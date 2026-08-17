@@ -1,0 +1,128 @@
+/* ============================
+   Base styles
+   ============================ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    background: #fafafa;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* ============================
+   Layout containers
+   ============================ */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* ============================
+   Logo
+   ============================ */
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.logo-mark {
+    font-size: 1.6rem;
+    margin-right: 0.4rem;
+}
+
+/* ============================
+   Navigation
+   ============================ */
+
+nav a {
+    margin-left: 1.2rem;
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: 500;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ============================
+   Hero section
+   ============================ */
+
+.hero {
+    text-align: center;
+    margin: 3rem 0 2rem;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: #444;
+}
+
+/* ============================
+   Section headings
+   ============================ */
+
+section h2 {
+    margin-top: 2.5rem;
+    font-size: 1.6rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.3rem;
+}
+
+/* ============================
+   Lists
+   ============================ */
+
+.links ul,
+.roadmap ul {
+    padding-left: 1.2rem;
+}
+
+.links li,
+.roadmap li {
+    margin-bottom: 0.6rem;
+}
+
+/* ============================
+   Footer links
+   ============================ */
+
+footer a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
