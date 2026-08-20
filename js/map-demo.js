@@ -93,7 +93,6 @@ mapObject.addEventListener("load", () => {
   const svgDoc = mapObject.contentDocument;
   const svgRoot = svgDoc.documentElement;
 
-  const backButton = document.getElementById("back");
   const resetButton = document.getElementById("resetDate");
 
   const viewBox = svgRoot.getAttribute("viewBox");
@@ -132,10 +131,6 @@ mapObject.addEventListener("load", () => {
     drawUmiWatch(ctx, lat, lon);
   });
 
-  backButton.addEventListener("click", (e) => {
-    window.history.back();
-  });
-  
   resetButton.addEventListener("click", (e) => {
     lastDayOffset = null;
     seasonSlider.value = 0;

@@ -53,6 +53,11 @@ footer {
 .logo-mark {
     font-size: 1.6rem;
     margin-right: 0.4rem;
+    background-image: url('../assets/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1.6rem;
+    height: 1.6rem;
 }
 
 /* ============================
