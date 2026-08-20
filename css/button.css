@@ -1,5 +1,5 @@
 /* Modern Blue Button styling */
-.btn-modern-blue {
+.btn-modern {
   /* Layout & Sizing */
   display: inline-flex;
   align-items: center;
@@ -15,7 +15,6 @@
   letter-spacing: -0.01em;
 
   /* Shaping & Borders */
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   cursor: pointer;
@@ -33,15 +32,14 @@
 }
 
 /* Hover State: Subtle color shift and lifting shadow effect */
-.btn-modern-blue:hover {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+.btn-modern:hover {
   box-shadow:
     0 1px 2px 0 rgba(0, 0, 0, 0.05),
     0 8px 20px 0 rgba(37, 99, 235, 0.35);
 }
 
 /* Active State: Tactile press-down effect */
-.btn-modern-blue:active {
+.btn-modern:active {
   transform: scale(0.98);
   box-shadow:
     0 1px 2px 0 rgba(0, 0, 0, 0.05),
@@ -49,7 +47,26 @@
 }
 
 /* Focus State: Accessible ring highlight for keyboard navigation */
-.btn-modern-blue:focus-visible {
-  outline: 2px solid #60a5fa;
+.btn-modern:focus-visible {
   outline-offset: 2px;
+}
+
+.btn-modern.blue {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+.btn-modern.blue:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+.btn-modern.blue:focus-visible {
+  outline: 2px solid #60a5fa;
+}
+
+.btn-modern.gray {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+.btn-modern.gray:hover {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+}
+.btn-modern.gray:focus-visible {
+  outline: 2px solid #60a5fa;
 }
