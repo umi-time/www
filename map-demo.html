@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Umi‑Time Interactive Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="css/button.css" rel="stylesheet" />
+    <link href="css/map-demo.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="at-top">
+      <div class="slider-row">
+        <input id="seasonSlider" type="range" min="-182" max="183" value="0" />
+        <button id="resetDate" class="btn-modern-blue">Reset</button>
+      </div>
+      <label id="selectedDate"></label>
+    </div>
+
+    <div id="map-container">
+      <!-- External SVG file -->
+      <object
+        id="map-object"
+        data="assets/mercator.svg"
+        type="image/svg+xml"
+      ></object>
+
+      <!-- Overlay Canvas matching the exact internal viewBox dimensions -->
+      <canvas id="shadow-canvas" width="1652.4702" height="1220.6385"></canvas>
+
+      <!-- Floating Umi‑Time watch face -->
+      <div id="watch-face">
+        <canvas id="umiCanvas" width="180" height="180"></canvas>
+      </div>
+    </div>
+
+    <script src="js/map-demo.js"></script>
+  </body>
+</html>
