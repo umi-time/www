@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Umi‑Time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Umi‑Time is a solar‑aligned time system based on degrees of rotation instead of civil clock hours."
+    />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <script src="js/includes.js" defer></script>
+    <script src="js/marked.min.js" defer></script>
+    <script src="js/markdownup.js" defer></script>
+  </head>
+  <body>
+    <div id="umi-header"></div>
+
+    <div class="umi-region umi-pad">
+      <div id="spec-content"></div>
+    </div>
+
+    <div id="umi-footer"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        loadMarkdownInto("spec-content", "manifesto.md");
+      });
+    </script>
+  </body>
+</html>
