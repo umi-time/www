@@ -6,40 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/button.css" />
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/map-demo.css" />
     <script src="js/includes.js" defer></script>
+    <script src="js/map-demo.js" defer></script>
   </head>
 
   <body>
     <div id="umi-header"></div>
-    <div class="at-top">
-      <div class="slider-row">
-        <input id="seasonSlider" type="range" min="-182" max="183" value="0" />
-        <button id="resetDate" class="btn-modern blue">Reset</button>
-      </div>
-      <label id="selectedDate"></label>
-    </div>
 
-    <div id="map-container">
-      <!-- External SVG file -->
-      <object
-        id="map-object"
-        data="assets/mercator.svg"
-        type="image/svg+xml"
-      ></object>
+    <div class="umi-region-full">
+      <main>
+        <div class="at-top">
+          <div class="slider-row">
+            <input id="seasonSlider" type="range" min="-182" max="183" value="0" />
+            <button id="resetDate" class="btn-modern blue">Reset</button>
+          </div>
+          <label id="selectedDate"></label>
+        </div>
 
-      <!-- Overlay Canvas matching the exact internal viewBox dimensions -->
-      <canvas id="shadow-canvas" width="1652.4702" height="1220.6385"></canvas>
+        <div id="map-container">
+          <!-- External SVG file -->
+          <object
+            id="map-object"
+            data="assets/mercator.svg"
+            type="image/svg+xml"
+          ></object>
 
-      <!-- Floating Umi‑Time watch face -->
-      <div id="watch-face">
-        <canvas id="umiCanvas" width="180" height="180"></canvas>
-      </div>
+          <!-- Overlay Canvas matching the exact internal viewBox dimensions -->
+          <canvas id="shadow-canvas" width="1652.4702" height="1220.6385"></canvas>
+
+          <!-- Floating Umi‑Time watch face -->
+          <div id="watch-face">
+            <canvas id="umiCanvas" width="180" height="180"></canvas>
+          </div>
+        </div>
+      </main>
     </div>
 
     <div id="umi-footer"></div>
-
-    <script src="js/map-demo.js"></script>
   </body>
 </html>

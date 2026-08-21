@@ -1,0 +1,178 @@
+/* ============================
+   Base styles
+   ============================ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    background: #fafafa;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* ============================
+   Region containers (geometry only)
+   ============================ */
+
+.umi-region {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.umi-region-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.umi-region-full {
+  max-width: none;
+  margin: 0;
+}
+
+/* ============================
+   Spacing containers (interior padding)
+   ============================ */
+
+.umi-pad {
+  padding: 0 1.5rem;
+}
+
+.umi-pad-sm {
+  padding: 0 1rem;
+}
+
+.umi-pad-lg {
+  padding: 0 2rem;
+}
+
+/* ============================
+   Vertical rhythm
+   ============================ */
+
+.umi-section {
+  margin: 2.5rem 0;
+}
+
+.umi-section-sm {
+  margin: 1.5rem 0;
+}
+
+.umi-section-lg {
+  margin: 3.5rem 0;
+}
+
+
+/* ============================
+   Header layout
+   ============================ */
+
+.umi-header .umi-region {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.logo-mark {
+  font-size: 1.6rem;
+  margin-right: 0.4rem;
+  background-image: url('../assets/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.umi-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 1rem;
+}
+
+.umi-nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+.umi-nav a:hover {
+  text-decoration: underline;
+}
+
+/* ============================
+   Footer layout
+   ============================ */
+
+.umi-footer .umi-region {
+  text-align: center;
+  padding: 24px 16px;
+  border-top: 1px solid #ddd;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.umi-footer p {
+  margin: 8px 0;
+}
+
+/* ============================
+   Footer links
+   ============================ */
+
+.umi-footer a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.umi-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ============================
+   Responsive breakpoints
+   ============================ */
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .umi-header .umi-region {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .logo {
+    margin-bottom: 0;
+  }
+
+  .umi-nav {
+    gap: 28px;
+    font-size: 1.05rem;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 900px) {
+  .umi-header .umi-pad {
+    padding: 20px 32px;
+  }
+
+  .umi-nav {
+    gap: 32px;
+  }
+
+  .umi-footer .umi-pad {
+    padding: 32px;
+    font-size: 1rem;
+  }
+}
