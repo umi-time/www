@@ -1728,7 +1728,7 @@
 
                   <p>Example (informative):</p>
                   <pre><code>235:198+123
-                235198S8-3+12</code></pre>
+                235198S3/8+12</code></pre>
                   <ol>
                     <li>
                       <h4>General syntax</h4>
@@ -1773,7 +1773,7 @@
                       <p>Examples (informative):</p>
                       <pre><code>
                     235:198+123
-                    235198S8-3+12
+                    235198S3/8+12
                     235:198-045
                       </code></pre>
                     </li>
@@ -1829,24 +1829,40 @@
 
                       <p>
                         A segment code suffix may be appended to a Umi‑Time
-                        value to indicate a locally defined subdivision of the
-                        observer’s environment, workflow, or operational domain.
-                        Segment codes provide contextual information only and
-                        shall not modify the interpretation of the UT degree or
-                        UT second fields. Their purpose is to support
-                        domain‑specific applications that require lightweight,
-                        human‑readable annotations.
+                        value to indicate the observer’s position within a
+                        locally defined segmentation of the solar day. Segment
+                        codes provide contextual information only and shall not
+                        modify the interpretation of the UT degree or UT second
+                        fields. Their purpose is to support domain‑specific
+                        applications that require lightweight, human‑readable
+                        annotations describing fractional progression through
+                        the day.
                       </p>
 
                       <p>
-                        A segment code suffix shall begin with a single
-                        uppercase letter that identifies the segment category,
-                        followed by one or more digits that identify the
-                        specific segment within that category. The category
-                        letter shall be drawn from the range
-                        <code>A</code>–<code>Z</code>. The numeric portion shall
-                        consist of one or more decimal digits without separators
-                        or whitespace.
+                        A segment code suffix shall begin with the uppercase
+                        letter
+                        <code>S</code>, followed by two integers separated by a
+                        solidus (<code>/</code>). The first integer shall
+                        identify the segment index <code>m</code>, and the
+                        second integer shall identify the total number of
+                        segments <code>n</code> in the segmentation system. Both
+                        integers shall be decimal and shall conform to the
+                        ranges defined by the segment system in use. The value
+                        <code>m/n</code> shall represent the fractional position
+                        <em>m divided by n</em>, corresponding to the observer’s
+                        progress through the segmented day.
+                      </p>
+
+                      <p>
+                        The numeric portion of the segment code suffix shall
+                        consist only of decimal digits and shall not include
+                        leading signs, whitespace, or additional punctuation.
+                        Zero‑padding is not required. A conforming
+                        implementation shall reject any segment code suffix in
+                        which either integer falls outside the permitted range
+                        or in which the solidus is missing, duplicated, or
+                        incorrectly positioned.
                       </p>
 
                       <p>
@@ -1860,305 +1876,332 @@
                       </p>
 
                       <p>
-                        Segment code suffixes are intended for human‑readable
-                        contexts, logging, and domain‑specific workflows. This
-                        specification does not assign semantic meaning to any
-                        particular segment category or number; such meanings are
-                        defined externally by the domain in which the suffix is
-                        used.
+                        This specification does not assign semantic meaning to
+                        any particular segmentation system or ratio. The
+                        interpretation of <code>m/n</code> is defined externally
+                        by the domain in which the suffix is used. Systems may
+                        employ uniform or non‑uniform segmentation, provided
+                        that the suffix accurately reflects the intended
+                        fractional position within the day.
                       </p>
 
                       <p>Examples (informative):</p>
                       <pre><code>
-                    235198S8
-                    235:198S12
-                    042057S3+045
-                      </code></pre>
+235198S3/8
+235:198S12/24
+042057S1/4
+2026‑08‑24U235:198S5/8
+  </code></pre>
                       <ol>
                         <li>
-                          <h4>Two‑segment system (S2)</h4>
+                          <h4>Two‑segment system (S/2)</h4>
 
                           <p>
-                            The two‑segment system (S2) is a local context
-                            convention in which the observer’s environment is
-                            divided into two operational segments. The S2 system
-                            provides lightweight contextual annotation and shall
-                            not modify the interpretation of the UT degree or UT
-                            second fields. Segment identifiers in the S2 system
-                            are informative only and shall not be used for
-                            computational purposes.
+                            The two‑segment system (S/2) is a local context
+                            convention in which the solar day is divided into
+                            two segments of equal duration. The S/2 system
+                            provides coarse, human‑readable annotation of day
+                            progression and shall not modify the interpretation
+                            of the UT degree or UT second fields. Segment
+                            identifiers in the S/2 system are informative only
+                            and shall not be used for computational purposes
+                            involving Earth rotation or Umi‑Time calculations.
                           </p>
 
                           <p>
-                            In the S2 system, the segment code suffix shall
+                            In the S/2 system, the segment code suffix shall
                             begin with the letter
-                            <code>S</code>, followed by a single digit
-                            identifying the segment number. The digit shall be
-                            either <code>1</code> or <code>2</code>,
-                            corresponding to the two defined segments. No
-                            additional digits, separators, or symbols shall
-                            appear within an S2 segment code.
+                            <code>S</code> followed by a ratio of the form
+                            <code>m/2</code>, where <code>m</code> is the
+                            segment index. The index <code>m</code> shall be
+                            either <code>0</code> or <code>1</code>,
+                            corresponding respectively to the first half and
+                            second half of the solar day. The ratio
+                            <code>m/2</code> represents the fractional position
+                            <em>m divided by 2</em>, indicating whether the
+                            observer is in the first or second segment.
                           </p>
 
                           <p>
-                            The S2 segment code suffix shall appear immediately
+                            The S/2 segment code suffix shall appear immediately
                             after the Umi‑Time value or after any longitude
                             offset suffix, if present. A conforming
-                            implementation shall treat the S2 suffix as
+                            implementation shall treat the S/2 suffix as
                             informative metadata and shall ignore it when
                             parsing or validating the underlying Umi‑Time
-                            fields. The presence or absence of an S2 suffix
+                            fields. The presence or absence of an S/2 suffix
                             shall not affect the semantics of the Umi‑Time
                             value.
                           </p>
 
                           <p>
-                            The two‑segment system is intended for
-                            human‑readable contexts, operational workflows, and
-                            domain‑specific applications where a binary
-                            segmentation of the observer’s environment is
-                            meaningful. This specification does not assign
-                            semantic meaning to segment <code>S1</code> or
-                            <code>S2</code>; such meanings are defined
-                            externally by the domain in which the S2 system is
-                            applied.
+                            The two‑segment system is intended for contexts
+                            where a binary division of the day is meaningful,
+                            such as distinguishing between morning and
+                            afternoon, pre‑solar‑noon and post‑solar‑noon
+                            phases, or other domain‑specific workflows. This
+                            specification does not assign semantic meaning to
+                            <code>S0/2</code> or <code>S1/2</code>; such
+                            meanings are defined externally by the domain in
+                            which the S/2 system is applied.
                           </p>
 
                           <p>Examples (informative):</p>
                           <pre><code>
-                        235198S1
-                        235:198S2
-                        042057S1+045
-                          </code></pre>
+235198S0/2
+235:198S1/2
+042057+045S0/2
+2026‑08‑24U235:198S1/2
+  </code></pre>
                         </li>
                         <li>
-                          <h4>Four‑segment system (S4)</h4>
+                          <h4>Four‑segment system (S/4)</h4>
 
                           <p>
-                            The four‑segment system (S4) is a local context
-                            convention in which the observer’s environment is
-                            divided into four operational segments. The S4
-                            system provides structured contextual annotation and
+                            The four‑segment system (S/4) is a local context
+                            convention in which the solar day is divided into
+                            four segments of equal duration. The S/4 system
+                            provides moderate‑granularity annotation of day
+                            progression and shall not modify the interpretation
+                            of the UT degree or UT second fields. Segment
+                            identifiers in the S/4 system are informative only
+                            and shall not be used for computational purposes
+                            involving Earth rotation or Umi‑Time calculations.
+                          </p>
+
+                          <p>
+                            In the S/4 system, the segment code suffix shall
+                            begin with the letter
+                            <code>S</code> followed by a ratio of the form
+                            <code>m/4</code>, where <code>m</code> is the
+                            segment index. The index <code>m</code> shall be one
+                            of <code>0</code>, <code>1</code>, <code>2</code>,
+                            or <code>3</code>, corresponding respectively to the
+                            first, second, third, and fourth quarter‑segments of
+                            the solar day. The ratio <code>m/4</code> represents
+                            the fractional position <em>m divided by 4</em>,
+                            indicating the observer’s progress through the
+                            segmented day.
+                          </p>
+
+                          <p>
+                            The S/4 segment code suffix shall appear immediately
+                            after the Umi‑Time value or after any longitude
+                            offset suffix, if present. A conforming
+                            implementation shall treat the S/4 suffix as
+                            informative metadata and shall ignore it when
+                            parsing or validating the underlying Umi‑Time
+                            fields. The presence or absence of an S/4 suffix
+                            shall not affect the semantics of the Umi‑Time
+                            value.
+                          </p>
+
+                          <p>
+                            The four‑segment system is intended for contexts
+                            where a quadripartite division of the day is
+                            meaningful, such as distinguishing early morning,
+                            late morning, afternoon, and evening phases, or
+                            other domain‑specific workflows. This specification
+                            does not assign semantic meaning to
+                            <code>S0/4</code>–<code>S3/4</code>; such meanings
+                            are defined externally by the domain in which the
+                            S/4 system is applied.
+                          </p>
+
+                          <p>Examples (informative):</p>
+                          <pre><code>
+235198S0/4
+235:198S1/4
+042057S2/4
+2026‑08‑24U235:198S3/4
+  </code></pre>
+                        </li>
+                        <li>
+                          <h4>Eight‑segment system (S/8)</h4>
+
+                          <p>
+                            The eight‑segment system (S/8) is a local context
+                            convention in which the solar day is divided into
+                            eight segments of equal duration. The S/8 system
+                            provides finer‑grained contextual annotation than
+                            the S/2 or S/4 systems and shall not modify the
+                            interpretation of the UT degree or UT second fields.
+                            Segment identifiers in the S/8 system are
+                            informative only and shall not be used for
+                            computational purposes involving Earth rotation or
+                            Umi‑Time calculations.
+                          </p>
+
+                          <p>
+                            In the S/8 system, the segment code suffix shall
+                            begin with the letter
+                            <code>S</code> followed by a ratio of the form
+                            <code>m/8</code>, where <code>m</code> is the
+                            segment index. The index <code>m</code> shall be one
+                            of <code>0</code> through <code>7</code>,
+                            corresponding respectively to the eight equal
+                            subdivisions of the solar day. The ratio
+                            <code>m/8</code> represents the fractional position
+                            <em>m divided by 8</em>, indicating the observer’s
+                            progress through the segmented day.
+                          </p>
+
+                          <p>
+                            The S/8 segment code suffix shall appear immediately
+                            after the Umi‑Time value or after any longitude
+                            offset suffix, if present. A conforming
+                            implementation shall treat the S/8 suffix as
+                            informative metadata and shall ignore it when
+                            parsing or validating the underlying Umi‑Time
+                            fields. The presence or absence of an S/8 suffix
+                            shall not affect the semantics of the Umi‑Time
+                            value.
+                          </p>
+
+                          <p>
+                            The eight‑segment system is intended for contexts
+                            where an octant‑based division of the day is
+                            meaningful, such as distinguishing early morning,
+                            mid‑morning, late morning, early afternoon,
+                            mid‑afternoon, late afternoon, early evening, and
+                            late evening phases. This specification does not
+                            assign semantic meaning to
+                            <code>S0/8</code>–<code>S7/8</code>; such meanings
+                            are defined externally by the domain in which the
+                            S/8 system is applied.
+                          </p>
+
+                          <p>Examples (informative):</p>
+                          <pre><code>
+235198S0/8
+235:198S3/8
+042057S7/8
+2026‑08‑24U235:198S5/8
+  </code></pre>
+                        </li>
+                        <li>
+                          <h4>Twelve‑segment system (S/12)</h4>
+
+                          <p>
+                            The twelve‑segment system (S/12) is a local context
+                            convention in which the solar day is divided into
+                            twelve segments of equal duration. The S/12 system
+                            provides high‑resolution contextual annotation and
                             shall not modify the interpretation of the UT degree
-                            or UT second fields. Segment identifiers in the S4
+                            or UT second fields. Segment identifiers in the S/12
                             system are informative only and shall not be used
-                            for computational purposes.
+                            for computational purposes involving Earth rotation
+                            or Umi‑Time calculations.
                           </p>
 
                           <p>
-                            In the S4 system, the segment code suffix shall
+                            In the S/12 system, the segment code suffix shall
                             begin with the letter
-                            <code>S</code>, followed by a single digit
-                            identifying the segment number. The digit shall be
-                            one of <code>1</code>, <code>2</code>,
-                            <code>3</code>, or <code>4</code>, corresponding to
-                            the four defined segments. No additional digits,
-                            separators, or symbols shall appear within an S4
-                            segment code.
+                            <code>S</code> followed by a ratio of the form
+                            <code>m/12</code>, where <code>m</code> is the
+                            segment index. The index <code>m</code> shall be one
+                            of <code>0</code> through <code>11</code>,
+                            corresponding respectively to the twelve equal
+                            subdivisions of the solar day. The ratio
+                            <code>m/12</code> represents the fractional position
+                            <em>m divided by 12</em>, indicating the observer’s
+                            progress through the segmented day.
                           </p>
 
                           <p>
-                            The S4 segment code suffix shall appear immediately
-                            after the Umi‑Time value or after any longitude
-                            offset suffix, if present. A conforming
-                            implementation shall treat the S4 suffix as
+                            The S/12 segment code suffix shall appear
+                            immediately after the Umi‑Time value or after any
+                            longitude offset suffix, if present. A conforming
+                            implementation shall treat the S/12 suffix as
                             informative metadata and shall ignore it when
                             parsing or validating the underlying Umi‑Time
-                            fields. The presence or absence of an S4 suffix
+                            fields. The presence or absence of an S/12 suffix
                             shall not affect the semantics of the Umi‑Time
                             value.
                           </p>
 
                           <p>
-                            The four‑segment system is intended for
-                            human‑readable contexts, operational workflows, and
-                            domain‑specific applications where a quadripartite
-                            segmentation of the observer’s environment is
-                            meaningful. This specification does not assign
-                            semantic meaning to segments
-                            <code>S1</code>–<code>S4</code>; such meanings are
-                            defined externally by the domain in which the S4
-                            system is applied.
+                            The twelve‑segment system is intended for contexts
+                            where a dodecant‑based division of the day is
+                            meaningful, such as distinguishing finer phases of
+                            morning, midday, afternoon, and evening, or
+                            supporting domain‑specific workflows requiring
+                            increased temporal granularity. This specification
+                            does not assign semantic meaning to
+                            <code>S0/12</code>–<code>S11/12</code>; such
+                            meanings are defined externally by the domain in
+                            which the S/12 system is applied.
                           </p>
 
                           <p>Examples (informative):</p>
                           <pre><code>
-                        235198S1
-                        235:198S3
-                        042057S4+045
-                          </code></pre>
+235198S0/12
+235:198S4/12
+042057S11/12
+2026‑08‑24U235:198S7/12
+  </code></pre>
                         </li>
                         <li>
-                          <h4>Eight‑segment system (S8)</h4>
+                          <h4>Twenty‑four‑segment system (S/24)</h4>
 
                           <p>
-                            The eight‑segment system (S8) is a local context
-                            convention in which the observer’s environment is
-                            divided into eight operational segments. The S8
-                            system provides a finer‑grained contextual
-                            annotation than the S2 or S4 systems and shall not
-                            modify the interpretation of the UT degree or UT
-                            second fields. Segment identifiers in the S8 system
-                            are informative only and shall not be used for
-                            computational purposes.
-                          </p>
-
-                          <p>
-                            In the S8 system, the segment code suffix shall
-                            begin with the letter
-                            <code>S</code>, followed by a single digit
-                            identifying the segment number. The digit shall be
-                            one of <code>1</code> through <code>8</code>,
-                            corresponding to the eight defined segments. No
-                            additional digits, separators, or symbols shall
-                            appear within an S8 segment code.
-                          </p>
-
-                          <p>
-                            The S8 segment code suffix shall appear immediately
-                            after the Umi‑Time value or after any longitude
-                            offset suffix, if present. A conforming
-                            implementation shall treat the S8 suffix as
-                            informative metadata and shall ignore it when
-                            parsing or validating the underlying Umi‑Time
-                            fields. The presence or absence of an S8 suffix
-                            shall not affect the semantics of the Umi‑Time
-                            value.
-                          </p>
-
-                          <p>
-                            The eight‑segment system is intended for
-                            human‑readable contexts, operational workflows, and
-                            domain‑specific applications where an octant‑based
-                            segmentation of the observer’s environment is
-                            meaningful. This specification does not assign
-                            semantic meaning to segments
-                            <code>S1</code>–<code>S8</code>; such meanings are
-                            defined externally by the domain in which the S8
-                            system is applied.
-                          </p>
-
-                          <p>Examples (informative):</p>
-                          <pre><code>
-                        235198S1
-                        235:198S6
-                        042057S8+045
-                          </code></pre>
-                        </li>
-                        <li>
-                          <h4>Twelve‑segment system (S12)</h4>
-
-                          <p>
-                            The twelve‑segment system (S12) is a local context
-                            convention in which the observer’s environment is
-                            divided into twelve operational segments. The S12
-                            system provides a high‑resolution contextual
+                            The twenty‑four‑segment system (S/24) is a local
+                            context convention in which the solar day is divided
+                            into twenty‑four segments of equal duration. The
+                            S/24 system provides high‑granularity contextual
                             annotation and shall not modify the interpretation
                             of the UT degree or UT second fields. Segment
-                            identifiers in the S12 system are informative only
-                            and shall not be used for computational purposes.
+                            identifiers in the S/24 system are informative only
+                            and shall not be used for computational purposes
+                            involving Earth rotation or Umi‑Time calculations.
                           </p>
 
                           <p>
-                            In the S12 system, the segment code suffix shall
+                            In the S/24 system, the segment code suffix shall
                             begin with the letter
-                            <code>S</code>, followed by a two‑digit integer
-                            identifying the segment number. The integer shall be
-                            in the range <code>01</code>–<code>12</code>,
-                            corresponding to the twelve defined segments. The
-                            numeric portion shall be zero‑padded to two digits.
-                            No additional digits, separators, or symbols shall
-                            appear within an S12 segment code.
+                            <code>S</code> followed by a ratio of the form
+                            <code>m/24</code>, where <code>m</code> is the
+                            segment index. The index <code>m</code> shall be one
+                            of <code>0</code> through <code>23</code>,
+                            corresponding respectively to the twenty‑four equal
+                            subdivisions of the solar day. The ratio
+                            <code>m/24</code> represents the fractional position
+                            <em>m divided by 24</em>, indicating the observer’s
+                            progress through the segmented day.
                           </p>
 
                           <p>
-                            The S12 segment code suffix shall appear immediately
-                            after the Umi‑Time value or after any longitude
-                            offset suffix, if present. A conforming
-                            implementation shall treat the S12 suffix as
+                            The S/24 segment code suffix shall appear
+                            immediately after the Umi‑Time value or after any
+                            longitude offset suffix, if present. A conforming
+                            implementation shall treat the S/24 suffix as
                             informative metadata and shall ignore it when
                             parsing or validating the underlying Umi‑Time
-                            fields. The presence or absence of an S12 suffix
-                            shall not affect the semantics of the Umi‑Time
-                            value.
-                          </p>
-
-                          <p>
-                            The twelve‑segment system is intended for
-                            human‑readable contexts, operational workflows, and
-                            domain‑specific applications where a dodecant‑based
-                            segmentation of the observer’s environment is
-                            meaningful. This specification does not assign
-                            semantic meaning to segments
-                            <code>S01</code>–<code>S12</code>; such meanings are
-                            defined externally by the domain in which the S12
-                            system is applied.
-                          </p>
-
-                          <p>Examples (informative):</p>
-                          <pre><code>
-                        235198S01
-                        235:198S07
-                        042057S12+045
-                          </code></pre>
-                        </li>
-                        <li>
-                          <h4>Twenty‑four‑segment system (S24)</h4>
-
-                          <p>
-                            The twenty‑four‑segment system (S24) is a local
-                            context convention in which the observer’s
-                            environment is divided into twenty‑four operational
-                            segments. The S24 system provides a high‑granularity
-                            contextual annotation and shall not modify the
-                            interpretation of the UT degree or UT second fields.
-                            Segment identifiers in the S24 system are
-                            informative only and shall not be used for
-                            computational purposes.
-                          </p>
-
-                          <p>
-                            In the S24 system, the segment code suffix shall
-                            begin with the letter
-                            <code>S</code>, followed by a two‑digit integer
-                            identifying the segment number. The integer shall be
-                            in the range <code>01</code>–<code>24</code>,
-                            corresponding to the twenty‑four defined segments.
-                            The numeric portion shall be zero‑padded to two
-                            digits. No additional digits, separators, or symbols
-                            shall appear within an S24 segment code.
-                          </p>
-
-                          <p>
-                            The S24 segment code suffix shall appear immediately
-                            after the Umi‑Time value or after any longitude
-                            offset suffix, if present. A conforming
-                            implementation shall treat the S24 suffix as
-                            informative metadata and shall ignore it when
-                            parsing or validating the underlying Umi‑Time
-                            fields. The presence or absence of an S24 suffix
+                            fields. The presence or absence of an S/24 suffix
                             shall not affect the semantics of the Umi‑Time
                             value.
                           </p>
 
                           <p>
                             The twenty‑four‑segment system is intended for
-                            human‑readable contexts, operational workflows, and
-                            domain‑specific applications where a
-                            twenty‑four‑part segmentation of the observer’s
-                            environment is meaningful. This specification does
-                            not assign semantic meaning to segments
-                            <code>S01</code>–<code>S24</code>; such meanings are
-                            defined externally by the domain in which the S24
-                            system is applied.
+                            contexts requiring fine‑resolution temporal
+                            annotation, such as operational workflows,
+                            scientific logging, or applications that benefit
+                            from dividing the solar day into hour‑like
+                            fractional units. This specification does not assign
+                            semantic meaning to
+                            <code>S0/24</code>–<code>S23/24</code>; such
+                            meanings are defined externally by the domain in
+                            which the S/24 system is applied.
                           </p>
 
                           <p>Examples (informative):</p>
                           <pre><code>
-                        235198S01
-                        235:198S12
-                        042057S24+045
-                          </code></pre>
+235198S0/24
+235:198S12/24
+042057S23/24
+2026‑08‑24U235:198S7/24
+  </code></pre>
                         </li>
                       </ol>
                     </li>
