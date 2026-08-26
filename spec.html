@@ -70,8 +70,7 @@
                     Umi‑time does not adjust its degree progression based on the
                     varying length of the solar day.<br />Solar‑day variation
                     affects sunrise and sunset times slightly, but does
-                    <strong>not</strong> affect the placement of solar noon or
-                    solar midnight on the dial.
+                    <strong>not</strong> affect the orientation of the dial.
                   </p>
                 </li>
                 <li>
@@ -134,10 +133,19 @@
                 time.
               </p>
               <p>
-                Solar geometry determines the <strong>orientation</strong> of
-                the dial — solar noon at the top, solar midnight at the
+                The observer's longitude determines the orientation of the
+                Umi‑time dial. Starting with the dial's origin (0°) at the
+                bottom, the dial rotates clockwise for positive longitudes and
+                counterclockwise for negative longitudes, by the same number of
+                degrees as the observer’s longitude. It is this rotation that
+                transforms Umi-Time into local solar time.
+              </p>
+              <p>
+                Solar geometry determines the position of certain events on the
+                solar ring — solar noon near the top, solar midnight near the
                 bottom,<br />and sunrise/sunset placed according to their true
-                positions — but does not affect the degree progression.
+                positions — but does not affect the degree progression or dial
+                orientation.
               </p>
               <p>
                 Umi‑time degrees are universal; the dial orientation is local.
@@ -290,13 +298,24 @@
               </p>
               <ol>
                 <li>
-                  <h3>Fixed Reference Points</h3>
-                  <p>The Umi‑time dial uses two fixed visual anchors:</p>
+                  <h3>Variable Solar Noon / Midnight Positions</h3>
+                  <p>
+                    The positions of solar noon and midnight on the Umi‑time
+                    solar ring vary by small amounts over the course of the
+                    year, but are generally positioned very close to the top and
+                    bottom of the solar ring:
+                  </p>
                   <ul>
-                    <li><strong>Top of dial</strong> → solar noon</li>
-                    <li><strong>Bottom of dial</strong> → solar midnight</li>
+                    <li><strong>Top of solar ring</strong> → solar noon</li>
+                    <li>
+                      <strong>Bottom of solar ring</strong> → solar midnight
+                    </li>
                   </ul>
-                  <p>These positions do not change.</p>
+                  <p>
+                    These positions do not change by any significant amount
+                    visually. So it is not generally useful to mark them
+                    explicitly on the solar ring.
+                  </p>
                 </li>
                 <li>
                   <h3>Variable Sunrise / Sunset Positions</h3>
@@ -309,16 +328,18 @@
                     <li>terrain (optional correction)</li>
                   </ul>
                   <p>
-                    They must be computed dynamically and placed on the dial
-                    according to their Umi‑time degree values.
+                    They must be computed dynamically and placed on the solar
+                    ring according to their Umi‑time degree values.
                   </p>
                 </li>
                 <li>
                   <h3>Dial Rotation</h3>
                   <p>
                     The dial rotates to align with the observer’s longitude.<br />The
-                    degree values remain universal; the dial orientation
-                    changes.
+                    degree values for Umi-Time remain universal; the dial
+                    orientation changes orientation such that the primary hand
+                    points toward the approximate position of the sun in its
+                    daily path.
                   </p>
                 </li>
               </ol>
@@ -355,8 +376,8 @@
                   <h3>Dial Rotation (Solar Noon &amp; Midnight Anchors)</h3>
                   <p>
                     <strong>Purpose:</strong><br />Align the dial so that solar
-                    noon and solar midnight appear at fixed positions relative
-                    to the solar ring.
+                    noon and solar midnight appear at roughly fixed positions
+                    relative to the solar ring.
                   </p>
                   <p><strong>Inputs Used (Dial Only):</strong></p>
                   <ul>
@@ -466,8 +487,7 @@
                   <h3>Local Civil Time Indicator</h3>
                   <p>
                     <strong>Purpose:</strong><br />Display local civil time in
-                    relation to Umi‑time, either on the dial or as an auxiliary
-                    marker on the solar ring.
+                    relation to Umi‑time.
                   </p>
                   <p><strong>Inputs Used:</strong></p>
                   <ul>
