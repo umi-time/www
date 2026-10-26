@@ -1,0 +1,175 @@
+---
+import Base from "../../layouts/Base.astro";
+import { Code } from "astro:components";
+title: "Solar Geometry Examples";
+description: "Examples demonstrating solar geometry using the Umi‑Time class and public solar helpers.";
+---
+
+<Base title="Solar Geometry Examples">
+  <div class="umi-region umi-pad">
+    <main class="page page-examples-solar">
+      <header class="page-header">
+        <h1>Solar Geometry Examples</h1>
+        <p>
+          These examples demonstrate how to compute solar‑related quantities
+          using the <code>UmiTime</code> class and the publicly exported solar
+          helpers. All examples match the current implementation and public API.
+        </p>
+      </header>
+
+      <!-- UmiTime solar getters -->
+      <section class="example">
+        <h2>1. Solar Geometry via UmiTime</h2>
+        <p>
+          The <code>UmiTime</code> class exposes solar geometry as getters.
+          These require precise latitude and longitude to be accurate.
+        </p>
+
+        <Code
+          code={`import { UmiTime } from "umi-time";
+
+const umi = new UmiTime(
+  new Date(),
+  { value: 35.14, uncertainty: 0 },     // latitude
+  { value: -120.64, uncertainty: 0 }    // longitude
+);
+
+console.log(umi.solarDeclination);   // Sun's declination angle
+console.log(umi.equationOfTime);     // apparent vs mean solar time
+console.log(umi.solarPosition);      // { altitude, azimuth }
+console.log(umi.sunrise);            // umi of sunrise
+console.log(umi.sunset);             // umi of sunset`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- solarAltitude -->
+      <section class="example">
+        <h2>2. Solar Altitude (Standalone Helper)</h2>
+        <p>
+          The <code>solarAltitude</code> helper computes the Sun’s altitude
+          above the horizon for a given UTC moment and observer location.
+        </p>
+
+        <Code
+          code={`import { solarAltitude } from "umi-time";
+
+const utc = new Date();
+const lat = 35.14;
+const lon = -120.64;
+
+const altitude = solarAltitude(utc, lat, lon);
+console.log(altitude);  // degrees above horizon`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Hour angle -->
+      <section class="example">
+        <h2>3. Solar Hour Angle</h2>
+        <p>
+          The hour angle describes the Sun’s position relative to local solar
+          noon. It requires the equation of time, which is available via
+          <code>UmiTime</code>.
+        </p>
+
+        <Code
+          code={`import { UmiTime, getHourAngle } from "umi-time";
+
+const umi = new UmiTime(
+  new Date(),
+  { value: 35.14, uncertainty: 0 },
+  { value: -120.64, uncertainty: 0 }
+);
+
+const eot = umi.equationOfTime;
+const utc = umi.utc;
+const lon = umi.longitude.value;
+
+const hourAngle = getHourAngle(utc, lon, eot);
+console.log(hourAngle);  // degrees`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- utUmiFromDate -->
+      <section class="example">
+        <h2>4. UT Umi From Date</h2>
+        <p>
+          <code>utUmiFromDate</code> computes the umi position directly from a
+          UTC timestamp. This is the same calculation used internally by
+          <code>UmiTime</code>.
+        </p>
+
+        <Code
+          code={`import { utUmiFromDate } from "umi-time";
+
+const utc = new Date();
+const umiValue = utUmiFromDate(utc);
+
+console.log(umiValue);  // 0–359`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- toDeg / toRad -->
+      <section class="example">
+        <h2>5. Angle Conversion</h2>
+        <p>
+          Basic helpers for converting between radians and degrees.
+        </p>
+
+        <Code
+          code={`import { toDeg, toRad } from "umi-time";
+
+console.log(toDeg(Math.PI));      // 180
+console.log(toRad(180));          // 3.14159...`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Combined example -->
+      <section class="example">
+        <h2>6. Combined Solar Geometry Example</h2>
+        <p>
+          A complete example showing how to compute multiple solar quantities
+          using both <code>UmiTime</code> and standalone helpers.
+        </p>
+
+        <Code
+          code={`import {
+  UmiTime,
+  solarAltitude,
+  getHourAngle,
+  toDeg,
+  toRad
+} from "umi-time";
+
+const umi = new UmiTime(
+  new Date(),
+  { value: 35.14, uncertainty: 0 },
+  { value: -120.64, uncertainty: 0 }
+);
+
+// From UmiTime
+const decl = umi.solarDeclination;
+const eot = umi.equationOfTime;
+const pos = umi.solarPosition;
+
+// Standalone helpers
+const alt = solarAltitude(umi.utc, umi.latitude.value, umi.longitude.value);
+const hourAngle = getHourAngle(umi.utc, umi.longitude.value, eot);
+
+console.log({ decl, eot, pos, alt, hourAngle });`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+    </main>
+  </div>
+</Base>

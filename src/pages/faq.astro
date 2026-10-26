@@ -1,0 +1,855 @@
+---
+import Base from "../layouts/Base.astro";
+title: "FAQ";
+description: "Frequently Asked Questions about Umi‑Time.";
+---
+
+<Base title="FAQ: Umi-Time">
+  <div class="umi-region umi-pad">
+    <div class="faq">
+      <h1>Frequently Asked Questions about Umi‑Time</h1>
+
+      <h2>🌍 Conceptual Understanding</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">What is Umi‑Time in one sentence?</button>
+        <div class="faq-answer">
+          <p>
+            At its core, Umi‑Time is UTC expressed as a single 360‑umi daily
+            rotation, giving the entire planet one shared continuous time.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why does the world need another time system?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Civil time was built for local life in a world divided by borders.
+            Today’s world is planetary, yet our clocks remain fragmented by time
+            zones, seasonal offsets, and political decisions. Umi‑Time offers a
+            single, coherent way to represent the day everywhere on Earth — a
+            modern alternative for a civilization that now thinks and operates
+            globally.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >How is Umi‑Time different from civil time (UTC / local time)?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Civil time, UTC, and Umi‑Time represent the day in fundamentally
+            different ways:
+          </p>
+          <ul>
+            <li>
+              <strong>Civil time</strong> uses 12‑hour clocks, divides the world into
+              time zones, and applies seasonal offsets like daylight saving. It works
+              for local schedules but becomes inconsistent and fragmented at global
+              scale.
+            </li>
+            <li>
+              <strong>UTC</strong> is a universal 24‑hour standard with no time zones
+              or seasonal adjustments. It is ideal for coordination, but its hours
+              have no relationship to the observer's experience of the day.
+            </li>
+            <li>
+              <strong>Umi‑Time</strong> is a universal 360‑umi cycle mapped directly
+              from UTC. It has no time zones or seasonal offsets, but unlike UTC,
+              it can include optional local context layers, allowing interfaces to
+              show how the global daily cycle aligns with your local daylight.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time meant to replace existing time standards?</button
+        >
+        <div class="faq-answer">
+          <p>
+            It can potentially replace civil time, if society finds greater
+            value in it. For now, Umi‑Time coexists with civil time and
+            complements it.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time a scientific time scale or a cultural one?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Neither. Umi‑Time is a representational layer built on top of UTC.
+            Scientific time scales define when events occur with precision;
+            cultural time systems define how societies choose to express the
+            day. Umi‑Time sits between these worlds — keeping UTC’s stability
+            while presenting the daily cycle in a form humans can read, share,
+            and reason about.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Does Umi‑Time depend on time zones?</button
+        >
+        <div class="faq-answer">
+          <p>No. Umi‑Time has no time zones and does not depend on them.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time the same everywhere on Earth?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. The Umi‑Time value is identical everywhere. Only the optional
+            local context layers depend on location.
+          </p>
+        </div>
+      </div>
+
+      <h2>🧭 How It Works</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">What exactly is umi in Umi‑Time?</button>
+        <div class="faq-answer">
+          <p>
+            Umi is the core unit of Umi‑Time — a rotational coordinate from 0ᵘ
+            to 360ᵘ that represents UTC's progress through its daily cycle.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What does the Umi dial represent?</button>
+        <div class="faq-answer">
+          <p>
+            The dial is a visual map of UTC’s daily progression. The hand shows
+            the current Umi‑Time; optional layers can display local solar‑day
+            features such as sunrise, sunset, and seasonal shifts.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How is the umi value calculated?</button>
+        <div class="faq-answer">
+          <p>
+            <code>umi = (UTC seconds of day ÷ 86,400) × 360</code>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why does the hand rotate once per day instead of twice?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Because Earth completes one solar rotation per day. Umi‑Time mirrors
+            that physical reality directly.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Why is solar geometry involved?</button>
+        <div class="faq-answer">
+          <p>
+            Solar geometry adds optional local meaning — sunrise, sunset,
+            twilight, day length, and seasonal variation — without affecting the
+            umi value itself.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Does Umi‑Time drift relative to UTC?</button
+        >
+        <div class="faq-answer">
+          <p>
+            No. Umi‑Time is a direct mapping of UTC’s 24‑hour day onto 360ᵘ and
+            stays perfectly synchronized with it.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How precise is Umi‑Time?</button>
+        <div class="faq-answer">
+          <p>
+            Exactly as precise as UTC, since it is derived directly from UTC
+            time.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Does Umi‑Time require astronomical data or can it be computed
+          locally?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Umi‑Time itself requires no astronomical data — it is computed
+            entirely from UTC. Optional solar‑context layers may use
+            astronomical inputs.
+          </p>
+        </div>
+      </div>
+
+      <h2>🕰️ Using Umi‑Time</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">How do I read the Umi‑Time clock?</button>
+        <div class="faq-answer">
+          <p>
+            The hand shows your current Umi‑Time on the dial. Its position on
+            the solar ring indicates your local solar‑day phase, such as
+            sunrise, daylight, twilight, or night.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >How do I convert between Umi‑Time and UTC or local civil time?</button
+        >
+        <div class="faq-answer">
+          <p>
+            <code>UTC_seconds = (umi ÷ 360ᵘ) × 86,400</code>. Convert the
+            resulting UTC time to local civil time using your time zone.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Can I use Umi‑Time for scheduling?</button>
+        <div class="faq-answer">
+          <p>
+            Yes — if everyone involved uses Umi‑Time. Otherwise, convert between
+            systems as needed.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is there a recommended way to display Umi‑Time on devices?</button
+        >
+        <div class="faq-answer">
+          <p>
+            A common pattern is the standard Umi‑Time analogclock: a fixed solar
+            ring, a dial rotated by longitude, and a single hand that completes
+            one rotation per UTC day.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Does Umi‑Time work offline?</button>
+        <div class="faq-answer">
+          <p>
+            Yes. Umi‑Time comes directly from your device’s UTC clock. Solar‑day
+            features can also be computed offline so long as the observer's
+            location is known.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is there an API or library I can use?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. Official libraries compute Umi‑Time, provide solar‑context
+            helpers, and ensure consistent behavior across platforms.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Can I embed the Umi‑Time clock on my own website?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. A lightweight <a href="/examples/clock"
+              >Umi‑Time clock web component</a
+            > is available for embedding.
+          </p>
+        </div>
+      </div>
+
+      <h2>🗺️ Map & Solar Geometry</h2>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why does the map demo show a shadow?</button
+        >
+        <div class="faq-answer">
+          <p>
+            It visualizes the nighttime side of Earth using the solar terminator
+            — the boundary between day and night.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why does the map show Greenland as large as Africa?</button
+        >
+        <div class="faq-answer">
+          <p>
+            The Mercator projection exaggerates the size of high‑latitude
+            regions, making Greenland appear much larger than it is.
+          </p>
+          <p>
+            The demo uses Mercator intentionally: it keeps latitude and
+            longitude lines straight, which makes the solar terminator, seasonal
+            shadow, and other Umi‑Time overlays behave predictably on screen.
+            The goal of the map is to show how daylight moves across Earth in
+            real time — not to depict land‑mass sizes accurately.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >What does the seasonal slider represent?</button
+        >
+        <div class="faq-answer">
+          <p>
+            It represents the day of the year. Adjusting it changes the Sun’s
+            declination, which affects both the map’s day‑night shadow and the
+            solar ring on the clock.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why does the terminator line look curved?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Because it’s a great circle on a spherical Earth projected onto a
+            flat map. The projection makes straight lines appear curved.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >How does latitude affect the Umi dial?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Latitude changes the solar‑day markers — sunrise, sunset, twilight,
+            and day length — but it does not affect the umi value or the dial
+            itself.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Does Umi‑Time behave differently near the poles?</button
+        >
+        <div class="faq-answer">
+          <p>The umi value works the same everywhere, including the poles.</p>
+          <p>
+            What changes is the solar‑day context: long stretches of daylight or
+            darkness, unusual twilight patterns, and periods with no sunrise or
+            sunset. These affect the solar ring, not Umi‑Time itself.
+          </p>
+        </div>
+      </div>
+
+      <h2>🔧 Technical / Developer Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time open source?</button>
+        <div class="faq-answer">
+          <p>
+            Yes. Umi‑Time is fully open source. The specification, core
+            libraries, demos, and website all live in public repositories so
+            anyone can inspect, implement, or contribute to the project.
+            <br />
+            GitHub: <a href="https://github.com/umi-time">github.com/umi-time</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Where can I learn the full specification?</button
+        >
+        <div class="faq-answer">
+          <p>
+            On the site’s <a href="/spec">Specification</a> page. It includes definitions,
+            the computational model, solar‑geometry formulas, textual formats, conformance
+            rules, and reference algorithms.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is there a quick start guide for developers?</button
+        >
+        <div class="faq-answer">
+          <p>
+            The <a href="/getting-started">Getting Started</a> page provides a fast
+            introduction and a Developer Quickstart example. The
+            <a href="/api">API Reference</a> is the main resource for integration.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Where can I report bugs or issues?</button>
+        <div class="faq-answer">
+          <p>
+            On the project’s GitHub repository:
+            <br />
+            • <a href="https://github.com/umi-time/umi-time/issues">Issues</a> for
+            bugs or suggestions • <a
+              href="https://github.com/umi-time/umi-time/discussions"
+              >Discussions</a
+            > for questions or ideas
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Are there reference implementations?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. The JavaScript demos show Umi‑Time calculation, dial behavior,
+            solar‑day modeling, and map logic:
+            <br />
+            • <a href="/clock">Clock Demo</a>
+            • <a href="/map-demo">Map Demo</a>
+            • <a href="/examples">Examples & Demos</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How stable is the specification?</button>
+        <div class="faq-answer">
+          <p>
+            The core concepts are stable. Wording refinements and edge‑case
+            clarifications continue to evolve as the project matures.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How do I contribute?</button>
+        <div class="faq-answer">
+          <p>
+            Join the GitHub Discussions, open issues, or submit pull requests:
+            <br />
+            • <a href="https://github.com/umi-time/umi-time/discussions"
+              >Discussions</a
+            >
+            • <a href="https://github.com/umi-time/umi-time/issues">Issues</a>
+            • <a href="https://github.com/umi-time/umi-time/pulls"
+              >Pull Requests</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time intended to be standardized formally (IETF, ISO)?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Not yet. The current focus is refining the specification, building
+            demos, and growing the community. Formal standardization would only
+            make sense once the project has matured and developed a strong
+            following.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What is the long‑term roadmap?</button>
+        <div class="faq-answer">
+          <p>
+            The long‑term roadmap focuses on expanding the Umi‑Time ecosystem.
+            Key goals include refining the specification, extending the demos,
+            and developing official libraries in multiple languages so Umi‑Time
+            can be used across many platforms.
+          </p>
+          <p>
+            Maker‑friendly physical clocks are a near‑term possibility — simple
+            designs with a single daily‑rotation hand and a static solar ring
+            can be built quickly by hobbyists. More advanced physical
+            implementations, such as professional watches, are a longer‑term
+            aspiration due to their complexity.
+          </p>
+        </div>
+      </div>
+
+      <h2>🖥️ Website‑Specific Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">How do I use the map demo?</button>
+        <div class="faq-answer">
+          <p>
+            <strong>View the full map:</strong> The map scales to your device width.
+            Zooming is not supported. Pan or scroll vertically to see the full height.
+          </p>
+          <p>
+            <strong>Set the observer’s location:</strong> Move the mouse pointer or
+            tap the map. This updates the solar context and shows the Umi‑Time clock
+            for that point on Earth.
+          </p>
+          <p>
+            <strong>What changes:</strong> Sunrise, sunset, twilight progression,
+            and dial orientation update with location. The underlying Umi‑Time value
+            does not change.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What does the clock page show?</button>
+        <div class="faq-answer">
+          <p>
+            The clock page displays the live Umi‑Time clock along with local
+            solar context:
+          </p>
+          <ul>
+            <li>
+              <strong>Umi‑Time dial and primary hand:</strong> Shows the current umi
+              value on a 360‑umi dial (one full rotation per UTC day). A secondary
+              hand shows the number of seconds elapsed within the current umi unit.
+            </li>
+            <li>
+              <strong>Solar ring:</strong> Always visible, showing sunrise, sunset,
+              twilight progression, solar noon, and other solar‑day features for the
+              current observer location.
+            </li>
+            <li>
+              <strong>Civil‑time readout:</strong> Your local clock time is shown
+              alongside Umi‑Time for easy comparison.
+            </li>
+            <li>
+              <strong>Maximize and restore:</strong> Switch between a compact view
+              and a full‑screen style view to focus on the dial and solar ring.
+            </li>
+            <li>
+              <strong>Manual latitude/longitude:</strong> If location services are
+              unavailable or you prefer not to grant access, you can manually enter
+              coordinates. This sets the solar context while the umi value remains
+              the same.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why does the Clock demo ask for my location? Is it safe to allow it?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Location is used once to compute local and solar context layers. It
+            is not stored, tracked, or sent anywhere.
+          </p>
+          <p>
+            You may also enter latitude and longitude manually via the gear icon
+            if you prefer not to grant access.
+          </p>
+        </div>
+      </div>
+
+      <h2>❓ Common Misunderstandings</h2>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time just UTC with different units?</button
+        >
+        <div class="faq-answer">
+          <p>
+            In part, yes. Umi‑Time is derived directly from UTC and represents
+            the same moments in time, just expressed with different units.
+            However, it adds additional layers of local and solar context that
+            UTC alone does not provide.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time just a 24 hour clock?</button>
+        <div class="faq-answer">
+          <p>
+            No. While Umi‑Time represents the 24‑hour UTC day, it is not a
+            conventional 24‑hour clock. It provides additional layers of local
+            and solar context, making it more than just a simple time display.
+            It unifies the universal time of UTC with local and solar context,
+            providing a comprehensive view of the day's progression.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time just decimal time?</button>
+        <div class="faq-answer">
+          <p>
+            No. Decimal time changes the length of a second; Umi‑Time keeps
+            standard seconds and simply maps the 24‑hour UTC day onto 360ᵘ.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time the same as sidereal time?</button
+        >
+        <div class="faq-answer">
+          <p>
+            No. Sidereal time measures Earth’s rotation relative to the stars.
+            Umi‑Time is tied to the UTC day which shifts relative to the stars
+            by a small number of degrees each day.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Does Umi‑Time depend on longitude?</button>
+        <div class="faq-answer">
+          <p>
+            The umi value in Umi‑Time is the same everywhere. Longitude only
+            affects the orientation of the local‑context layer, not Umi‑Time
+            itself.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time a time zone?</button>
+        <div class="faq-answer">
+          <p>
+            No. Umi‑Time has no offsets, regions, or seasonal rules. It is a
+            universal time value, not a civil‑time zone. However, the
+            local‑context layer adjusts the representation of Umi‑Time to more
+            closely match the observer's day, providing similar functionality to
+            a time zone without actually being one.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time a calendar?</button>
+        <div class="faq-answer">
+          <p>
+            No. Umi‑Time represents the time of day. It does not encode dates or
+            calendar information, though it may be combined with such
+            information from other sources to provide a complete temporal
+            context.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Does Umi‑Time require GPS?</button>
+        <div class="faq-answer">
+          <p>
+            No, but it can make use of location information provided by GPS for
+            representing optional local context. Other sources can provide
+            location information as well, including Wi‑Fi, system services, or
+            manual entry.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time affected by daylight saving time?</button
+        >
+        <div class="faq-answer">
+          <p>
+            No. DST is a civil‑time rule. Umi‑Time does not use offsets and is
+            not affected by daylight‑saving changes.
+          </p>
+        </div>
+      </div>
+
+      <h2>🧪 Practical Real‑World Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Can I use Umi‑Time for scientific work?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes — for any workflow based on UTC. Umi‑Time preserves UTC’s
+            precision and simply expresses the 24‑hour day as 360ᵘ.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Can I use Umi‑Time for meditation / mindfulness / circadian tracking?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. The continuous 360ᵘ representation of the solar day provides a
+            calm, intuitive sense of daily rhythm that aligns well with
+            mindfulness and circadian awareness.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Does Umi‑Time help with global coordination?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. Everyone shares the same Umi‑Time value with no offsets,
+            regions, or seasonal rules, making global coordination
+            straightforward.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time useful for astronomy?</button>
+        <div class="faq-answer">
+          <p>
+            Yes — especially for solar‑day planning, twilight awareness, and
+            observation timing. It complements, but does not replace,
+            specialized astronomical time scales such as sidereal time or UT1.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time useful for outdoor photography?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. Umi‑Time makes sunrise, golden hour, blue hour, and sunset easy
+            to visualize through the solar ring and daily rotation.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time compatible with existing software systems?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes. Umi‑Time is a display‑layer concept built directly on UTC, so
+            it integrates cleanly with existing systems and time APIs.
+          </p>
+        </div>
+      </div>
+
+      <h2>🧩 Philosophical / Motivational</h2>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Why anchor time to the UTC day instead of local time zones?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Time zones are human conventions; UTC is universal. Civil time
+            depends on regional rules, offsets, and seasonal adjustments.
+            Umi‑Time anchors itself to the UTC day, making it globally
+            consistent and independent of borders or legislation.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is Umi‑Time political?</button>
+        <div class="faq-answer">
+          <p>
+            No. Umi‑Time does not use time zones, regional offsets, or
+            government‑defined rules. It is based entirely on the UTC day — a
+            physical process involving atomic clocks that exists outside
+            political or cultural boundaries.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is this a critique of time zones or daylight saving time?</button
+        >
+        <div class="faq-answer">
+          <p>
+            No. Umi‑Time is not a criticism of civil‑time systems. It is an
+            alternative that avoids political offsets and seasonal rules by
+            grounding itself in the UTC day.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question"
+          >Is Umi‑Time meant to unify global timekeeping?</button
+        >
+        <div class="faq-answer">
+          <p>
+            Yes — that is the long‑term vision. Umi‑Time provides a single,
+            continuous representation of the solar day that works the same
+            everywhere. If widely adopted, it could simplify global coordination
+            by replacing regional offsets and seasonal clock changes with one
+            planetary standard.
+          </p>
+        </div>
+      </div>
+
+      <!-- end of faq -->
+    </div>
+    <!-- end of umi-region umi-pad -->
+  </div>
+
+  <link rel="stylesheet" href="/css/faq.css" />
+
+  <script>
+    document.querySelectorAll(".faq-question").forEach((button) => {
+      button.addEventListener("click", () => {
+        // Close all other answers
+        document.querySelectorAll(".faq-answer.open").forEach((open) => {
+          if (open !== button.nextElementSibling) {
+            open.classList.remove("open");
+          }
+        });
+
+        // Toggle this answer
+        const answer = button.nextElementSibling;
+        if (!!answer) {
+          answer.classList.toggle("open");
+        }
+      });
+    });
+  </script>
+</Base>

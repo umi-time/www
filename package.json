@@ -1,0 +1,22 @@
+{
+  "name": "umi-time-website",
+  "type": "module",
+
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+
+  "dependencies": {
+    "umi-time": "file:./src/lib/umi-time-js",
+    "astro": "^7.2.9",
+    "mathjax-full": "^3.2.1"
+  },
+
+  "devDependencies": {
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1"
+  }
+}

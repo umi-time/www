@@ -1,0 +1,139 @@
+---
+import Base from "../layouts/Base.astro";
+import { Code } from "astro:components";
+
+title: "Download & Install";
+description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
+---
+
+<Base title="Download & Install">
+  <div class="umi-region umi-pad">
+    <main class="page page-download">
+      <header class="page-header">
+        <h1>Download & Install</h1>
+        <p>
+          Umi‑Time is available via npm, CDN, and GitHub releases. Choose the
+          method that fits your workflow.
+        </p>
+      </header>
+
+      <!-- NPM Install -->
+      <section class="example">
+        <h2>Install via npm</h2>
+        <p>The recommended way to use Umi‑Time in production.</p>
+
+        <Code code={`npm install umi-time`} lang="bash" theme="dracula" />
+
+        <Code code={`pnpm add umi-time`} lang="bash" theme="dracula" />
+
+        <Code code={`yarn add umi-time`} lang="bash" theme="dracula" />
+      </section>
+
+      <!-- CDN -->
+      <section class="example">
+        <h2>Use via CDN</h2>
+        <p>Great for demos, prototypes, and quick experimentation.</p>
+
+        <Code
+          code={`<script src="https://cdn.jsdelivr.net/npm/umi-time/dist/umi-time.min.js"></script>`}
+          lang="html"
+          theme="dracula"
+        />
+
+        <Code
+          code={`<script src="https://unpkg.com/umi-time/dist/umi-time.min.js"></script>`}
+          lang="html"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Minimal Working Example -->
+      <section class="example">
+        <h2>Minimal Working Example</h2>
+        <p>
+          Copy‑paste this into an <code>index.html</code> file to verify everything
+          works.
+        </p>
+
+        <Code
+          code={`<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Umi‑Time Minimal Example</h2>
+
+    <script src="https://cdn.jsdelivr.net/npm/umi-time/dist/umi-time.min.js"></script>
+    <script>
+      // Create a UmiTime instance for the current moment
+      const umi = new UmiTime(new Date());
+
+      // Log the canonical Umi value
+      console.log("Umi value:", umi.umi);
+    </script>
+  </body>
+</html>`}
+          lang="html"
+          theme="dracula"
+        />
+      </section>
+
+      <section class="example">
+        <h2>Package Contents</h2>
+        <p>The npm package includes only the compiled distribution files:</p>
+
+        <ul>
+          <li><strong>dist/index.js</strong> — ES module build</li>
+          <li><strong>dist/index.cjs</strong> — CommonJS build</li>
+          <li><strong>dist/index.d.ts</strong> — TypeScript definitions</li>
+          <li>
+            <strong>dist/umi-time.min.js</strong> — Minified IIFE bundle for browsers
+            (global <code>UmiTime</code>)
+          </li>
+        </ul>
+
+        <p>
+          Source files, tests, and documentation remain in the GitHub repository
+          and are not included in the npm package.
+        </p>
+      </section>
+
+      <!-- Versioning -->
+      <section class="example">
+        <h2>Versioning & Compatibility</h2>
+        <ul>
+          <li>Stable version: <strong>1.x</strong></li>
+          <li>Browser support: modern evergreen browsers</li>
+          <li>Builds: ES module & UMD</li>
+          <li>Node: 18+</li>
+        </ul>
+      </section>
+
+      <!-- TypeScript -->
+      <section class="example">
+        <h2>TypeScript Support</h2>
+        <p>
+          Umi‑Time ships with full TypeScript definitions. All public
+          APIs—including
+          <code>UmiTime</code>, solar‑geometry helpers, error types, and format
+          constants—are strongly typed and included in the npm package via <code
+            >dist/index.d.ts</code
+          >.
+        </p>
+      </section>
+
+      <!-- Links -->
+      <section class="example">
+        <h2>More Resources</h2>
+        <ul>
+          <li><a href="/api">API Reference</a></li>
+          <li><a href="/examples">Examples & Demos</a></li>
+          <li><a href="/getting-started">Getting Started</a></li>
+          <li>
+            <a href="https://github.com/umi-time/umi-time/releases"
+              >GitHub Releases</a
+            >
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</Base>

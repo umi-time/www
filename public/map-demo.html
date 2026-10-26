@@ -1,0 +1,50 @@
+<div class="umi-region-full">
+  <main>
+    <div class="at-top">
+      <div class="slider-row">
+        <input id="seasonSlider" type="range" min="-182" max="183" value="0" />
+        <button id="resetDate" class="btn-modern blue">Reset</button>
+      </div>
+      <label id="selectedDate"></label>
+    </div>
+
+    <div id="map-container">
+      <!-- External SVG file -->
+      <object
+        id="map-object"
+        data="assets/mercator.svg"
+        type="image/svg+xml"
+        aria-hidden="true"
+      ></object>
+
+      <!-- Overlay Canvas matching the exact internal viewBox dimensions -->
+      <canvas id="shadow-canvas" width="1652.4702" height="1220.6385" role="presentation"></canvas>
+
+      <!-- Floating Umi‑Time watch face -->
+      <div id="watch-face">
+        <canvas id="umiCanvas" width="180" height="180" aria-hidden="true"></canvas>
+      </div>
+
+      <div id="layerToggleButton" aria-expanded="false">☰</div>
+
+      <div id="layerMenu" role="menu">
+        <div class="layers-title">Layers</div>
+        <label class="layer-item"
+          ><input type="checkbox" role="menuitemcheckbox" id="toggleLatitude" checked /> Latitude
+          Lines</label
+        >
+        <label class="layer-item"
+          ><input type="checkbox" role="menuitemcheckbox" id="toggleLongitude" checked /> Longitude
+          Lines</label
+        >
+        <label class="layer-item"
+          ><input type="checkbox" role="menuitemcheckbox" id="toggleTimeZones" /> Time Zones</label
+        >
+        <label class="layer-item">
+          <input type="checkbox" role="menuitemcheckbox" id="layerTerminator" checked />
+          Nighttime Shadow
+        </label>
+      </div>
+    </div>
+  </main>
+</div>

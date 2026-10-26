@@ -1,0 +1,112 @@
+---
+import Base from "../layouts/Base.astro";
+title: "Examples & Demos";
+description: "Interactive examples and demonstrations of Umi‑Time.";
+---
+
+<Base title="Examples & Demos">
+  <div class="umi-region umi-pad">
+    <main class="page page-examples">
+      <header class="page-header">
+        <h1>Examples & Demos</h1>
+        <p>
+          Explore interactive demonstrations of Umi‑Time. These examples show
+          how the system behaves, how solar context is visualized, and how
+          Umi‑Time can be integrated into real applications.
+        </p>
+      </header>
+
+      <!-- Clock Demo -->
+      <section class="example">
+        <h2>Live Umi‑Time Clock</h2>
+        <p>
+          The clock demo shows the core Umi‑Time interface: a single rotating
+          hand, a fixed solar ring, and a dial oriented by your longitude.
+        </p>
+        <p>
+          It displays the universal Umi‑Time value alongside your local
+          solar‑day context.
+        </p>
+        <ul>
+          <li>Continuous 360ᵘ rotation (one sweep per UTC day)</li>
+          <li>Solar ring showing sunrise, sunset, twilight, and solar noon</li>
+          <li>Automatic or manual observer location</li>
+          <li>Compact and full‑screen modes</li>
+        </ul>
+        <p>
+          <a class="button" href="/clock">Open the Clock Demo →</a>
+        </p>
+      </section>
+
+      <!-- Map Demo -->
+      <section class="example">
+        <h2>Solar Geometry Map</h2>
+        <p>
+          The map demo visualizes the solar terminator — the boundary between
+          day and night — across Earth.
+        </p>
+        <p>
+          Moving your pointer or tapping the map sets the observer location and
+          updates the solar ring and clock accordingly.
+        </p>
+        <ul>
+          <li>Real‑time day/night shadow</li>
+          <li>Seasonal slider for exploring the solar year</li>
+          <li>Location‑based solar context</li>
+          <li>Dial orientation based on longitude</li>
+        </ul>
+        <p><a class="button" href="/map-demo">Open the Map Demo →</a></p>
+      </section>
+
+      <!-- API Examples -->
+      <section class="example">
+        <h2>API Examples</h2>
+        <p>
+          These examples demonstrate how to compute Umi‑Time, convert from UTC,
+          and work with solar‑context helpers using the official JavaScript API.
+        </p>
+        <p>Topics include:</p>
+        <ul>
+          <li>Creating and reading <code>UmiTime</code> values</li>
+          <li>Converting UTC seconds to Umi‑Time</li>
+          <li>Formatting Umi‑Time for display</li>
+          <li>Computing sunrise, sunset, and twilight</li>
+          <li>Integrating Umi‑Time into web interfaces</li>
+        </ul>
+        <p>
+          <a href="/examples/api" class="umi-link">View API Examples →</a>
+        </p>
+      </section>
+
+      <!-- Solar Geometry Examples -->
+      <section class="example">
+        <h2>Solar Geometry Examples</h2>
+        <p>Explore how solar‑day features are computed and visualized.</p>
+        <p>
+          These examples illustrate the formulas used for sunrise, sunset,
+          twilight, solar declination, and the seasonal movement of the
+          terminator.
+        </p>
+        <p>
+          <a href="/examples/solar" class="umi-link"
+            >View Solar Geometry Examples →</a
+          >
+        </p>
+      </section>
+
+      <!-- Clock Integration Examples -->
+      <section class="example">
+        <h2>Clock Integration Examples</h2>
+        <p>
+          These examples show how to embed the Umi‑Time clock into your own
+          website or application using the lightweight web component.
+        </p>
+        <p>
+          <a href="/examples/clock" class="umi-link"
+            >View Clock Integration Examples →</a
+          >
+        </p>
+      </section>
+    </main>
+  </div>
+</Base>

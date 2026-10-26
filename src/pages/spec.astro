@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import specHtml from '../../spec/spec.html?raw';
+---
+
+<Base>
+  <slot slot="head">
+    <!-- Load styles from your served static folder -->
+    <link rel="stylesheet" href="/css/spec.css" />
+
+    <!-- Configure MathJax targeting absolute root assets -->
+    <script is:inline>
+      window.MathJax = {
+        chtml: {
+          fontURL: '/vendor/mathjax-full/es5/output/chtml/fonts/woff-v2'
+        }
+      };
+    </script>
+    <script is:inline src="/vendor/mathjax-full/es5/tex-mml-chtml.js"></script>
+    <script is:inline src="/js/spec.js" defer></script>
+  </slot>
+
+  <!-- Raw HTML spec content -->
+  <div set:html={specHtml}></div>
+</Base>

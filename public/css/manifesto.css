@@ -1,0 +1,88 @@
+
+/* Reduce padding on narrow screens */
+@media (max-width: 600px) {
+  .primary-content th,
+  .primary-content td {
+    padding: 0.4rem 0.5rem;
+  }
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+th, td {
+  border: 1px solid #d1d5db;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+thead th {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+tbody tr:hover {
+  background-color: #f0f4ff;
+}
+
+/* Highlight Umi-Time column */
+td:last-child, th:last-child {
+  background-color: #eef3ff;
+  font-weight: 500;
+}
+
+thead th:last-child {
+  background-color: #2d4a8a;
+}
+
+.umi-endmark {
+  text-align: center;
+  margin: 4rem 0 2rem 0;
+  letter-spacing: 0.1rem;
+}
+
+.umi-endmark-symbol {
+  display: inline-block;
+  position: relative;
+  font-size: 2rem;
+  color: #444;
+  margin: 0 1rem;
+  pointer-events: none;
+}
+
+.umi-endmark-symbol::before,
+.umi-endmark-symbol::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: clamp(2rem, 20vw, 6rem);
+  height: 1px;
+  background: #ccc;
+}
+
+.umi-endmark-symbol::before {
+  left: -7rem;
+}
+
+.umi-endmark-symbol::after {
+  right: -7rem;
+}

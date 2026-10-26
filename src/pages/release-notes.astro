@@ -1,0 +1,112 @@
+---
+import Base from "../layouts/Base.astro";
+
+title: "Release Notes";
+description: "Version history and release notes for the Umi‑Time project.";
+---
+
+<Base title="Release Notes">
+  <div class="umi-region umi-pad">
+    <main class="page page-release-notes">
+      <header class="page-header">
+        <h1>Release Notes</h1>
+        <p>
+          This page provides version history and release notes for the Umi‑Time
+          project. Each release will include details about new features, fixes,
+          improvements, and any breaking changes.
+        </p>
+      </header>
+
+      <!-- Placeholder Release Notes -->
+      <section class="example">
+        <h2>v1.0.0 — Initial Stable Release</h2>
+        <h4>November 1, 2026</h4>
+        <p>
+          The first stable release of Umi‑Time. This version establishes the
+          foundation of the Umi‑Time standard and provides a complete,
+          production‑ready JavaScript implementation.
+        </p>
+
+        <ul>
+          <li>
+            First publication of the <code>umi-time</code> npm package.
+          </li>
+
+          <li>
+            Introduces the core <code>UmiTime</code> class with an immutable API design
+            for predictable, functional behavior.
+          </li>
+
+          <li>
+            Implements full solar‑geometry support, including:
+            <code>solarAltitude</code>, <code>getHourAngle</code>,
+            <code>toDeg</code>, <code>toRad</code>, and
+            <code>utUmiFromDate</code>.
+          </li>
+
+          <li>
+            Provides the complete set of Umi‑Time formatting specifications:
+            <code>UMI_COMPACT</code>, <code>UMI_COMPACT_BARE</code>,
+            <code>UMI_EXTENDED</code>, <code>UMI_EXTENDED_BARE</code>,
+            <code>UMI_DATE_TIME</code>, <code>UMI_DATE_TIME_EXT</code>,
+            <code>UMI_CANONICAL_FULL</code>, and
+            <code>UMI_CANONICAL_FULL_EXT</code>.
+          </li>
+
+          <li>
+            Ships comprehensive TypeScript definitions via
+            <code>dist/index.d.ts</code>.
+          </li>
+
+          <li>
+            Provides a browser‑ready global bundle:
+            <code>dist/umi-time.min.js</code>, exposing <code>UmiTime</code> as a
+            global for CDN and script‑tag usage.
+          </li>
+
+          <li>
+            Launches the documentation site, including examples, demos, and the
+            Umi‑Time Manifesto.
+          </li>
+        </ul>
+
+        <p>
+          Future releases will expand the standard, refine solar calculations,
+          introduce additional examples, and continue improving documentation
+          and tooling.
+        </p>
+      </section>
+
+      <!-- Semantic Versioning -->
+      <section class="example">
+        <h2>Semantic Versioning</h2>
+        <p>
+          Umi‑Time follows semantic versioning (<code>MAJOR.MINOR.PATCH</code>).
+          Breaking changes will increment the major version, new features will
+          appear in minor releases, and fixes or refinements will be included in
+          patch releases.
+        </p>
+      </section>
+
+      <!-- Where Releases Are Published -->
+      <section class="example">
+        <h2>Where Releases Are Published</h2>
+        <ul>
+          <li><strong>npm:</strong> <code>umi-time</code> package</li>
+          <li><strong>GitHub:</strong> tagged releases with changelogs</li>
+          <li><strong>Website:</strong> this Release Notes page</li>
+        </ul>
+      </section>
+
+      <!-- Feedback -->
+      <section class="example">
+        <h2>Feedback</h2>
+        <p>
+          If you notice an issue in a release or want to propose improvements,
+          please open an issue on GitHub or visit the
+          <a href="/contributing">Contributing</a> page.
+        </p>
+      </section>
+    </main>
+  </div>
+</Base>

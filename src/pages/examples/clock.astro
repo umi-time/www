@@ -1,0 +1,85 @@
+---
+import Base from "../../layouts/Base.astro";
+import { Code } from "astro:components";
+
+title: "Clock Integration Examples";
+description: "Examples showing how to use the <umi-clock> web component.";
+---
+<script type="module" src="/src/components/umi-clock.js"></script>
+
+<Base title="Clock Integration Examples">
+  <div class="umi-region umi-pad">
+    <main class="page page-examples-clock">
+      <header class="page-header">
+        <h1>Clock Integration Examples</h1>
+        <p>
+          The <code>&lt;umi-clock&gt;</code> web component renders a complete,
+          self‑contained Umi‑Time clock with solar shading, sunrise/sunset
+          indicators, and a digital display. You control its location and size
+          using attributes.
+        </p>
+      </header>
+
+      <!-- Basic Usage -->
+      <section class="example">
+        <h2>1. Basic Usage</h2>
+        <p>
+          Provide latitude, longitude, and an optional size:
+        </p>
+
+        <umi-clock latitude="35.138666" longitude="-120.643473" size="350px"></umi-clock>
+
+        <Code
+          code={`<umi-clock latitude="35.138666" longitude="-120.643473" size="350px"></umi-clock>`}
+          lang="html"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Attribute Binding -->
+      <section class="example">
+        <h2>2. Binding Attributes</h2>
+        <p>
+          Because <code>&lt;umi-clock&gt;</code> is a native web component,
+          attributes can be bound to variables in any framework (Angular, React,
+          Vue, Svelte, etc.).
+        </p>
+
+        <Code
+          code={`<umi-clock latitude={lat} longitude={lon} size="300px"></umi-clock>`}
+          lang="html"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Imperative Updates -->
+      <section class="example">
+        <h2>3. Updating Location Imperatively</h2>
+        <p>
+          You can also update the clock’s location using JavaScript:
+        </p>
+
+        <Code
+          code={`const clock = document.querySelector("umi-clock");
+clock.setLocation(40.71, -74.00); // New York City`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Resizing -->
+      <section class="example">
+        <h2>4. Resizing the Clock</h2>
+        <p>
+          The <code>size</code> attribute controls the visual size:
+        </p>
+
+        <Code
+          code={`<umi-clock size="500px"></umi-clock>`}
+          lang="html"
+          theme="dracula"
+        />
+      </section>
+    </main>
+  </div>
+</Base>

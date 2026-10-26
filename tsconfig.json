@@ -1,0 +1,20 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    "src",
+    "scripts",
+    ".astro/types.d.ts"
+  ],
+
+  "exclude": [
+    "dist",
+    "../packages/**/dist"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "umi-time": ["../packages/umi-time-js/src"],
+      "umi-time/*": ["../packages/umi-time-js/src/*"]
+    }
+  }
+}

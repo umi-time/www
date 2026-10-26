@@ -1,0 +1,153 @@
+---
+import Base from "../layouts/Base.astro";
+title: "Design Principles";
+description: "Core design principles behind Umi‑Time.";
+---
+
+<Base title="Design Principles: Umi‑Time">
+  <div class="umi-region umi-pad">
+    <main class="page page-design-principles">
+      <header class="page-header">
+        <h1>Umi‑Time Design Principles</h1>
+        <p>
+          Umi‑Time is built on the idea that the entire planet shares one
+          continuous daily cycle. These principles define how the system works,
+          how it looks, and why its interface behaves the way it does.
+        </p>
+      </header>
+
+      <section class="principle">
+        <h2>1. Global First, Local Second</h2>
+        <p>
+          Umi‑Time begins with the global perspective. The underlying time value
+          is the same everywhere on Earth, derived directly from UTC with no
+          offsets, regions, or seasonal changes.
+        </p>
+        <p>
+          Local meaning is layered on top of this foundation. Your location
+          affects the solar‑day context, but never the time itself.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>2. One Day, One Rotation</h2>
+        <p>
+          The day is represented as a single continuous 360‑umi sweep. The hand
+          completes one full rotation per UTC day, creating a calm, intuitive
+          sense of the daily cycle.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>3. UTC as the Anchor</h2>
+        <p>
+          Umi‑Time inherits the stability, precision, and universality of UTC.
+          There are no time zones, daylight‑saving rules, or political offsets.
+          UTC is the backbone of global systems; Umi‑Time builds directly on
+          that foundation.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>4. Solar Context as a Fixed Layer</h2>
+        <p>
+          The solar ring is a static map of your solar day. It shows sunrise,
+          sunset, twilight phases, solar noon, solar midnight, and day length,
+          computed from your latitude and longitude. It provides local meaning
+          without altering the global time value.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>5. Dial Orientation Reflects Longitude</h2>
+        <p>
+          The dial contains the 0ᵘ–360ᵘ UT scale and rotates only when the
+          observer’s longitude changes. This ensures Umi‑Time noon is at the top
+          and Umi‑Time midnight at the bottom, giving each location a consistent
+          orientation for interpreting the universal time value.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>6. The Hand Is the Only Moving Element</h2>
+        <p>
+          The hand is the dynamic core of the interface. It rotates
+          continuously—one sweep per UTC day—and simultaneously points to
+          Umi‑Time on the dial and to the solar‑day phase on the ring. Keeping
+          everything else static preserves clarity and calmness.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>7. Geometry and Numerics in Balance</h2>
+        <p>
+          Umi‑Time supports both geometric and numeric representations. Geometry
+          makes the daily cycle readable at a glance, while the Specification
+          defines precise numeric formats for Umi‑Time and related values. Both
+          forms are equally valid and intentionally complementary.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>8. Minimalism and Non‑Interference</h2>
+        <p>
+          The interface avoids clutter and unnecessary decoration. The dial is
+          clean, the solar ring is subtle, and the hand is the only animated
+          element. This restraint keeps the clock focused on the structure of
+          the day.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>9. Universality and Accessibility</h2>
+        <p>
+          Umi‑Time must work everywhere: at any latitude, in any season, with or
+          without location services, online or offline, and across cultures and
+          languages. The design avoids assumptions tied to specific regions,
+          calendars, or traditions.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>10. Predictability and Transparency</h2>
+        <p>
+          The system behaves in a fully transparent way. The hand moves at a
+          constant rate, the dial orientation is determined solely by longitude,
+          and the solar ring is computed from clear, published formulas with no
+          hidden adjustments. Predictability builds trust.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>11. Separation of Concerns</h2>
+        <p>
+          Umi‑Time maintains strict conceptual boundaries: Umi‑Time is pure
+          global time, solar geometry is pure local context, and civil time is a
+          separate system entirely. This separation allows Umi‑Time to coexist
+          cleanly with existing time standards.
+        </p>
+      </section>
+
+      <section class="principle">
+        <h2>12. Grounded in Physical Reality</h2>
+        <p>
+          Civil time is shaped by politics; UTC is shaped by atomic clocks;
+          Umi‑Time is shaped by UTC. Its representation of the day is continuous
+          and universal, while the solar ring provides the physical context of
+          the observer’s solar day.
+        </p>
+      </section>
+
+      <section class="principle principle-conclusion">
+        <h2>Conclusion</h2>
+        <p>
+          Umi‑Time unifies global precision, local meaning, and intuitive
+          geometry into a single universal and local representation of the UTC day. These
+          design principles ensure that Umi‑Time remains simple, consistent, and
+          locally meaningful — a time‑keeping system built for a connected
+          planet.
+        </p>
+      </section>
+    </main>
+  </div>
+</Base>

@@ -1,0 +1,215 @@
+---
+import Base from "../../layouts/Base.astro";
+import { Code } from "astro:components";
+title: "API Examples";
+description: "Practical examples showing how to use the Umi‑Time JavaScript API.";
+---
+
+<Base title="API Examples">
+  <div class="umi-region umi-pad">
+    <main class="page page-examples-api">
+      <header class="page-header">
+        <h1>API Examples</h1>
+        <p>
+          These examples demonstrate how to construct <code>UmiTime</code>
+          instances, compute derived values, work with solar geometry, use
+          formatting and parsing, and understand segment/refinement helpers.
+          All examples match the current Umi‑Time implementation.
+        </p>
+      </header>
+
+      <!-- Creating UmiTime -->
+      <section class="example">
+        <h2>1. Creating a Umi‑Time Value</h2>
+        <p>
+          A <code>UmiTime</code> instance is created by passing a UTC
+          <code>Date</code>. Latitude and longitude are optional
+          <code>ApproximateValue</code> objects used for solar geometry.
+        </p>
+
+        <Code
+          code={`import { UmiTime } from "umi-time";
+
+// Basic: no location (max uncertainty)
+const umi1 = new UmiTime(new Date());
+
+// With precise location
+const umi2 = new UmiTime(
+  new Date(),
+  { value: 35.14, uncertainty: 0 },     // latitude
+  { value: -120.64, uncertainty: 0 }    // longitude
+);`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Derived fields -->
+      <section class="example">
+        <h2>2. Derived Fields</h2>
+        <p>
+          Umi‑Time exposes civil‑date fields and Umi‑Time fields derived from the
+          UTC timestamp.
+        </p>
+
+        <Code
+          code={`const umi = new UmiTime(new Date());
+
+console.log(umi.year);   // UTC year
+console.log(umi.month);  // UTC month (1–12)
+console.log(umi.day);    // UTC day
+
+console.log(umi.umi);    // umi (0–359)
+console.log(umi.second); // second within umi (0–239)`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Immutability -->
+      <section class="example">
+        <h2>3. Immutability Helpers</h2>
+        <p>
+          <code>withUTC</code>, <code>withLatitude</code>, and
+          <code>withLongitude</code> return new instances with updated values.
+        </p>
+
+        <Code
+          code={`const umi = new UmiTime(new Date());
+
+const later = umi.withUTC(new Date(Date.now() + 60000));
+const precise = umi.withLatitude(35.14, 0).withLongitude(-120.64, 0);`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Formatting -->
+      <section class="example">
+        <h2>4. Formatting Umi‑Time</h2>
+        <p>
+          Formatting uses <code>format(spec)</code> with tokens defined in the
+          <a href="/api#format-tokens" class="umi-link">API Reference</a>.
+        </p>
+
+        <Code
+          code={`const umi = new UmiTime(new Date());
+
+umi.format("Uuuusss");            // "U042180"
+umi.format("Uuuu:sss");           // "U042:180"
+umi.format("yyyy-MM-ddUuuusss");  // "2026-09-25U042180"
+umi.format(UMI_CANONICAL_FULL);   // "2026-09-25U042180+S21/24"
+`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Parsing -->
+      <section class="example">
+        <h2>5. Parsing Umi‑Time Strings</h2>
+        <p>
+          <code>UmiTime.parse()</code> accepts compact, extended, date-prefixed,
+          and canonical forms, including segment, refinement, and longitude
+          suffixes.
+        </p>
+
+        <Code
+          code={`import { UmiTime } from "umi-time";
+
+// Basic
+UmiTime.parse("042180");
+
+// Extended
+UmiTime.parse("042:180");
+
+// Date + Umi-Time
+UmiTime.parse("2026-09-25U042180");
+
+// With segment + refinement
+UmiTime.parse("042180S3/24+12");
+
+// With explicit coordinates
+UmiTime.parse("042180", { latitude: 35.14, longitude: -120.64 });`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Segment helpers -->
+      <section class="example">
+        <h2>6. Segment & Refinement Helpers</h2>
+        <p>
+          Segments divide the 360‑umi day into equal parts. Refinement measures
+          offset inside a segment.
+        </p>
+
+        <Code
+          code={`const umi = new UmiTime(
+  new Date(),
+  { value: 35.14, uncertainty: 0 },
+  { value: -120.64, uncertainty: 0 }
+);
+
+console.log(umi.segmentIndex(24));      // 0–23
+console.log(umi.segmentRefinement(24)); // offset inside segment`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Solar geometry via UmiTime -->
+      <section class="example">
+        <h2>7. Solar Geometry (via UmiTime)</h2>
+        <p>
+          Solar geometry getters require sufficiently precise latitude and
+          longitude to be accurate.
+        </p>
+
+        <Code
+          code={`const umi = new UmiTime(
+  new Date(),
+  { value: 35.14, uncertainty: 0 },
+  { value: -120.64, uncertainty: 0 }
+);
+
+console.log(umi.solarDeclination);
+console.log(umi.equationOfTime);
+console.log(umi.solarPosition); // { altitude, azimuth }
+console.log(umi.sunrise);       // umi of sunrise
+console.log(umi.sunset);        // umi of sunset`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+
+      <!-- Live display -->
+      <section class="example">
+        <h2>8. Live Umi‑Time Display</h2>
+        <p>
+          A simple example showing how to update a Umi‑Time display every second.
+        </p>
+
+        <Code
+          code={`import { UmiTime, UMI_EXTENDED } from "umi-time";
+
+function updateUmiTime() {
+  const now = new Date();
+  const umi = new UmiTime(now);
+
+  const text = umi.format(UMI_EXTENDED);
+
+  const el = document.getElementById("umi-live-time");
+  if (el) el.textContent = text;
+}
+
+setInterval(updateUmiTime, 1000);
+updateUmiTime();
+`}
+          lang="js"
+          theme="dracula"
+        />
+      </section>
+    </main>
+  </div>
+</Base>

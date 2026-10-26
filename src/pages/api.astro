@@ -1,0 +1,945 @@
+---
+import Base from "../layouts/Base.astro";
+import { Code } from "astro:components";
+---
+
+<Base>
+  <div class="umi-region umi-pad" id="umi-api">
+    <div id="umi-columns">
+      <nav id="umi-toc">
+        <h2>Table of Contents</h2>
+        <ul id="toc-list"></ul>
+      </nav>
+      <main id="umi-content">
+        <h1>Umi‑Time API Reference</h1>
+        <section id="introduction">
+          <h2>Introduction</h2>
+
+          <p>
+            Umi‑Time is a time system that divides the UTC day into a continuous
+            360‑unit cycle called <em>umi</em>. Each umi corresponds to four
+            minutes of UTC, providing a simple geometric representation of the
+            daily cycle that is easy to compute and reason about.
+          </p>
+
+          <p>
+            The core of the library is the <code>UmiTime</code> class. A
+            <code>UmiTime</code> instance is anchored to a specific UTC moment and
+            an approximate observer location, represented by latitude and longitude
+            with uncertainty. From this single value, the class provides derived components:
+            civil‑date fields (<code>year</code>, <code>month</code>, <code
+              >day</code
+            >) and Umi‑Time fields (<code>umi</code>, <code>second</code>,
+            <code>millisecond</code>). Immutability helpers (<code>withUTC</code
+            >,
+            <code>withLatitude</code>, <code>withLongitude</code>) allow
+            constructing new instances with updated context.
+          </p>
+
+          <p>
+            The library includes solar‑geometry helpers that operate on
+            <code>UmiTime</code> instances. These derived properties compute quantities
+            such as solar declination, equation of time, solar altitude and azimuth,
+            sunrise, and sunset, using the UTC timestamp together with the observer’s
+            latitude and longitude. These values are used for solar‑context features
+            such as the solar ring, but they do not affect the umi value or dial orientation.
+          </p>
+
+          <p>
+            Umi‑Time also supports formatting and parsing. The
+            <code>format(spec)</code> method produces Umi‑Time strings according to
+            predefined or custom format specifiers, and
+            <code>UmiTime.parse(input, opts)</code> constructs a
+            <code>UmiTime</code> instance from a string, optionally guided by explicit
+            latitude and longitude hints.
+          </p>
+
+          <p>
+            This API reference documents the <code>UmiTime</code> class, the solar‑
+            geometry helpers, the formatting and parsing functions, the predefined
+            format constants, and the supporting utility functions exported by the
+            library. It serves as the authoritative guide for using Umi‑Time in applications,
+            tools, and language bindings.
+          </p>
+        </section>
+        <section id="core-concepts">
+          <h2>Core Concepts</h2>
+
+          <section id="concept-umi">
+            <h3>Umi</h3>
+            <p>
+              Umi‑Time divides the UTC day into 360 equal units called <em
+                >umi</em
+              >. Each umi corresponds to four minutes of UTC. This creates a
+              simple, uniform geometric representation of the daily cycle.
+            </p>
+          </section>
+
+          <section id="concept-utc-location">
+            <h3>UTC and Location</h3>
+            <p>
+              Every Umi‑Time value is anchored to a specific UTC moment.
+              Latitude and longitude provide optional context for solar
+              calculations such as solar altitude, azimuth, sunrise, and sunset.
+              These geographic values may include uncertainty and do not affect
+              the underlying Umi‑Time value.
+            </p>
+          </section>
+
+          <section id="concept-segments">
+            <h3>Day Segments</h3>
+            <p>
+              Day segments divide the 360‑umi cycle into equal parts, such as
+              quarters or twelfths. They provide optional contextual labels for
+              applications and user interfaces. Segments do not affect the
+              underlying Umi‑Time value.
+            </p>
+          </section>
+
+          <section id="concept-refinement">
+            <h3>Refinement</h3>
+            <p>
+              Refinement is an optional offset inside a day segment. It
+              describes how far the current umi value lies from the start of its
+              segment. Refinement is used for more precise contextual labeling
+              and does not modify the underlying Umi‑Time value.
+            </p>
+          </section>
+
+          <section id="concept-strings">
+            <h3>Umi‑Time Strings</h3>
+            <p>
+              Umi‑Time strings provide textual representations of Umi‑Time
+              values. Formats may include date prefixes, segment codes,
+              refinement suffixes, and longitude annotations. These strings can
+              be parsed back into fully constructed <code>UmiTime</code> instances.
+            </p>
+          </section>
+
+          <section id="concept-umitime-class">
+            <h3>The UmiTime Class</h3>
+            <p>
+              The <code>UmiTime</code> class represents a UTC moment together with
+              an approximate observer location. It provides derived civil‑date fields,
+              Umi‑Time fields (<code>umi</code>, <code>second</code>,
+              <code>millisecond</code>), solar geometry, segment helpers, and
+              formatting and parsing capabilities. All API functions operate on
+              or produce <code>UmiTime</code> instances.
+            </p>
+          </section>
+        </section>
+        <section id="umitime-class">
+          <h2>UmiTime Class</h2>
+
+          <p>
+            The <code>UmiTime</code> class represents a single moment in time anchored
+            to a UTC timestamp and an approximate observer location. All Umi‑Time
+            values, solar‑geometry context, segment information, and formatted string
+            representations are derived from this core data.
+          </p>
+
+          <h3>Constructor</h3>
+
+          <Code
+            code={`new UmiTime(
+  utc: Date,
+  latitude: ApproximateValue = { value: 0, uncertainty: 90 },
+  longitude: ApproximateValue = { value: 0, uncertainty: 180 },
+)`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <p>
+            Creates a new <code>UmiTime</code> instance. The <code>utc</code> value
+            is required. Latitude and longitude are optional and may include uncertainty.
+            These geographic values are used only for solar‑geometry calculations
+            and do not affect the underlying Umi‑Time value.
+          </p>
+
+          <h3>Properties</h3>
+
+          <h4>utc</h4>
+          <p>
+            A <code>Date</code> object representing the underlying UTC timestamp for
+            this Umi‑Time value. All derived fields are computed from this moment.
+          </p>
+
+          <h4>latitude</h4>
+          <p>
+            An <code>ApproximateValue</code> describing the observer’s latitude. Used
+            for solar‑geometry calculations. May include uncertainty.
+          </p>
+
+          <h4>longitude</h4>
+          <p>
+            An <code>ApproximateValue</code> describing the observer’s longitude.
+            Used for solar‑geometry calculations and optional day‑segment inference.
+            May include uncertainty.
+          </p>
+
+          <h3>Immutability Helpers</h3>
+
+          <p>
+            These methods return new <code>UmiTime</code> instances with updated values.
+          </p>
+
+          <Code
+            code={`withUTC(utc: Date): UmiTime
+withLatitude(value: number, uncertainty?: number): UmiTime
+withLongitude(value: number, uncertainty?: number): UmiTime`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <h3>Derived Civil‑Date Fields</h3>
+
+          <ul>
+            <li><code>year: number</code></li>
+            <li><code>month: number</code></li>
+            <li><code>day: number</code></li>
+          </ul>
+
+          <p>
+            These values are extracted directly from the underlying UTC
+            timestamp.
+          </p>
+
+          <h3>Derived Umi‑Time Fields</h3>
+
+          <ul>
+            <li>
+              <code>umi: number</code> — the umi position within the 360‑umi UTC day
+            </li>
+            <li>
+              <code>second: number</code> — the second within the current umi (0–239)
+            </li>
+            <li>
+              <code>millisecond: number</code> — the millisecond within the current
+              second
+            </li>
+          </ul>
+
+          <p>
+            These values are computed from the UTC timestamp using the Umi‑Time
+            day structure.
+          </p>
+
+          <h3>Solar Geometry</h3>
+
+          <p>
+            These getters compute solar‑related quantities for the current UTC
+            moment and observer location. Some calculations require sufficiently
+            precise latitude and longitude values and may throw
+            <code>UmiTimeError</code> if the uncertainty is too large.
+          </p>
+
+          <ul>
+            <li>
+              <Code
+                code={`get solarDeclination(): number`}
+                lang="ts"
+                theme="dracula"
+              />
+              Computes the Sun’s declination angle for this moment.
+            </li>
+
+            <li>
+              <Code
+                code={`get equationOfTime(): number`}
+                lang="ts"
+                theme="dracula"
+              />
+              Computes the equation of time, describing the difference between apparent
+              and mean solar time.
+            </li>
+
+            <li>
+              <Code
+                code={`get solarPosition(): { altitude: number; azimuth: number }`}
+                lang="ts"
+                theme="dracula"
+              />
+              Computes the Sun’s altitude and azimuth for the observer’s location.
+            </li>
+
+            <li>
+              <Code code={`get sunrise(): number`} lang="ts" theme="dracula" />
+              Returns the umi of sunrise for the observer’s location.
+            </li>
+
+            <li>
+              <Code code={`get sunset(): number`} lang="ts" theme="dracula" />
+              Returns the umi of sunset for the observer’s location.
+            </li>
+          </ul>
+
+          <p>
+            These values are computed using the UTC timestamp together with the
+            observer’s latitude and longitude. Some calculations require
+            sufficiently precise geographic values and may throw <code
+              >UmiTimeError</code
+            > if the uncertainty is too large.
+          </p>
+
+          <h3>Day Segment Helpers</h3>
+
+          <Code
+            code={`segmentIndex(total: number): number
+segmentRefinement(total: number): number`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <p>
+            These helpers divide the 360‑umi UTC day into equal parts and
+            compute the current segment and the offset within that segment. They
+            do not modify the underlying Umi‑Time value.
+          </p>
+
+          <h4>Format Tokens</h4>
+
+          <p>
+            Tokens fall into two categories: <strong>variable tokens</strong>,
+            which insert computed values, and <strong>literal tokens</strong>,
+            which appear exactly as written in the output.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Date tokens (variable)</strong>
+              <ul>
+                <li><code>yyyy</code> — 4‑digit year</li>
+                <li><code>MM</code> — 2‑digit month</li>
+                <li><code>dd</code> — 2‑digit day of month</li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Umi‑Time tokens (variable)</strong>
+              <ul>
+                <li><code>uuu</code> — umi (000–359), zero‑padded</li>
+                <li>
+                  <code>sss</code> — second within the umi (000–239), zero‑padded
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Literal tokens</strong>
+              <ul>
+                <li><code>U</code> — literal prefix indicating Umi‑Time</li>
+                <li>
+                  <code>:</code> — literal separator between umi and seconds
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Segment tokens (variable)</strong>
+              <ul>
+                <li>
+                  <code>G24</code> — segment suffix (e.g., <code>S19/24</code>)
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Refinement tokens (variable)</strong>
+              <ul>
+                <li>
+                  <code>+</code> — refinement offset inside the segment (e.g., <code
+                    >+12</code
+                  >)
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <p>
+            The predefined specifiers below combine these tokens into commonly
+            used Umi‑Time formats.
+          </p>
+
+          <p>The library provides the following predefined specifiers:</p>
+
+          <ul>
+            <li>
+              <Code
+                code={`UMI_COMPACT = "Uuuusss"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Compact Umi‑Time with a leading <code>U</code>. No date, no
+              segment, no refinement.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_COMPACT_BARE = "uuusss"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Compact form without the leading <code>U</code>.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_EXTENDED = "Uuuu:sss"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Extended compact form with a colon separator.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_EXTENDED_BARE = "uuu:sss"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Extended compact form without the leading <code>U</code>.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_DATE_TIME = "yyyy-MM-ddUuuusss"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Date + compact Umi‑Time. Closest to ISO‑8601 in structure.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_DATE_TIME_EXT = "yyyy-MM-ddUuuu:sss"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Date + extended Umi‑Time. More human‑readable variant of
+              <code>UMI_DATE_TIME</code>.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_CANONICAL_FULL = "yyyy-MM-ddUuuusssG24+"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Full canonical Umi‑Time including segment and refinement suffixes.
+            </li>
+
+            <li>
+              <Code
+                code={`UMI_CANONICAL_FULL_EXT = "yyyy-MM-ddUuuu:sssG24+"`}
+                lang="ts"
+                theme="dracula"
+              />
+              Extended canonical form including segment and refinement.
+            </li>
+          </ul>
+
+          <h3>Parsing</h3>
+
+          <Code
+            code={`static parse(
+  input: string,
+  opts?: { latitude?: number; longitude?: number },
+): UmiTime`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <p>
+            Parses a Umi‑Time string and returns a fully constructed
+            <code>UmiTime</code> instance. The parser recognizes a small set of built‑in
+            patterns directly, without requiring an explicit format specifier. It
+            accepts:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Basic Umi‑Time:</strong>
+              <code>uuusss</code> (e.g. <code>042180</code>)
+            </li>
+            <li>
+              <strong>Extended Umi‑Time:</strong>
+              <code>uuu:sss</code> (e.g. <code>042:180</code>)
+            </li>
+            <li>
+              <strong>Umi‑only:</strong>
+              <code>uuu</code> (e.g. <code>042</code>, interpreted as <code
+                >042000</code
+              >)
+            </li>
+            <li>
+              <strong>Optional leading U:</strong> any of the above may start with
+              <code>U</code> (e.g. <code>U042180</code>)
+            </li>
+            <li>
+              <strong>Optional date prefix:</strong>
+              <code>yyyy-MM-dd</code> before the Umi‑Time portion
+            </li>
+            <li>
+              <strong>Optional segment suffix:</strong>
+              <code>Sindex/total</code> (e.g. <code>S3/24</code>)
+            </li>
+            <li>
+              <strong>Optional refinement suffix:</strong>
+              <code>+nnn</code> (e.g. <code>+12</code>)
+            </li>
+            <li>
+              <strong>Optional longitude suffix:</strong>
+              <code>+ddd</code> or <code>-ddd</code> (e.g. <code>+123</code>)
+            </li>
+          </ul>
+
+          <p>
+            If the string does not encode longitude, an explicit
+            <code>opts.longitude</code> value or a segment/refinement suffix is used
+            to infer an approximate longitude. If no latitude is provided via
+            <code>opts.latitude</code>, a default approximate latitude is used.
+          </p>
+
+          <p>
+            Umi and second values are validated; out‑of‑range values or
+            malformed input produce a <code>ParseError</code>.
+          </p>
+
+          <p>
+            For the full definition of Umi‑Time textual formats, see the
+            <a href="/spec#string-formats">Umi‑Time Specification</a>. The
+            parser accepts all standard forms described there.
+          </p>
+        </section>
+        <section id="solar-geometry">
+          <h2>Solar Geometry Helpers</h2>
+
+          <p>
+            The Umi‑Time library provides a small set of standalone functions
+            for computing solar‑related quantities. These helpers operate on UTC
+            timestamps and geographic coordinates, and are used internally by
+            the
+            <code>UmiTime</code> class’s solar‑geometry getters. They may also be
+            used directly in applications that need lower‑level access to solar calculations.
+          </p>
+
+          <h3>Angle Conversion</h3>
+
+          <p>Basic helpers for converting between radians and degrees.</p>
+
+          <ul>
+            <li>
+              <Code
+                code={`toDeg(rad: number): number`}
+                lang="ts"
+                theme="dracula"
+              />
+              Converts radians to degrees.
+            </li>
+
+            <li>
+              <Code
+                code={`toRad(deg: number): number`}
+                lang="ts"
+                theme="dracula"
+              />
+              Converts degrees to radians.
+            </li>
+          </ul>
+
+          <h3>UT Umi From Date</h3>
+
+          <p>
+            Computes the umi position for a given UTC timestamp. This is the
+            same calculation used internally by <code>UmiTime</code> to derive its
+            <code>umi</code> getter.
+          </p>
+
+          <Code
+            code={`utUmiFromDate(utc: Date): number`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <h3>Solar Altitude</h3>
+
+          <p>
+            Computes the Sun’s altitude angle for a given UTC moment and
+            observer location. Altitude is measured in degrees above the
+            horizon.
+          </p>
+
+          <Code
+            code={`solarAltitude(
+  utc: Date,
+  latitude: number,
+  longitude: number,
+): number`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <h3>Hour Angle</h3>
+
+          <p>
+            Computes the solar hour angle for a given UTC moment and observer
+            location. The hour angle describes the Sun’s position relative to
+            local solar noon.
+          </p>
+
+          <Code
+            code={`getHourAngle(
+  utc: Date,
+  longitude: number,
+  equationOfTime: number,
+): number`}
+            lang="ts"
+            theme="dracula"
+          />
+        </section>
+        <section id="approximate-value">
+          <h2>ApproximateValue</h2>
+
+          <p>
+            <code>ApproximateValue</code> represents a numeric value together with
+            an uncertainty radius. It is used for geographic coordinates in
+            <code>UmiTime</code>, allowing the library to express both exact and
+            approximate positions. Solar‑geometry calculations rely on these
+            values to determine whether the observer’s location is sufficiently
+            precise for computing solar context.
+          </p>
+
+          <Code
+            code={`interface ApproximateValue {
+  value: number;        // central value
+  uncertainty: number;  // ± range around the value
+}`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <h3>Semantics</h3>
+
+          <ul>
+            <li>
+              <strong>value</strong> — the estimated latitude or longitude.
+            </li>
+            <li>
+              <strong>uncertainty</strong> — the radius of the interval around
+              <code>value</code> within which the true coordinate may lie.
+            </li>
+          </ul>
+
+          <p>
+            An uncertainty of <code>0</code> indicates an exact coordinate. Larger
+            uncertainties represent increasingly approximate positions. Examples:
+          </p>
+
+          <ul>
+            <li>
+              <Code
+                code={`{ value: 34.9, uncertainty: 0 }`}
+                lang="ts"
+                theme="dracula"
+              />
+              — exact coordinate
+            </li>
+
+            <li>
+              <Code
+                code={`{ value: 120, uncertainty: 15 }`}
+                lang="ts"
+                theme="dracula"
+              />
+              — approximate longitude
+            </li>
+
+            <li>
+              <Code
+                code={`{ value: 0, uncertainty: 180 }`}
+                lang="ts"
+                theme="dracula"
+              />
+              — completely unknown longitude
+            </li>
+          </ul>
+
+          <h3>Usage in UmiTime</h3>
+
+          <p>
+            <code>ApproximateValue</code> is used for both <code>latitude</code> and
+            <code>longitude</code> in the <code>UmiTime</code> constructor and in
+            parsing. When a Umi‑Time string does not specify location, the parser
+            constructs approximate values using default uncertainties:
+          </p>
+
+          <ul>
+            <li>
+              <strong>latitude:</strong>
+              <Code
+                code={`{ value: 0, uncertainty: 90 }`}
+                lang="ts"
+                theme="dracula"
+              />
+            </li>
+
+            <li>
+              <strong>longitude:</strong>
+              <Code
+                code={`{ value: 0, uncertainty: 180 }`}
+                lang="ts"
+                theme="dracula"
+              />
+            </li>
+          </ul>
+
+          <p>
+            Segment and refinement suffixes (<code>Sindex/total</code> and
+            <code>+refinement</code>) reduce longitude uncertainty by narrowing
+            the inferred solar segment.
+          </p>
+        </section>
+        <section id="errors">
+          <h2>Errors</h2>
+
+          <p>
+            Umi‑Time defines two error classes used throughout parsing and
+            solar‑geometry evaluation. Both extend the built‑in <code
+              >Error</code
+            >
+            type and provide descriptive messages indicating what went wrong.
+          </p>
+
+          <h3>ParseError</h3>
+
+          <Code
+            code={`class ParseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ParseError";
+  }
+}`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <p>
+            <code>ParseError</code> is thrown when a Umi‑Time string cannot be parsed.
+            This includes malformed input, invalid umi or second ranges, or unrecognized
+            combinations of date, segment, refinement, or longitude suffixes.
+          </p>
+
+          <p>Examples of conditions that produce a <code>ParseError</code>:</p>
+
+          <ul>
+            <li>umi outside <code>0–359</code></li>
+            <li>second outside <code>0–239</code></li>
+            <li>
+              invalid Umi‑Time portion (neither <code>uuu:sss</code> nor
+              <code>uuusss</code>)
+            </li>
+            <li>malformed segment suffix (e.g., <code>S3/x</code>)</li>
+            <li>malformed refinement suffix (e.g., <code>+abc</code>)</li>
+          </ul>
+
+          <h3>UmiTimeError</h3>
+
+          <Code
+            code={`class UmiTimeError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UmiTimeError";
+  }
+}`}
+            lang="ts"
+            theme="dracula"
+          />
+
+          <p>
+            <code>UmiTimeError</code> is thrown when a valid <code>UmiTime</code
+            >
+            instance cannot perform a requested computation. This occurs when solar‑geometry
+            calculations require more precise geographic information than the instance
+            contains.
+          </p>
+
+          <p>Common reasons for <code>UmiTimeError</code>:</p>
+
+          <ul>
+            <li>latitude uncertainty too large for solar altitude/azimuth</li>
+            <li>
+              longitude uncertainty too large for sunrise/sunset computation
+            </li>
+            <li>segment/refinement inference insufficiently precise</li>
+          </ul>
+
+          <p>
+            These errors indicate that the caller should provide more precise
+            <code>latitude</code> or <code>longitude</code> values, either via
+            <code>withLatitude()</code>, <code>withLongitude()</code>, or by
+            supplying explicit coordinates when parsing.
+          </p>
+        </section>
+
+        <section id="module-parity-matrix">
+          <h2>Module Parity Matrix</h2>
+
+          <p>
+            Umi‑Time is designed as a multi‑language library. Each language
+            binding implements the same conceptual modules, though some bindings
+            may not yet support all modules. The table below summarizes current
+            parity across official implementations.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>JavaScript / TypeScript</th>
+                <th>Python</th>
+                <th>Rust</th>
+                <th>C++</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Core UmiTime Class</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>Formatting API</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>Parsing API</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>Solar Geometry API</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>Segment API</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>UT Math API</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>Utilities</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+              <tr>
+                <td>Error Model</td>
+                <td>✔ Implemented</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+                <td>⧗ Planned</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            “✔ Implemented” indicates full support in the current release. “⧗
+            Planned” indicates modules that will be added as the corresponding
+            language binding matures. All bindings aim for complete parity with
+            the JavaScript reference implementation.
+          </p>
+        </section>
+
+        <section id="roadmap">
+          <h2>Roadmap</h2>
+
+          <p>
+            Umi‑Time is evolving toward a complete, multi‑language ecosystem.
+            The roadmap below outlines the major milestones planned for the next
+            phases of development. Timelines are approximate and will adjust
+            based on community feedback and implementation experience.
+          </p>
+
+          <h3>Core Specification</h3>
+          <ul>
+            <li>Refine and stabilize the Umi‑Time specification</li>
+            <li>
+              Expand examples and edge‑case definitions in the specification
+            </li>
+            <li>
+              Formalize segment and refinement semantics for cross‑language
+              parity
+            </li>
+          </ul>
+
+          <h3>Reference Implementation (JavaScript / TypeScript)</h3>
+          <ul>
+            <li>Complete solar‑geometry coverage</li>
+            <li>Finalize formatting and parsing APIs</li>
+            <li>Improve error diagnostics and uncertainty reporting</li>
+            <li>
+              Publish additional demos (map, clock, solar‑context
+              visualizations)
+            </li>
+          </ul>
+
+          <h3>Language Bindings</h3>
+          <ul>
+            <li>Python binding with full module parity</li>
+            <li>Rust binding with zero‑copy geometry primitives</li>
+            <li>C++ binding for embedded and high‑performance environments</li>
+            <li>Shared test suite across all bindings</li>
+          </ul>
+
+          <h3>Tools & Ecosystem</h3>
+          <ul>
+            <li>
+              CLI utilities for converting and inspecting Umi‑Time strings
+            </li>
+            <li>Browser‑based playground for interactive exploration</li>
+            <li>Reference datasets for sunrise/sunset validation</li>
+            <li>
+              Integration examples for mapping and visualization frameworks
+            </li>
+          </ul>
+
+          <h3>Community & Governance</h3>
+          <ul>
+            <li>Establish the Umi‑Time GitHub organization</li>
+            <li>Define contribution guidelines and module ownership</li>
+            <li>Publish long‑term adoption and compatibility policy</li>
+          </ul>
+
+          <p>
+            As the ecosystem grows, the roadmap will continue to evolve.
+            Community feedback is encouraged and will guide future priorities.
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="/css/api.css" />
+
+  <script src="/js/api.js" defer is:inline></script>
+</Base>

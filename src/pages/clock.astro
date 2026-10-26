@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Base.astro";
+---
+
+<!--
+This is a custom clock implementation that uses a non-standard time keeping system.
+It is closely related to UTC, but instead of hh:mm:ss time format, it uses a uuu:sss format,
+where the umi range from 0-359, and the seconds range from 0-239.
+The clock display has an outer solar ring showing a gradient to represent different parts of the local day,
+including sunrise, daytime, sunset and nighttime. It also has an inner dial with markings for the umi.
+The inner dial is rotated by an amount equal to the longitude.
+The sunrise and sunset times are variable based on the date and latitude.
+When the latitude and longitude are set correctly, this clock can be used in any location in the world.
+-->
+<Layout title="Umi‑Time Clock">
+  <div class="umi-region-full clock-page">
+    <main>
+      <!-- Configuration toggle button -->
+      <button
+        id="configurationToggle"
+        class="configuration-btn"
+        aria-label="Toggle configuration"
+      >
+        ⚙️
+      </button>
+
+      <!-- Fullscreen toggle button -->
+      <button
+        id="fullscreenToggle"
+        class="fullscreen-btn"
+        aria-label="Toggle fullscreen"
+      >
+        ⛶
+      </button>
+
+      <!-- Manual location fallback (hidden unless geolocation fails) -->
+      <div
+        id="configurationRegion"
+        class="manual-location"
+        style="display:none;"
+      >
+        <div class="manual-location-content">
+          <label>
+            <span>Latitude: </span>
+            <input
+              id="lat"
+              type="number"
+              step="1"
+              value="0"
+              min="-85"
+              max="85"
+            />
+          </label>
+          <label>
+            <span>Longitude: </span>
+            <input
+              id="lon"
+              type="number"
+              step="1"
+              value="0"
+              min="-180"
+              max="180"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div id="clockWrapper">
+        <umi-clock id="umi-clock" latitude="0" longitude="0" size="350px" dark="true"></umi-clock>
+      </div>
+    </main>
+  </div>
+
+  <link rel="stylesheet" href="/css/button.css" />
+  <link rel="stylesheet" href="/css/clock.css" />
+
+  <script src="/src/components/umi-clock.js"></script>
+  <script src="../scripts/clock.js"></script>
+</Layout>

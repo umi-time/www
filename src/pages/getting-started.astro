@@ -1,0 +1,117 @@
+---
+import Base from "../layouts/Base.astro";
+import { Code } from "astro:components";
+title: "Getting Started";
+description: "A quick introduction to using Umi‑Time — a planetary way to see the UTC day.";
+---
+
+<Base title="Getting Started with Umi-Time">
+  <div class="umi-region umi-pad">
+    <section class="page">
+      <h1>Getting Started</h1>
+
+      <p class="lead">
+        Umi‑Time gives you a single, planetary time of day — the same
+        everywhere, interpreted locally. This page helps you see it, understand
+        it, and use it within a minute.
+      </p>
+
+      <!-- 1. What You Can Do Here -->
+      <section>
+        <h2>What You Can Do Here</h2>
+        <ul>
+          <li>View Umi‑Time in your browser</li>
+          <li>Understand how it relates to civil time and UTC</li>
+          <li>Use the interactive clock</li>
+          <li>Install the library for your own projects</li>
+          <li>Convert between Umi‑Time and local time</li>
+        </ul>
+      </section>
+
+      <!-- 2. Clock Demo -->
+      <section>
+        <h2>See Umi‑Time in Action</h2>
+        <p>
+          The Umi‑Time analog clock shows the UTC day as a single continuous rotation —
+          the simplest way to understand the system.
+        </p>
+
+        <p>
+          <a class="button" href="/clock">Open the Clock Demo</a>
+        </p>
+      </section>
+
+      <!-- 3. Understanding the Basics -->
+      <section>
+        <h2>Understanding the Basics</h2>
+        <p>
+          Umi‑Time expresses the day as a smooth, uninterrupted 360‑unit cycle
+          derived directly from UTC. Every place on Earth shares the same umi
+          value at the same moment, with local meaning provided by the
+          orientation of the dial.
+        </p>
+
+        <p>
+          Umi‑Time builds on UTC as with presentational layers. The first layer
+          provides local meaning, mapping the global umi value to where it
+          occurs in the observer's day. A second layer provides even greater
+          local context by representing solar events, like sunrise and sunset,
+          at the umi positions where they occur.
+        </p>
+      </section>
+
+      <!-- 4. Using Umi‑Time Day to Day -->
+      <section>
+        <h2>Using Umi‑Time Day to Day</h2>
+        <p>
+          Umi‑Time helps you understand where the world is in the day at a
+          glance. It simplifies global coordination, clarifies the structure of
+          the UTC day, and provides a shared frame for events, travel, and
+          communication.
+        </p>
+      </section>
+
+      <!-- 5. Developer Quickstart -->
+      <section>
+        <h2>Developer Quickstart</h2>
+        <p>
+          If you want to use Umi‑Time programmatically, here is a simple
+          example:
+        </p>
+
+        <Code
+          code={`// Get the current Umi‑Time value
+import { UmiTime } from "umi-time";
+import { UMI_EXTENDED } from "umi-time";
+
+const now = new Date();
+const umi = new UmiTime(now);
+
+const text = umi.format(UMI_EXTENDED);
+console.log(text);
+`}
+          lang="js"
+          theme="dracula"
+        />
+
+        <p>
+          See the <a href="/docs/api">Developer API Reference</a> for full details.
+        </p>
+      </section>
+
+      <!-- 6. Next Steps -->
+      <section>
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/design">Design Principles</a></li>
+          <li><a href="/api">Developer API Reference</a></li>
+          <li><a href="/demos">Examples & Demos</a></li>
+          <li>
+            <a href="https://github.com/umi-time" target="_blank">GitHub</a>
+          </li>
+        </ul>
+      </section>
+    </section>
+  </div>
+</Base>
