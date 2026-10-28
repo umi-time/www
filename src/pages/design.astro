@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 title: "Design Principles";
-description: "Core design principles behind Umi‑Time.";
+description: "The core architectural layers and interface design principles of Umi-Time.";
 ---
 
 <Base title="Design Principles: Umi‑Time">
@@ -10,142 +10,202 @@ description: "Core design principles behind Umi‑Time.";
       <header class="page-header">
         <h1>Umi‑Time Design Principles</h1>
         <p>
-          Umi‑Time is built on the idea that the entire planet shares one
-          continuous daily cycle. These principles define how the system works,
-          how it looks, and why its interface behaves the way it does.
+          Umi‑Time is built on the reality that the entire planet shares one
+          continuous daily cycle. These principles define how the system
+          processes temporal data, guides interface design, and ensures that
+          global coordination always coexists harmoniously with local human
+          experience.
         </p>
       </header>
 
-      <section class="principle">
-        <h2>1. Global First, Local Second</h2>
-        <p>
-          Umi‑Time begins with the global perspective. The underlying time value
-          is the same everywhere on Earth, derived directly from UTC with no
-          offsets, regions, or seasonal changes.
+      <!-- SECTION I: THE LAYERED ARCHITECTURE -->
+      <section class="principle-group">
+        <h2 class="group-heading">I. The Layered Architecture</h2>
+        <p class="group-intro">
+          Umi-Time is architected as a modular, four-layer data and presentation
+          stack. By separating the core clock signal from how it is visually
+          oriented, the standard enables a shared universal time to coexist
+          cleanly with local geographic reality.
         </p>
-        <p>
-          Local meaning is layered on top of this foundation. Your location
-          affects the solar‑day context, but never the time itself.
-        </p>
+
+        <div class="architecture-layer">
+          <h3>Layer 0 — Universal Time (UTC)</h3>
+          <p class="layer-subtitle"><strong>The foundation.</strong></p>
+          <p>
+            The globally synchronized, location‑independent time scale. Umi‑Time
+            begins with UTC and preserves its precision, neutrality, and
+            universality. It bypasses political constructs like Daylight Saving
+            Time (DST) and legislated time zones to provide a raw, universal
+            temporal signal.
+          </p>
+        </div>
+
+        <div class="architecture-layer">
+          <h3>Layer 1 — Umi Unit and Scale</h3>
+          <p class="layer-subtitle"><strong>The transformation.</strong></p>
+          <p>
+            This layer transforms UTC's 24-hour day into a 360-umi day. Its
+            purpose is to create a distinct, rotationally meaningful metric for
+            universal time based on three characteristics:
+          </p>
+          <ul>
+            <li>
+              <strong>Cognitive Clarity:</strong> UTC's representation is so similar
+              to that of civil time that it is frequently misinterpreted as such.
+              By changing the units of time and the scale range, Umi‑Time ensures
+              that its representation will never be misinterpreted for another.
+            </li>
+            <li>
+              <strong>Rotational Identity:</strong> 360 umis per day was not chosen
+              randomly. It was an explicit decision to inherently align it with the
+              Earth's daily mean rotation of 360 degrees.
+            </li>
+            <li>
+              <strong>Simple Transformation:</strong> Converting between UTC and Umi-Time
+              is simple arithmetic.
+            </li>
+          </ul>
+        </div>
+
+        <div class="architecture-layer">
+          <h3>Layer 2 — Local Longitude-Based Presentation</h3>
+          <p class="layer-subtitle"><strong>The translation.</strong></p>
+          <p>
+            This layer shifts the time representation to align with the
+            observer's day, based solely on their current longitude. This is the
+            layer that replaces civil time zones, removing political boundaries
+            by mapping universal values using geographic rotation:
+          </p>
+          <ul>
+            <li>
+              <strong>Analog Presentation:</strong> The longitude-based translation
+              for analog clocks can be accomplished by rotating the dial clockwise
+              by the same number of degrees as the observer's longitude. Thus, negative
+              longitude values will result in a counter-clockwise rotation. This rotation
+              ensures that the observer's Umi-Time Midnight is placed at the bottom
+              of the dial with their Umi-Time Noon at the top.
+            </li>
+            <li>
+              <strong>Digital/Textual Presentation:</strong> While there are multiple
+              ways to provide local context to Umi-Time in digital/textual presentations,
+              the most intuitive is the day phase suffix. This appends an integer
+              value in the range of 0 to 23 representing the local hour segment to
+              which the Umi-Time value corresponds. These hour segments will typically
+              be similar to the existing civil time hours, though still longitude-based
+              instead of time zones and DST. This produces a practical local time
+              representation without political rules.
+            </li>
+          </ul>
+        </div>
+
+        <div class="architecture-layer">
+          <h3>Layer 3 — Solar Events Context</h3>
+          <p class="layer-subtitle"><strong>The enrichment.</strong></p>
+          <p>
+            This layer provides additional local day context indications
+            representing events and periods that are meaningful to the
+            observer's experience. This typically includes events like sunrise
+            and sunset, and periods like daytime, nighttime, and twilight.
+          </p>
+          <ul>
+            <li>
+              <strong>Analog Presentation:</strong> The calculation of times for local
+              solar events and periods requires several inputs, including the observer's
+              location (latitude and longitude) and the current date and time. The
+              Umi-Time clock demo visualizes this information using a "solar ring"
+              circumscribed around the clock dial. Color gradients are used to represent
+              the periods of the day, while distinct markers identify sunrise and
+              sunset events.
+            </li>
+            <li>
+              <strong>Digital/Textual Presentation:</strong> This layer is intentionally
+              omitted from textual and minimalist digital layouts to preserve absolute
+              clarity and legibility.
+            </li>
+          </ul>
+        </div>
       </section>
 
-      <section class="principle">
-        <h2>2. One Day, One Rotation</h2>
-        <p>
-          The day is represented as a single continuous 360‑umi sweep. The hand
-          completes one full rotation per UTC day, creating a calm, intuitive
-          sense of the daily cycle.
+      <!-- SECTION II: CORE DESIGN PRINCIPLES -->
+      <section class="principle-group">
+        <h2 class="group-heading">II. System Design Principles</h2>
+        <p class="group-intro">
+          These guiding core principles dictate how the layered architecture
+          must be handled across different interface form factors, rendering
+          engines, and implementation environments.
         </p>
+
+        <div class="principle">
+          <h3>1. Universal First, Locally Meaningful Second</h3>
+          <p>
+            Umi‑Time begins with a single global perspective. Local meaning is
+            strictly a presentation-layer map applied on top of a shared
+            foundation. An observer's geography alters how time is displayed and
+            visualized, but it can never alter or shift the underlying temporal
+            data coordinate.
+          </p>
+        </div>
+
+        <div class="principle">
+          <h3>2. Absolute Separation of Concerns</h3>
+          <p>
+            The conceptual boundaries between data tiers must remain strict and
+            unyielding. Universal time is pure, longitude-based orientation is
+            pure geometry, and solar event tracking is pure astronomy. Mixing
+            political boundaries or legislative compromises into these distinct
+            layers is forbidden, enabling clean coexistence with existing
+            systems.
+          </p>
+        </div>
+
+        <div class="principle">
+          <h3>3. Presentation-Agnostic Fluidity</h3>
+          <p>
+            The standard does not favor one specific visual interface or
+            representation over another. Local context must be deliverable and
+            equally valid across all presentation formats. Whether an interface
+            utilizes geometric rotation on an analog dial, a day-phase suffix on
+            a text display, or a spatial map tracking view, it must intuitively
+            communicate where the observer stands within the universal day
+            cycle.
+          </p>
+        </div>
+
+        <div class="principle">
+          <h3>4. Predictability and Algorithmic Trust</h3>
+          <p>
+            The core temporal metric moves at an absolute, constant rate, free
+            from hidden computational smoothing or adjustments. All visual,
+            digital, and textual elements change state predictably based on
+            transparent mathematics and immediate geographical coordinates. By
+            eliminating sudden, legislated rule changes, the system builds an
+            immutable baseline of user trust.
+          </p>
+        </div>
+
+        <div class="principle">
+          <h3>5. Minimalist Restraint and Calmness</h3>
+          <p>
+            Interfaces must avoid clutter, unnecessary decorations, and
+            competing animations. Dynamic components are restricted strictly to
+            elements that track the active progression of the day or changing
+            solar horizons. Maintaining a calm, highly structured display
+            configuration allows the observer to digest the geometry of the
+            entire planetary day at a single glance.
+          </p>
+        </div>
       </section>
 
-      <section class="principle">
-        <h2>3. UTC as the Anchor</h2>
-        <p>
-          Umi‑Time inherits the stability, precision, and universality of UTC.
-          There are no time zones, daylight‑saving rules, or political offsets.
-          UTC is the backbone of global systems; Umi‑Time builds directly on
-          that foundation.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>4. Solar Context as a Fixed Layer</h2>
-        <p>
-          The solar ring is a static map of your solar day. It shows sunrise,
-          sunset, twilight phases, solar noon, solar midnight, and day length,
-          computed from your latitude and longitude. It provides local meaning
-          without altering the global time value.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>5. Dial Orientation Reflects Longitude</h2>
-        <p>
-          The dial contains the 0ᵘ–360ᵘ UT scale and rotates only when the
-          observer’s longitude changes. This ensures Umi‑Time noon is at the top
-          and Umi‑Time midnight at the bottom, giving each location a consistent
-          orientation for interpreting the universal time value.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>6. The Hand Is the Only Moving Element</h2>
-        <p>
-          The hand is the dynamic core of the interface. It rotates
-          continuously—one sweep per UTC day—and simultaneously points to
-          Umi‑Time on the dial and to the solar‑day phase on the ring. Keeping
-          everything else static preserves clarity and calmness.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>7. Geometry and Numerics in Balance</h2>
-        <p>
-          Umi‑Time supports both geometric and numeric representations. Geometry
-          makes the daily cycle readable at a glance, while the Specification
-          defines precise numeric formats for Umi‑Time and related values. Both
-          forms are equally valid and intentionally complementary.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>8. Minimalism and Non‑Interference</h2>
-        <p>
-          The interface avoids clutter and unnecessary decoration. The dial is
-          clean, the solar ring is subtle, and the hand is the only animated
-          element. This restraint keeps the clock focused on the structure of
-          the day.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>9. Universality and Accessibility</h2>
-        <p>
-          Umi‑Time must work everywhere: at any latitude, in any season, with or
-          without location services, online or offline, and across cultures and
-          languages. The design avoids assumptions tied to specific regions,
-          calendars, or traditions.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>10. Predictability and Transparency</h2>
-        <p>
-          The system behaves in a fully transparent way. The hand moves at a
-          constant rate, the dial orientation is determined solely by longitude,
-          and the solar ring is computed from clear, published formulas with no
-          hidden adjustments. Predictability builds trust.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>11. Separation of Concerns</h2>
-        <p>
-          Umi‑Time maintains strict conceptual boundaries: Umi‑Time is pure
-          global time, solar geometry is pure local context, and civil time is a
-          separate system entirely. This separation allows Umi‑Time to coexist
-          cleanly with existing time standards.
-        </p>
-      </section>
-
-      <section class="principle">
-        <h2>12. Grounded in Physical Reality</h2>
-        <p>
-          Civil time is shaped by politics; UTC is shaped by atomic clocks;
-          Umi‑Time is shaped by UTC. Its representation of the day is continuous
-          and universal, while the solar ring provides the physical context of
-          the observer’s solar day.
-        </p>
-      </section>
-
+      <!-- Conclusion -->
       <section class="principle principle-conclusion">
         <h2>Conclusion</h2>
         <p>
-          Umi‑Time unifies global precision, local meaning, and intuitive
-          geometry into a single universal and local representation of the UTC day. These
-          design principles ensure that Umi‑Time remains simple, consistent, and
-          locally meaningful — a time‑keeping system built for a connected
-          planet.
+          Umi‑Time unifies global precision, local meaning, and intuitive data
+          structures into a single cohesive representation of the UTC day. These
+          design principles ensure that the system remains simple,
+          mathematically transparent, and accessible across any hardware
+          platform or interface form factor—a timekeeping framework engineered
+          intentionally for a connected planet.
         </p>
       </section>
     </main>

@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Maintain up-to-date node packages via npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly" # Checks for new versions once a week to prevent alert fatigue
+    open-pull-requests-limit: 3 # Limits open PRs so your dashboard doesn't get overwhelmed
