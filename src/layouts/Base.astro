@@ -10,11 +10,35 @@ const { children } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Umi‑Time is a solar‑aligned time system based on umi units instead of civil clock hours."
+      content="Umi‑Time is an open standard for presenting UTC in a locally meaningful way."
     />
+    <meta property="og:title" content="Umi‑Time — Universal Time, Locally Meaningful">
+    <meta property="og:description" content="Umi‑Time is an open standard for presenting UTC in a locally meaningful way.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://umitime.com">
+    <meta property="og:image" content="https://umitime.com/og-image.png">
+    <meta property="og:site_name" content="Umi‑Time">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Umi‑Time",
+        "url": "https://umitime.com",
+        "description": "Umi‑Time is an open standard for presenting UTC in a locally meaningful way.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Umi‑Time"
+        }
+      }
+    </script>
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="/css/layout.css" />
-    <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <script src="../scripts/umi-live-time.js"></script>
   </head>
 

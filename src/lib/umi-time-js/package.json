@@ -1,0 +1,47 @@
+{
+  "name": "umi-time",
+  "version": "1.0.0",
+  "description": "Umi‑Time: a JavaScript library implementing the Umi‑Time standard — a locally aware presentation of UTC — including umi conversion, formatting, and solar‑geometry helpers.",
+  "author": "Daniel Brannon and Umi-Time contributors",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umi-time/umi-time-js.git"
+  },
+  "homepage": "https://www.umitime.com/api",
+  "keywords": [
+    "umi-time",
+    "umi",
+    "utc",
+    "time",
+    "timekeeping",
+    "astronomy",
+    "solar",
+    "planetary"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@vitest/coverage-v8": "^5.0.5",
+    "eslint": "^9.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^5.0.5"
+  }
+}
