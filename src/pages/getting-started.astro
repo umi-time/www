@@ -11,9 +11,10 @@ description: "A quick introduction to using Umi‑Time — a planetary way to se
       <h1>Getting Started</h1>
 
       <p class="lead">
-        Umi‑Time gives you a single, planetary time of day — the same
-        everywhere, interpreted locally. This page helps you see it, understand
-        it, and use it within a minute.
+        Umi‑Time gives you a single, planetary time of day: one shared value
+        everywhere on Earth, interpreted locally through longitude and solar
+        context. This page helps you see it, understand it, and use it within a
+        minute.
       </p>
 
       <!-- 1. What You Can Do Here -->
@@ -24,7 +25,7 @@ description: "A quick introduction to using Umi‑Time — a planetary way to se
           <li>Understand how it relates to civil time and UTC</li>
           <li>Use the interactive clock</li>
           <li>Install the library for your own projects</li>
-          <li>Convert between Umi‑Time and local time</li>
+          <li>Convert between Umi‑Time, UTC and local civil time</li>
         </ul>
       </section>
 
@@ -32,8 +33,8 @@ description: "A quick introduction to using Umi‑Time — a planetary way to se
       <section>
         <h2>See Umi‑Time in Action</h2>
         <p>
-          The Umi‑Time analog clock shows the UTC day as a single continuous rotation —
-          the simplest way to understand the system.
+          The Umi‑Time analog clock shows the UTC day as a single continuous
+          rotation — the simplest way to understand the system.
         </p>
 
         <p>
@@ -51,12 +52,23 @@ description: "A quick introduction to using Umi‑Time — a planetary way to se
           orientation of the dial.
         </p>
 
+        <p>Umi‑Time builds on UTC through a layered model</p>
+        <ol>
+          <li>UTC provides the universal time reference.</li>
+          <li>Umi‑Time expresses the UTC day as a 360‑umi cycle.</li>
+          <li>
+            Longitude-based presentation shows where that universal value falls
+            within the observer's day without using time zones.
+          </li>
+          <li>
+            Optional solar context layers provide sunrise, sunset, twilight, and
+            other astronomical context related to the observer's location.
+          </li>
+        </ol>
         <p>
-          Umi‑Time builds on UTC as with presentational layers. The first layer
-          provides local meaning, mapping the global umi value to where it
-          occurs in the observer's day. A second layer provides even greater
-          local context by representing solar events, like sunrise and sunset,
-          at the umi positions where they occur.
+          These layers never alter the underlying umi value. Everyone on Earth
+          shares the same umi value at the same moment. The layers only provide
+          progressively richer ways to interpret that value locally.
         </p>
       </section>
 
@@ -65,9 +77,9 @@ description: "A quick introduction to using Umi‑Time — a planetary way to se
         <h2>Using Umi‑Time Day to Day</h2>
         <p>
           Umi‑Time helps you understand where the world is in the day at a
-          glance. It simplifies global coordination, clarifies the structure of
-          the UTC day, and provides a shared frame for events, travel, and
-          communication.
+          glance. Because everyone shares the same umi value, global
+          coordination becomes simpler, while local presentation preserves an
+          intuitive sense of morning, afternoon, evening, and night.
         </p>
       </section>
 

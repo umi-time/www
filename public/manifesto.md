@@ -156,7 +156,7 @@ Umi‑Time does not ask that. Umi‑Time keeps UTC exactly as it is.
 
 What UTC left out is presentation. The format `hh:mm:ss` was inherited from local civil clocks, and it carries their connotations. `07:00` says _morning_ to everyone who reads it — which is a lie for most of the planet when the `07:00` is UTC. Shown in that format, universal time looks like someone else's local time. People translate it back to their own zone and the universality evaporates.
 
-UTC's only flaw as a human clock is that it was never given a way to be _human_ without becoming _local_. That is the gap Umi‑Time fills — and it fills it without touching the underlying time.
+UTC's only flaw as a human clock is that it was never given a way to be _human_ without becoming _local_. That is the gap Umi‑Time fills — and it fills it without touching the underlying time. Umi‑Time separates a shared universal time value from the local and solar context used to interpret it.
 
 The next step is not a new time scale. We have one, and it is excellent. The next step is to let people _see_ it.
 
@@ -172,82 +172,104 @@ That is the whole definition. `00:00:00 UTC` is 0ᵘ. `12:00:00 UTC` is 180ᵘ. 
 
 Because it is UTC, the umi value is identical everywhere on Earth. There is nothing to convert. A meeting at 105ᵘ is at 105ᵘ in Lisbon, Delhi, and Honolulu. A log entry at `2026-08-24U235:038` means the same instant to every system that reads it. No offsets, no DST rules, no `tzdata` lookups to agree on what happened when.
 
-The number, on its own, deliberately tells you _nothing_ about where you are in the day. That is not a defect; it is the point. The number is universal. Local meaning comes from the dial.
+The number, on its own, deliberately tells you _nothing_ about where you are in the day. That is not a defect; it is the point. The number is universal. Local meaning comes from your relationship to the Earth beneath you, not from the number itself.
 
-## 5.2 The Dial
+## 5.2 The Layers
 
-The Umi‑Time dial is a circle with 0ᵘ at the bottom and the umi increasing clockwise, one full turn per day. A single hand sweeps once around in 24 hours.
+Umi‑Time separates four concerns that conventional timekeeping often mixes together.
 
-Then the dial is rotated by your longitude — clockwise for east, counterclockwise for west, one degree of rotation per degree of longitude. After that rotation, the umi value at the bottom of the dial is **Umi‑Time midnight** for your location, and the value at the top is **Umi‑Time noon**. Morning is the left half; afternoon and evening the right.
+**Layer 0: Universal Time.** UTC provides the underlying universal time reference. It is the same everywhere and serves as the foundation upon which everything else is built.
 
-Nothing about the number changed. The hand still points at 105ᵘ. But in Lisbon the dial has turned so that 105ᵘ sits in the morning quadrant; in Delhi it sits near the top; in Honolulu it sits low on the evening side. Three people look at the same value and each sees, immediately and without arithmetic, where it falls in _their_ day.
+**Layer 1: Umi‑Time Representation.** UTC is represented as a continuous 360‑umi cycle. This creates a single universal value shared by everyone on Earth.
 
-That is the entire trick: universal number, local orientation. Civil time puts the local meaning into the digits and forces everyone to translate. Umi‑Time puts the local meaning into the geometry and lets the digits stay shared.
+**Layer 2: Local Interpretation.** Longitude relates that universal value to an observer's local day, producing concepts such as Umi‑Time noon, Umi‑Time midnight, Umi‑Day, and Umi‑Date.
 
-## 5.3 The Solar Ring
+**Layer 3: Solar Context.** Sunrise, sunset, twilight, and other solar phenomena are computed from location and date and layered on top of the time value and its local interpretation.
 
-Around the dial sits a fixed ring that carries the sky.
+The layers build on one another without modifying one another. UTC remains UTC. The Umi‑Time value remains universal. Local interpretation remains geographic. Solar context remains astronomical.
+
+This separation is the central idea behind Umi‑Time. A single universal value can be shared globally while remaining meaningful locally.
+
+## 5.3 The Dial
+
+The reference analog implementation of Umi‑Time uses a circular dial with 0ᵘ at the bottom and the umi increasing clockwise, one full turn per day. A single hand sweeps once around in 24 hours.
+
+The dial is then rotated by your longitude — clockwise for east, counterclockwise for west, one degree of rotation per degree of longitude. After that rotation, the umi value at the bottom of the dial is **Umi‑Time midnight** for your location, and the value at the top is **Umi‑Time noon**. Morning is the left half; afternoon and evening the right.
+
+Nothing about the number changed. The hand still points at 105ᵘ. But in Lisbon the dial has turned so that 105ᵘ sits in the morning quadrant; in Delhi it sits near the top; in Honolulu it sits low on the evening side. Three people look at the same value and each sees, immediately and without arithmetic, where it falls in *their* day.
+
+That is the entire trick: universal number, local interpretation. Civil time puts the local meaning into the digits and forces everyone to translate. Umi‑Time keeps the value shared and lets each observer derive local meaning from their relationship to the Earth beneath them.
+
+## 5.4 The Solar Ring
+
+In the reference analog implementation, a fixed solar ring surrounds the dial and carries the sky.
 
 Computed from your latitude, longitude, and the date, the ring marks sunrise and sunset, and shades the bands of twilight between them — civil, nautical, astronomical, and the photographer's golden and blue hours. Physical solar noon drifts a few minutes either side of the top over the course of the year, exactly as it does in the real sky.
 
-The ring is where the Sun lives in Umi‑Time. The umi value does not know or care about the Sun; it is UTC. But the ring shows you, at a glance, that 105ᵘ in Honolulu is after sunset, that there are forty umi of daylight left in Lisbon, that the Milky Way will be visible in the Atacama once the hand crosses the astronomical‑twilight boundary.
+The solar ring is one way to represent the solar context defined by Umi‑Time. The umi value itself does not know or care about the Sun; it is UTC expressed as a universal coordinate. Solar context is computed separately and layered on top. The ring lets you see, at a glance, that 105ᵘ in Honolulu is after sunset, that there are forty umi of daylight left in Lisbon, or that the Milky Way will be visible in the Atacama once the hand crosses the astronomical‑twilight boundary.
 
-For a traveler, set the dial to the destination and you see its day before you arrive. For a distributed team, lay the dials for each member side by side and the overlap of daylight is visible without a single conversion.
+For a traveler, set the dial to the destination and you can see its day before you arrive. For a distributed team, place several dials side by side and the overlap of daylight becomes visible without a single conversion.
 
-## 5.4 The Digital Form
+The same solar context can be presented in other ways. A digital display might show daylight remaining, the current twilight phase, or upcoming sunrise and sunset events. The solar ring remains the reference analog implementation because it makes the relationship between universal time and local solar conditions immediately visible.
 
-Not every clock is a dial. A phone lock screen, a status bar, a calendar entry, the corner of a screen — most of the places people glance at the time are text. Umi‑Time has a digital form that carries the same two layers the dial does: the universal number and the local orientation.
+## 5.5 The Digital Form
 
-The number is the umi value: **105ᵘ**. That part is identical everywhere.
+Not every implementation is visual. A phone lock screen, a status bar, a calendar entry, a command-line tool, the corner of a monitor — most places people encounter time are textual or digital. Umi‑Time therefore provides a digital form that preserves the same principles as the analog representation: a universal time value accompanied by optional local context.
 
-The local orientation is a **day phase**: the phase symbol `Φ` and a number from 0 to 23, telling you which twenty‑fourth of your local Umi‑Day the value falls in, counted from Umi‑Time midnight. Each phase is fifteen umi — one hour — so the phase reads like the hour hand of a familiar clock. Φ0 is the hour after midnight, Φ6 is around dawn, Φ12 is the hour after noon, Φ18 is early evening, Φ23 the last hour before midnight.
+The universal component is the umi value itself: **105ᵘ**. That value is identical everywhere on Earth.
 
-So a digital clock showing **105ᵘ Φ9** is saying: _it is 105 umi — the same 105 umi everyone on Earth is seeing — and for you that is mid‑morning._ Spoken, it is simply "105, phase 9."
+Local context can then be added in several ways. The most practical is the **day phase**: the phase symbol `Φ` and a number from 0 to 23, indicating which twenty‑fourth of the local Umi‑Day the value falls within, counted from Umi‑Time midnight. Each phase spans fifteen umi — one hour — making the phase familiar and immediately understandable. Φ0 is the hour after midnight, Φ6 is around dawn, Φ12 is the hour after noon, Φ18 is early evening, and Φ23 is the final hour before midnight.
 
-The phase does to the digits exactly what longitude does to the dial. The three people from the previous section, glancing at their screens at the same instant, would see:
+A display showing **105ᵘ Φ9** therefore conveys two pieces of information: the universal time value, shared by everyone everywhere, and the observer's local position within the day. Spoken, it is simply "105, phase 9."
 
-```
+Three people looking at the same moment might see:
+
+```text
 Lisbon     105ᵘ Φ6     early morning
 Delhi      105ᵘ Φ12    just past noon
 Honolulu   105ᵘ Φ20    evening
 ```
 
-Same number. Different phase. No conversion — the phase is computed from the reader's own longitude, not negotiated with anyone.
+Same number. Different phase. No conversion is required; the phase is derived from the reader's own longitude rather than negotiated with anyone else.
 
-The phase never changes the umi value; it is a reading aid, the way the rotated dial is. Finer or coarser local context is available too — the specification defines a segment form (the fourth of eight equal parts of the day, say) and a longitude form — but the day phase is the one most people will want, because it maps directly onto the hour sense everyone already has. Where the Φ glyph is unavailable, a plain `P` serves (105ᵘ P9), and that letter is what the specification's strict, machine‑readable timestamp format uses. The digital clock face is for people.
+The phase never changes the umi value. It is a reading aid that provides local context while preserving the universal time value itself. The specification also defines other forms of local context, including segment-based and longitude-based representations, but the day phase is likely to be the most intuitive because it maps directly onto the familiar human sense of hours within a day.
 
-## 5.5 Why 360
+Where the Φ glyph is unavailable, a plain `P` may be used (`105ᵘ P9`). This form is also used by the specification's strict machine-readable timestamp format. The timestamp serves systems; the phase serves people.
 
-If Umi‑Time is just UTC with a dial, why not display `hh:mm:ss` on the dial and be done with it? Because 360 is not an arbitrary choice. It is the number that makes the dial a map.
+## 5.6 Why 360
+
+If Umi‑Time is simply a different representation of UTC, why use 360 umi instead of hours, minutes, and seconds? Because 360 is not an arbitrary choice. It is the number that makes geography, rotation, and time align naturally.
 
 Earth turns 360° in a day, so the mean Sun crosses one degree of longitude every four minutes — exactly one umi. That single fact collapses all the geometry:
 
 - **Dial rotation equals longitude.** An observer at 75° W rotates the dial 75° counterclockwise. No conversion factor, no 15°‑per‑hour arithmetic.
-- **The umi value is a meridian.** At any moment, Umi‑Time midnight is passing over the longitude 360° − UT, and Umi‑Time noon over 180° − UT. The clock reading _is_ a position on the globe. A world map with the day/night terminator is a direct rendering of the umi value.
-- **The solar ring is a subtraction.** The angle of any event on the ring is simply its umi value minus Umi‑Time midnight, in degrees.
-- **The hand's angle is the reading.** On a 360‑unit dial, the hand pointing at 105° _is_ 105ᵘ. There is no second scale to read.
+- **The umi value has a direct geographic interpretation.** At any moment, Umi‑Time midnight is passing over the longitude 360° − UT, and Umi‑Time noon over 180° − UT. The Umi‑Time value can therefore be interpreted geometrically as a position on the globe.
+- **The solar ring becomes simple.** In the reference analog implementation, the angle of any solar event is simply its umi value minus Umi‑Time midnight, expressed in degrees.
+- **The hand's angle is the reading.** On a 360‑unit dial, a hand pointing at 105° *is* 105ᵘ. There is no second scale to interpret.
 
-There is a human reason as well. `14:00` lies to most of the planet; it asserts an afternoon it does not possess. `210ᵘ` asserts nothing. It has no inherited local meaning to fight the dial, so the dial can supply the meaning cleanly. And `210ᵘ` can only ever be Umi‑Time — which means it can only ever be UTC. No reader will mistake it for someone's local clock.
+There is a human reason as well. `14:00` lies to most of the planet; it asserts an afternoon it does not possess. `210ᵘ` asserts nothing. It carries no inherited local meaning, allowing local context to be added independently. And `210ᵘ` can only ever be Umi‑Time, which means it can only ever be UTC. No reader will mistake it for someone's local clock.
 
 Finally, 360 is a generous number. It divides evenly into halves, thirds, quarters, sixths, eighths, twelfths, twenty‑fourths, and more. The day splits into 24 phases of 15ᵘ, or 8 segments of 45ᵘ, or 6 of 60ᵘ, always on whole units. Fifteen umi is an hour. Ninety umi is a quarter‑day. The old fractions still work; they just stop needing the colon.
 
-This is the same relationship navigators have exploited since the first marine chronometer: time _is_ longitude. Umi‑Time simply chooses the unit in which that identity is literal.
+This is the same relationship navigators have exploited since the first marine chronometer: time *is* longitude. Umi‑Time simply chooses the unit in which that relationship becomes literal.
 
-## 5.6 Design Principles
+## 5.7 Design Principles
 
 Everything above follows from a small number of commitments.
 
 **Universal first.** The time value is shared by everyone and owned by no one. It is UTC, and it stays UTC. Nothing local is ever written into the number.
 
-**Local second — and always visible.** Local meaning is essential, but it belongs in presentation: the dial's rotation, the solar ring, the day‑phase suffix. Two people in the same room share a number and a dial; two people on opposite coasts share a number and differ by a rotation — or by a suffix. Neither needs to convert anything.
+**Layered by design.** Universal time, local interpretation, and solar context are distinct concerns. Umi‑Time keeps them separate so that each can be understood, computed, and presented independently without modifying the others. The time value remains universal. Local interpretation remains geographic. Solar context remains astronomical.
 
-**No politics in the clock.** The dial turns by longitude, a physical quantity. Time zones, DST, and legislation have no input. A city may still agree that work starts at a given umi — that is a social convention, and Umi‑Time does not pretend to abolish conventions. It abolishes the _legislated offset_.
+**Local second — and always visible.** Local meaning is essential, but it belongs in interpretation rather than in the time value itself. Two people in the same place share both a Umi‑Time value and its local meaning. Two people on opposite sides of the Earth share the same Umi‑Time value while interpreting it within different local days. Neither needs to convert anything.
 
-**Compatible by construction.** Any system that stores UTC already stores Umi‑Time. Adoption requires no new infrastructure, no new epoch, no migration — only a display layer.
+**No politics in time.** Local interpretation is derived from longitude, a physical quantity. Time zones, daylight saving rules, and legislation have no role in determining the Umi‑Time value or its local interpretation. Communities may still agree that work begins at a particular umi or phase, but those are social conventions. Umi‑Time does not attempt to eliminate conventions; it eliminates legislated offsets.
 
-**Honest about the Sun.** Umi‑Time noon is a longitude‑based reference, not solar noon. The two differ by the equation of time — up to about sixteen minutes over the year — and the ring shows the difference rather than hiding it. Umi‑Time shows you the sky; it does not pretend to _be_ the sky.
+**Compatible by construction.** Any system that stores UTC already stores Umi‑Time. Adoption requires no new infrastructure, no new epoch, no migration. Only the representation changes.
 
-**Simple enough to explain in a sentence.** _It's UTC counted in 360ths, on a dial rotated by your longitude, with the sunrise and sunset drawn on._ If a system cannot be explained that briefly, it will not be adopted voluntarily — and Umi‑Time can only be adopted voluntarily.
+**Honest about the Sun.** Umi‑Time noon is a longitude‑based reference, not physical solar noon. The two differ by the equation of time and related solar effects. Umi‑Time preserves that distinction rather than hiding it. Solar context describes the sky; it does not define the time.
+
+**Simple enough to explain in a sentence.** *It's UTC counted in 360ths, with longitude‑based local interpretation and optional solar context.* If a system cannot be explained that briefly, it will not be adopted voluntarily — and Umi‑Time can only be adopted voluntarily.
 
 ---
 
@@ -283,83 +305,104 @@ With Umi‑Time, the timestamp `2026-08-24U235:038.25` is displayed as‑is to e
 
 # 7. Comparisons
 
-| Dimension                                             | Civil Time                                                                     | UTC                                               | Umi‑Time                                                                              |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **What it is**                                        | Legal local time: UTC plus a political offset, sometimes with a seasonal shift | The world's reference time, kept by atomic clocks | UTC, counted as 360 umi per day instead of 24 hours, with a longitude-oriented dial   |
-| **Same value everywhere**                             | No — ~38 offsets in use                                                        | Yes                                               | Yes — identical to UTC by construction                                                |
-| **Conversion needed to coordinate across regions**    | Yes — offsets and DST rules on both sides                                      | No                                                | No                                                                                    |
-| **Daylight Saving Time**                              | Yes, in many regions                                                           | No                                                | No                                                                                    |
-| **Leap seconds**                                      | Inherited from UTC                                                             | Yes, until their scheduled end (by 2035)          | Inherited from UTC                                                                    |
-| **The number alone tells you the local phase of day** | Yes — `07:00` is morning wherever you are                                      | No                                                | No — the dial or your longitude supplies it                                           |
-| **Shows where the Sun is**                            | No                                                                             | No                                                | On the dial: noon at top, midnight at bottom, sunrise / sunset and twilight on the ring |
-| **Alignment with physical solar noon**                | Off by the zone offset and DST — up to ~2 h                                    | Only at 0° longitude                              | Within the equation of time (±16 min) at every longitude, via the dial                |
-| **Legal or infrastructure change to adopt**           | —                                                                              | —                                                 | None — any system that stores UTC already stores Umi‑Time                             |
-| **Familiarity today**                                 | Universal                                                                      | High among engineers, pilots, scientists          | None — must be learned                                                                |
-| **Built for**                                         | Regional daily life                                                            | Machines and global synchronization               | People coordinating across regions, and anyone who wants to see the day whole         |
+| Dimension | Civil Time | UTC | Umi‑Time |
+|------------|------------|-----|----------|
+| **What it is** | Legal local time: UTC plus a political offset, sometimes with a seasonal shift | The world's reference time, kept by atomic clocks | UTC represented as a continuous 360‑umi day, with optional local interpretation and solar context |
+| **Same value everywhere** | No — ~38 offsets in use | Yes | Yes — identical to UTC by construction |
+| **Conversion needed to coordinate across regions** | Yes — offsets and DST rules on both sides | No | No |
+| **Daylight Saving Time** | Yes, in many regions | No | No |
+| **Leap seconds** | Inherited from UTC | Yes, until their scheduled end (by 2035) | Inherited from UTC |
+| **The number alone tells you the local phase of day** | Yes — `07:00` is morning wherever you are | No | No — local interpretation is provided separately |
+| **Provides local day context** | Built into the displayed time value | Not directly | Yes — through longitude‑based local interpretation |
+| **Represents solar context** | Not directly | No | Optionally — through computed solar context such as sunrise, sunset, and twilight |
+| **Alignment with physical solar noon** | Off by the zone offset and DST — up to ~2 h | Only at 0° longitude | Within the equation of time (±16 min) at every longitude |
+| **Legal or infrastructure change to adopt** | — | — | None — any system that stores UTC already stores Umi‑Time |
+| **Familiarity today** | Universal | High among engineers, pilots, scientists | None — must be learned |
+| **Built for** | Regional daily life | Machines and global synchronization | Universal coordination with locally meaningful interpretation |
 
 ## 7.1 Against Civil Time
 
-Civil time's great strength is that its digits carry local meaning: `07:00` is morning everywhere. Its great weakness is that this meaning is regional, so the same instant has dozens of names, and the names shift with legislation and season. Civil time coordinates a region well and a planet badly.
+Civil time's great strength is that its digits carry local meaning: `07:00` is morning wherever you are. Its great weakness is that this meaning is regional, so the same instant acquires dozens of different names, and those names can change with legislation and season. Civil time coordinates a region well and a planet poorly.
 
-Umi‑Time inverts the trade. The digits are universal and the local meaning moves into the dial. Coordination across regions becomes trivial; reading the local phase of day requires a glance at geometry rather than a glance at digits. For anyone whose life is lived within one time zone, civil time remains perfectly good. For anyone whose life crosses zones — which is an ever‑growing share of us — the inversion pays for itself quickly.
+Umi‑Time inverts the trade. The time value is universal, while local meaning is derived separately from the observer's longitude. Coordination across regions becomes trivial because everyone shares the same value, while local context remains immediately available through local interpretation. For someone whose life rarely crosses time zones, civil time remains perfectly adequate. For someone coordinating across regions, the inversion quickly becomes useful.
+
+Civil time places local meaning directly into the displayed number. Umi‑Time keeps the number shared and places local meaning in a separate layer. One approach optimizes for local familiarity; the other optimizes for universal consistency.
+
+Neither approach eliminates the need for local context. The difference is where that context lives. Civil time bakes it into the timestamp itself. Umi‑Time derives it from geography while preserving a single universal value for everyone.
 
 ## 7.2 Beside UTC
 
-Umi‑Time and UTC are not alternatives. Umi‑Time is UTC. The comparison is between two ways of _presenting_ the same quantity.
+Umi‑Time and UTC are not alternatives. Umi‑Time is UTC. The comparison is between two ways of *representing* the same quantity.
 
-`hh:mm:ss` is the familiar presentation, and that familiarity is a liability when the time is universal: it looks local, so people treat it as local and translate it away. The umi presentation is unfamiliar, and that unfamiliarity is an asset: it cannot be mistaken for anyone's local clock, so it stays shared. Paired with the dial, it also carries something `hh:mm:ss` never could — a picture of where the day stands for the reader, derived from the one quantity UTC already knows nothing about: where the reader is.
+`hh:mm:ss` is the familiar representation, and that familiarity becomes a liability when the time is universal. It looks like local civil time, so people instinctively interpret it as local civil time and begin converting it. The umi representation avoids that problem. A value such as `210ᵘ` has no inherited association with a particular hour of the day, so it remains unmistakably universal.
 
-Machines should keep speaking UTC in whatever format they like. Umi‑Time is for the moment a human looks at the screen.
+Additional local meaning can then be provided separately. A day‑phase indicator, longitude context, local interpretation, or other presentation layer can tell a reader where that shared value falls within their day without changing the value itself. The universal time stays universal; the local meaning remains local.
+
+UTC tells systems exactly when something happened. Umi‑Time aims to let people share that same universal moment without immediately translating it into dozens of regional representations.
+
+Machines should continue speaking UTC in whatever format is most useful to them. Umi‑Time exists for the moment a person looks at the screen.
 
 ## 7.3 Costs and Trade‑offs
 
-A manifesto that lists only benefits is advertising.  
+A manifesto that lists only benefits is advertising.
+
 Here is what Umi‑Time asks of you, and what it does not fix.
 
 ### You have to learn a new number
 
-`235:198` means nothing to anyone alive today.  
-It will take weeks before "about 235" feels like "about quarter to four."  
-There is no hour‑sized unit between the umi (4 minutes) and the day; the 24 day‑phases of the dial are the closest thing, and they take time to internalize.
+`235:198` means nothing to anyone alive today.
+
+It takes time before "about 235" feels as natural as "about quarter to four." Although Umi‑Time retains familiar relationships within the day, the numbering system itself must be learned. There is no traditional hour-sized unit between the umi (four minutes) and the day. Day phases provide a useful bridge, but even they require some acclimation.
 
 ### The number alone does not tell you where you are in the day
 
-`07:00` is morning anywhere on Earth.  
-`105ᵘ` is morning in Lisbon, lunchtime in Delhi, and late evening in Honolulu.  
-Umi‑Time trades that built‑in local meaning for a shared global value. The dial gives the meaning back, and so does the day‑phase suffix — but you need one of them, or your longitude, to read it.
+`07:00` is morning anywhere on Earth.
+
+`105ᵘ` is morning in Lisbon, lunchtime in Delhi, and late evening in Honolulu.
+
+Umi‑Time deliberately trades built‑in local meaning for a shared global value. Local context is provided separately through longitude‑based interpretation, day phases, or other contextual indicators. The universal value remains the same for everyone; understanding where it falls within the local day requires that additional context.
 
 ### It does not remove the need for local conventions
 
-"School starts at 9" is a social agreement, not a time‑zone artifact.  
-In Umi‑Time that agreement still has to be made, and it will be made differently in every city. What disappears is the _legislated_ offset and the DST switch — not the human habit of agreeing when the day begins.
+"School starts at 9" is a social agreement, not a time‑zone artifact.
+
+In Umi‑Time that agreement still has to be made, and it will be made differently in every city. What disappears is the *legislated* offset and the DST switch, not the human habit of agreeing when the day begins, when businesses open, or when people gather.
 
 ### The date still turns somewhere inconvenient
 
-Umi‑Time inherits the UTC date, which rolls over at 0ᵘ — 09:00 in Tokyo, and 19:00 or 20:00 in New York depending on the season.  
-The specification provides a local Umi‑Date for contexts that need the calendar to follow the observer's day, but that is one more concept to carry.
+Umi‑Time inherits the UTC calendar date, which rolls over at 0ᵘ. For some people that occurs near the beginning of the local day; for others it occurs in the middle of daily activities.
 
-### Umi‑Time noon is not solar noon
+The specification provides a local Umi‑Date for situations where the calendar should follow the observer's day, but that introduces an additional concept that must be understood.
 
-The dial puts Umi‑Time noon at the top. True solar noon wanders around it by up to ±16 minutes over the year (the equation of time) and is marked separately on the ring.  
-Umi‑Time shows you the Sun honestly; it does not pretend to _be_ the Sun.
+### Umi‑Time noon is not physical solar noon
+
+Umi‑Time noon is a longitude‑based reference. Physical solar noon varies throughout the year because of the equation of time and related astronomical effects.
+
+Umi‑Time preserves this distinction rather than hiding it. Solar context can describe where the Sun actually is; the time value itself remains independent of solar conditions.
 
 ### Six digits look like six digits
 
-`235198` is syntactically identical to an ISO 8601 `hhmmss` time.  
-The `U` prefix and the `235:198` form exist to resolve this, but the ambiguity is real and the habit of using the unambiguous forms must be learned.
+`235198` is syntactically similar to many existing time formats.
+
+The `U` prefix and forms such as `235:198` exist to eliminate ambiguity, but the potential for confusion is real and the habit of using unambiguous forms must be learned.
 
 ### Nobody else is using it yet
 
-This is the largest cost and the one no specification can remove.  
-A shared clock is only valuable when it is shared. Early users pay the full price of translation for everyone who has not yet joined.
+This is the largest cost and the one no specification can remove.
+
+A shared clock is only valuable when it is shared. Early adopters bear the full cost of explaining and translating the system until enough other people begin using it.
 
 ### What Umi‑Time does not claim
 
-It does not measure Earth's rotation; it counts UTC.  
-It is not more precise than UTC; it is UTC.  
-It will not abolish time zones by itself; it offers a way to stop needing them, starting with the conversations where they hurt most.
+It does not measure Earth's rotation; it represents UTC.
 
-If, knowing all this, one shared number with a picture of the day still sounds better than thirty‑eight numbers with none — read on.
+It is not more precise than UTC; it is UTC.
+
+It does not eliminate geography; it separates universal time from local interpretation.
+
+It will not abolish time zones by itself. It offers an alternative way to coordinate across regions, starting with the situations where time zones create the most friction.
+
+If, knowing all of this, one shared number with locally meaningful interpretation still sounds better than dozens of regional numbers describing the same moment, read on.
 
 ---
 
@@ -409,7 +452,7 @@ None of these stages requires anyone to be forced. That is the only kind of adop
 
 Every system humanity builds reflects the world it believes it inhabits. Civil time was built for a world divided by borders. UTC was built for a world connected by machines. Umi‑Time is built for the world we have now: one where the machines are already connected and the people are still doing arithmetic.
 
-The near horizon is a world where, when two people in different countries talk about _when_, they reach for a number they both already share — and each can see, on their own dial, what that number means under their own sky. Civil time is still there; it is simply no longer the thing everyone has to agree on first.
+The near horizon is a world where, when two people in different countries talk about _when_, they reach for a number they both already share — and each can immediately see what that number means under their own sky. Civil time is still there; it is simply no longer the thing everyone has to agree on first.
 
 The far horizon is a world that no longer needs two clocks. Not because anyone was made to give one up, but because one of them stopped earning its place. That is a long way off, and it may not come. But it is the direction.
 

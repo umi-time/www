@@ -5,6 +5,7 @@ import { Code } from "astro:components";
 title: "Clock Integration Examples";
 description: "Examples showing how to use the <umi-clock> web component.";
 ---
+
 <script type="module" src="/src/components/umi-clock.js"></script>
 
 <Base title="Clock Integration Examples">
@@ -13,10 +14,9 @@ description: "Examples showing how to use the <umi-clock> web component.";
       <header class="page-header">
         <h1>Clock Integration Examples</h1>
         <p>
-          The <code>&lt;umi-clock&gt;</code> web component renders a complete,
-          self‑contained Umi‑Time clock with solar shading, sunrise/sunset
-          indicators, and a digital display. You control its location and size
-          using attributes.
+          The <code>&lt;umi-clock&gt;</code> web component renders a complete, self‑contained
+          Umi‑Time clock with solar shading, sunrise/sunset indicators, and a digital
+          display. You control its location and size using attributes.
         </p>
       </header>
 
@@ -24,10 +24,13 @@ description: "Examples showing how to use the <umi-clock> web component.";
       <section class="example">
         <h2>1. Basic Usage</h2>
         <p>
-          Provide latitude, longitude, and an optional size:
+          Provide latitude, longitude, and an optional size. Latitude and
+          longitude are used to compute local presentation and solar context;
+          they do not affect the underlying umi value.
         </p>
 
-        <umi-clock latitude="35.138666" longitude="-120.643473" size="350px"></umi-clock>
+        <umi-clock latitude="35.138666" longitude="-120.643473" size="350px"
+        ></umi-clock>
 
         <Code
           code={`<umi-clock latitude="35.138666" longitude="-120.643473" size="350px"></umi-clock>`}
@@ -40,9 +43,9 @@ description: "Examples showing how to use the <umi-clock> web component.";
       <section class="example">
         <h2>2. Binding Attributes</h2>
         <p>
-          Because <code>&lt;umi-clock&gt;</code> is a native web component,
-          attributes can be bound to variables in any framework (Angular, React,
-          Vue, Svelte, etc.).
+          Because <code>&lt;umi-clock&gt;</code> is a native web component, attributes
+          can be bound to variables in any framework (Angular, React, Vue, Svelte,
+          etc.).
         </p>
 
         <Code
@@ -56,7 +59,8 @@ description: "Examples showing how to use the <umi-clock> web component.";
       <section class="example">
         <h2>3. Updating Location Imperatively</h2>
         <p>
-          You can also update the clock’s location using JavaScript:
+          You can update the clock’s local context by changing its location
+          programmatically:
         </p>
 
         <Code

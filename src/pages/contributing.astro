@@ -15,6 +15,9 @@ description: "How to contribute to the Umi‑Time project.";
           Umi-Time gives us one shared number for the exact same instant globally, while presenting it in a way that is locally meaningful. 
           As an open standard ecosystem, contributions are welcome across our technical specifications, website interfaces, and reference libraries.
         </p>
+        <p>
+          Contributions are welcome from developers, writers, designers, educators, translators, and anyone interested in helping make Umi‑Time more understandable and accessible.
+        </p>
       </header>
 
       <!-- Project Architecture -->
@@ -24,7 +27,7 @@ description: "How to contribute to the Umi‑Time project.";
 
         <ul>
           <li>
-            <strong><a href="https://github.com">umi-time/spec</a></strong> — The canonical, self-contained standard document defining the 0ᵘ–360ᵘ mapping rules, mathematical formulas, and vendored MathJax layouts.
+            <strong><a href="https://github.com">umi-time/spec</a></strong> — The canonical, self-contained standard document defining the 360‑umi representation of the UTC day, mathematical formulas, and canonical formats.
           </li>
           <li>
             <strong><a href="https://github.com">umi-time/www</a></strong> — The primary public website, the Manifesto, and the presentation layers (Clock, Map, Geometry). It embeds the <code>spec</code> repository dynamically via a Git submodule.
@@ -50,7 +53,7 @@ description: "How to contribute to the Umi‑Time project.";
         <p>To contribute to the website layout, documentation text, or interactive tools, clone the web repository locally:</p>
 
         <Code
-          code={`git clone https://github.com.git
+          code={`git clone https://github.com/umi-time/www.git
 cd www
 git submodule update --init --recursive
 npm install`}

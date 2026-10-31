@@ -6,11 +6,11 @@ title: "Download & Install";
 description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
 ---
 
-<Base title="Download & Install">
+<Base title="Install">
   <div class="umi-region umi-pad">
-    <main class="page page-download">
+    <main class="page page-install">
       <header class="page-header">
-        <h1>Download & Install</h1>
+        <h1>Install</h1>
         <p>
           Umi‑Time is available via npm, CDN, and GitHub releases. Choose the
           method that fits your workflow.
@@ -67,7 +67,7 @@ description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
       const umi = new UmiTime(new Date());
 
       // Log the canonical Umi value
-      console.log("Umi value:", umi.umi);
+      console.log(umi.format(UMI_EXTENDED));
     </script>
   </body>
 </html>`}
@@ -102,7 +102,13 @@ description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
         <ul>
           <li>Stable version: <strong>1.x</strong></li>
           <li>Browser support: modern evergreen browsers</li>
-          <li>Builds: ES module & UMD</li>
+          <li>Builds:
+            <ul>
+              <li>ES module build (ESM)</li>
+              <li>CommonJS build (CJS)</li>
+              <li>Minified bundle for browsers (IIFE)</li>
+            </ul>
+          </li>
           <li>Node: 18+</li>
         </ul>
       </section>

@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 
 title: "Release Notes";
-description: "Version history and release notes for the Umi‑Time project.";
+description: "Release history for the Umi‑Time Specification and reference implementations.";
 ---
 
 <Base title="Release Notes">
@@ -11,100 +11,181 @@ description: "Version history and release notes for the Umi‑Time project.";
       <header class="page-header">
         <h1>Release Notes</h1>
         <p>
-          This page provides version history and release notes for the Umi‑Time
-          project. Each release will include details about new features, fixes,
-          improvements, and any breaking changes.
+          The Umi‑Time project currently consists of two independently versioned
+          artifacts:
+        </p>
+
+        <ul>
+          <li>
+            The <strong>Umi‑Time Specification</strong>, which defines the
+            standard.
+          </li>
+          <li>
+            The <strong>umi-time</strong> JavaScript library, which serves as
+            the reference implementation.
+          </li>
+        </ul>
+
+        <p>
+          Release notes for both are maintained on this page.
         </p>
       </header>
 
-      <!-- Placeholder Release Notes -->
+      <!-- ========================================================== -->
+      <!-- Specification Releases -->
+      <!-- ========================================================== -->
+
       <section class="example">
-        <h2>v1.0.0 — Initial Stable Release</h2>
-        <h4>November 1, 2026</h4>
-        <p>
-          The first stable release of Umi‑Time. This version establishes the
-          foundation of the Umi‑Time standard and provides a complete,
-          production‑ready JavaScript implementation.
-        </p>
+        <h2>Specification Releases</h2>
 
-        <ul>
-          <li>
-            First publication of the <code>umi-time</code> npm package.
-          </li>
+        <article>
+          <h3>Specification v1.0.0 — Initial Public Release</h3>
+          <h4>November 1, 2026</h4>
 
-          <li>
-            Introduces the core <code>UmiTime</code> class with an immutable API design
-            for predictable, functional behavior.
-          </li>
+          <p>
+            The first stable release of the Umi‑Time specification.
+          </p>
 
-          <li>
-            Implements full solar‑geometry support, including:
-            <code>solarAltitude</code>, <code>getHourAngle</code>,
-            <code>toDeg</code>, <code>toRad</code>, and
-            <code>utUmiFromDate</code>.
-          </li>
+          <ul>
+            <li>
+              Defines the 360‑umi representation of the UTC day.
+            </li>
 
-          <li>
-            Provides the complete set of Umi‑Time formatting specifications:
-            <code>UMI_COMPACT</code>, <code>UMI_COMPACT_BARE</code>,
-            <code>UMI_EXTENDED</code>, <code>UMI_EXTENDED_BARE</code>,
-            <code>UMI_DATE_TIME</code>, <code>UMI_DATE_TIME_EXT</code>,
-            <code>UMI_CANONICAL_FULL</code>, and
-            <code>UMI_CANONICAL_FULL_EXT</code>.
-          </li>
+            <li>
+              Defines canonical Umi‑Time formats and representations.
+            </li>
 
-          <li>
-            Ships comprehensive TypeScript definitions via
-            <code>dist/index.d.ts</code>.
-          </li>
+            <li>
+              Defines longitude‑based presentation principles.
+            </li>
 
-          <li>
-            Provides a browser‑ready global bundle:
-            <code>dist/umi-time.min.js</code>, exposing <code>UmiTime</code> as a
-            global for CDN and script‑tag usage.
-          </li>
+            <li>
+              Defines optional local and solar context layers.
+            </li>
 
-          <li>
-            Launches the documentation site, including examples, demos, and the
-            Umi‑Time Manifesto.
-          </li>
-        </ul>
-
-        <p>
-          Future releases will expand the standard, refine solar calculations,
-          introduce additional examples, and continue improving documentation
-          and tooling.
-        </p>
+            <li>
+              Establishes normative terminology, computational rules, and
+              conformance requirements.
+            </li>
+          </ul>
+        </article>
       </section>
 
+      <!-- ========================================================== -->
+      <!-- JavaScript Reference Implementation Releases -->
+      <!-- ========================================================== -->
+
+      <section class="example">
+        <h2>JavaScript Reference Implementation Releases</h2>
+
+        <article>
+          <h3>umi-time v1.0.0 — Initial Stable Release</h3>
+          <h4>November 1, 2026</h4>
+
+          <p>
+            The first stable release of the official JavaScript reference
+            implementation.
+          </p>
+
+          <ul>
+            <li>
+              First publication of the <code>umi-time</code> npm package.
+            </li>
+
+            <li>
+              Introduces the immutable <code>UmiTime</code> class.
+            </li>
+
+            <li>
+              Implements Umi‑Time conversion, parsing, and formatting APIs.
+            </li>
+
+            <li>
+              Implements solar‑geometry helpers including
+              <code>solarAltitude</code>,
+              <code>getHourAngle</code>,
+              <code>toDeg</code>,
+              <code>toRad</code>, and
+              <code>utUmiFromDate</code>.
+            </li>
+
+            <li>
+              Ships comprehensive TypeScript definitions.
+            </li>
+
+            <li>
+              Provides ESM, CommonJS, and browser‑ready builds.
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ========================================================== -->
       <!-- Semantic Versioning -->
+      <!-- ========================================================== -->
+
       <section class="example">
         <h2>Semantic Versioning</h2>
-        <p>
-          Umi‑Time follows semantic versioning (<code>MAJOR.MINOR.PATCH</code>).
-          Breaking changes will increment the major version, new features will
-          appear in minor releases, and fixes or refinements will be included in
-          patch releases.
-        </p>
-      </section>
 
-      <!-- Where Releases Are Published -->
-      <section class="example">
-        <h2>Where Releases Are Published</h2>
+        <p>
+          Both the Umi‑Time Specification and the
+          <code>umi-time</code> JavaScript library follow semantic versioning
+          (<code>MAJOR.MINOR.PATCH</code>).
+        </p>
+
         <ul>
-          <li><strong>npm:</strong> <code>umi-time</code> package</li>
-          <li><strong>GitHub:</strong> tagged releases with changelogs</li>
-          <li><strong>Website:</strong> this Release Notes page</li>
+          <li>
+            <strong>MAJOR</strong> versions indicate incompatible changes.
+          </li>
+
+          <li>
+            <strong>MINOR</strong> versions introduce new functionality while
+            preserving backward compatibility.
+          </li>
+
+          <li>
+            <strong>PATCH</strong> versions contain fixes, clarifications, and
+            refinements.
+          </li>
         </ul>
       </section>
 
+      <!-- ========================================================== -->
+      <!-- Publication Locations -->
+      <!-- ========================================================== -->
+
+      <section class="example">
+        <h2>Where Releases Are Published</h2>
+
+        <ul>
+          <li>
+            <strong>Specification:</strong>
+            GitHub releases and tagged specification updates.
+          </li>
+
+          <li>
+            <strong>JavaScript Library:</strong>
+            npm package releases and GitHub release tags.
+          </li>
+
+          <li>
+            <strong>Website:</strong>
+            Release summaries and project announcements.
+          </li>
+        </ul>
+      </section>
+
+      <!-- ========================================================== -->
       <!-- Feedback -->
+      <!-- ========================================================== -->
+
       <section class="example">
         <h2>Feedback</h2>
+
         <p>
-          If you notice an issue in a release or want to propose improvements,
-          please open an issue on GitHub or visit the
-          <a href="/contributing">Contributing</a> page.
+          If you discover an issue, find an ambiguity in the specification, or
+          have ideas for future improvements, please open an issue on GitHub or
+          visit the <a href="/contributing">Contributing</a> page.
         </p>
       </section>
     </main>
