@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Manifesto from '../../public/manifesto.md';
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 ---
 
 <Base>
@@ -12,6 +13,6 @@ import Manifesto from '../../public/manifesto.md';
     </div>
   </div>
 
-  <link rel="stylesheet" href="/css/manifesto.css" />
+  <link rel="stylesheet" href={fingerprint("/css/manifesto.css")} />
 
 </Base>

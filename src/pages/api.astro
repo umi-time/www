@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { Code } from "astro:components";
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 ---
 
 <Base>
@@ -958,7 +959,7 @@ segmentRefinement(total: number): number`}
     </div>
   </div>
 
-  <link rel="stylesheet" href="/css/api.css" />
+  <link rel="stylesheet" href={fingerprint("/css/api.css")} />
 
-  <script src="/js/api.js" defer is:inline></script>
+  <script src={fingerprint("/js/api.js")} defer is:inline></script>
 </Base>

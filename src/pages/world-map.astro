@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import mapDemoHtml from '../content/world-map.html?raw';
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 ---
 
 <Base>
   <slot slot="head">
-    <link rel="stylesheet" href="/css/button.css" />
-    <link rel="stylesheet" href="/css/world-map.css" />
+    <link rel="stylesheet" href={fingerprint("/css/button.css")} />
+    <link rel="stylesheet" href={fingerprint("/css/world-map.css")} />
 
     <script src="../scripts/world-map.js"></script>
   </slot>

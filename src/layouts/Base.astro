@@ -1,5 +1,6 @@
 ---
 const { children } = Astro.props;
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 ---
 
 <!doctype html>
@@ -39,12 +40,12 @@ const { children } = Astro.props;
       }
     </script>
 
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href={fingerprint("/favicon.ico")} sizes="any" />
+    <link rel="icon" href={fingerprint("/favicon.png")} type="image/png" />
+    <link rel="apple-touch-icon" href={fingerprint("/apple-touch-icon.png")} />
+    <link rel="manifest" href={fingerprint("/site.webmanifest")} />
 
-    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href={fingerprint("/css/layout.css")} />
     <script src="../scripts/umi-live-time.js"></script>
 
     <slot name="head" />
@@ -91,7 +92,11 @@ const { children } = Astro.props;
           <a href="/api">API Reference</a>
           <a href="/examples">Examples & Demos</a>
           <a href="/install">Install</a>
-          <a href="https://github.com/umi-time" target="_blank">GitHub</a>
+          <a
+            href="https://github.com/umi-time"
+            target="_blank"
+            rel="noopener noreferrer">GitHub</a
+          >
         </div>
 
         <div class="umi-footer-section">
@@ -139,7 +144,11 @@ const { children } = Astro.props;
           <a href="/api">API Reference</a>
           <a href="/examples">Examples & Demos</a>
           <a href="/install">Install</a>
-          <a href="https://github.com/umi-time" target="_blank">GitHub</a>
+          <a
+            href="https://github.com/umi-time"
+            target="_blank"
+            rel="noopener noreferrer">GitHub</a
+          >
         </div>
       </div>
 

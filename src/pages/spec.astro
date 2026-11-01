@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import specHtmlRaw from '../../spec/spec.html?raw';
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 
   const match = specHtmlRaw.match(
     /<!-- BEGIN CONTENT -->([\s\S]*?)<!-- END CONTENT -->/
@@ -12,7 +13,7 @@ import specHtmlRaw from '../../spec/spec.html?raw';
 <Base>
   <slot slot="head">
     <!-- Load styles from your served static folder -->
-    <link rel="stylesheet" href="/css/spec.css" />
+    <link rel="stylesheet" href={fingerprint("/css/spec.css")} />
 
     <!-- Configure MathJax targeting absolute root assets -->
     <script is:inline>
@@ -22,8 +23,8 @@ import specHtmlRaw from '../../spec/spec.html?raw';
         }
       };
     </script>
-    <script is:inline src="/vendor/mathjax-full/es5/tex-mml-chtml.js"></script>
-    <script is:inline src="/js/spec.js" defer></script>
+    <script is:inline src={fingerprint("/vendor/mathjax-full/es5/tex-mml-chtml.js")}></script>
+    <script is:inline src={fingerprint("/js/spec.js")} defer></script>
   </slot>
 
 

@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 ---
 
 <Base>
@@ -70,21 +71,19 @@ import Base from "../layouts/Base.astro";
         <a
           class="resource-card"
           href="/manifesto"
-          target="_blank"
-          rel="noopener"
         >
           <img src="/assets/manifesto.jpg" alt="Manifesto" />
           <h3>Manifesto</h3>
           <p>Why Umi‑Time exists<br>and what it solves.</p>
         </a>
 
-        <a class="resource-card" href="/design" target="_blank" rel="noopener">
+        <a class="resource-card" href="/design">
           <img src="/assets/design.jpg" alt="Design Principles" />
           <h3>Design Principles</h3>
           <p>The guiding principles<br>behind Umi‑Time's design.</p>
         </a>
 
-        <a class="resource-card" href="/spec" target="_blank" rel="noopener">
+        <a class="resource-card" href="/spec">
           <img src="/assets/spec.jpg" alt="Specification document" />
           <h3>Technical Specification</h3>
           <p>The formal definition<br>of Umi‑Time.</p>
@@ -94,5 +93,5 @@ import Base from "../layouts/Base.astro";
   </main>
 
   <!-- Page-specific CSS -->
-  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href={fingerprint("/css/main.css")} />
 </Base>

@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Base.astro";
+import { fingerprint } from "../scripts/utils/fingerprint.js";
 ---
 
 <!--
@@ -71,8 +72,8 @@ When the latitude and longitude are set correctly, this clock can be used in any
     </main>
   </div>
 
-  <link rel="stylesheet" href="/css/button.css" />
-  <link rel="stylesheet" href="/css/clock.css" />
+  <link rel="stylesheet" href={fingerprint("/css/button.css")} />
+  <link rel="stylesheet" href={fingerprint("/css/clock.css")} />
 
   <script src="/src/components/umi-clock.js"></script>
   <script src="../scripts/clock.js"></script>

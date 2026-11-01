@@ -1,5 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
+import { fingerprint } from "../scripts/utils/fingerprint.js";
+
 title: "FAQ";
 description: "Frequently Asked Questions about Umi‑Time.";
 ---
@@ -968,7 +970,7 @@ description: "Frequently Asked Questions about Umi‑Time.";
     <!-- end of umi-region umi-pad -->
   </div>
 
-  <link rel="stylesheet" href="/css/faq.css" />
+  <link rel="stylesheet" href={fingerprint("/css/faq.css")} />
 
   <script>
     document.querySelectorAll(".faq-question").forEach((button) => {
