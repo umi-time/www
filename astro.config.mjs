@@ -33,7 +33,7 @@ export default defineConfig({
           fs.mkdirSync(mathJaxJsDestDir, { recursive: true });
 
           // Execute atomic file syncs
-          console.log("[Umi-Time Build] Mirroring specification assets into public directory...");
+          console.log("[Umi‑Time Build] Mirroring specification assets into public directory...");
           
           fs.copyFileSync(cssSrc, path.join(cssDestDir, "spec.css"));
           fs.copyFileSync(jsSrc, path.join(jsDestDir, "spec.js"));
@@ -47,9 +47,9 @@ export default defineConfig({
                 path.join(fontDestDir, file)
               );
             });
-            console.log("[Umi-Time Build] Offline MathJax font layouts successfully compiled.");
+            console.log("[Umi‑Time Build] Offline MathJax font layouts successfully compiled.");
           } else {
-            throw new Error(`[Umi-Time Build Error] MathJax font directory not found at: ${fontSrcDir}`);
+            throw new Error(`[Umi‑Time Build Error] MathJax font directory not found at: ${fontSrcDir}`);
           }
         },
       },

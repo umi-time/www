@@ -1,12 +1,12 @@
-# Umi-Time Website
+# Umi‑Time Website
 
-This repository contains the **primary public website for Umi-Time**, served at:
+This repository contains the **primary public website for Umi‑Time**, served at:
 
 **https://www.umitime.com**
 
 The site provides:
 
-- The public introduction to Umi-Time  
+- The public introduction to Umi‑Time  
 - The Manifesto  
 - The Specification (embedded via the `spec` submodule)  
 - Interactive demos (Clock, Map, Solar Geometry)  

@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 title: "Design Principles";
-description: "The core architectural layers and interface design principles of Umi-Time.";
+description: "The core architectural layers and interface design principles of Umi‑Time.";
 ---
 
 <Base title="Design Principles: Umi‑Time">
@@ -22,7 +22,7 @@ description: "The core architectural layers and interface design principles of U
       <section class="principle-group">
         <h2 class="group-heading">I. The Layered Architecture</h2>
         <p class="group-intro">
-          Umi-Time is architected as a modular, four-layer data and presentation
+          Umi‑Time is architected as a modular, four-layer data and presentation
           stack. By separating the core clock signal from how it is visually
           oriented, the standard enables a shared universal time to coexist
           cleanly with local geographic reality.
@@ -61,7 +61,7 @@ description: "The core architectural layers and interface design principles of U
               Earth's daily mean rotation of 360 degrees.
             </li>
             <li>
-              <strong>Simple Transformation:</strong> Converting between UTC and Umi-Time
+              <strong>Simple Transformation:</strong> Converting between UTC and Umi‑Time
               is simple arithmetic.
             </li>
           </ul>
@@ -85,15 +85,15 @@ description: "The core architectural layers and interface design principles of U
               for analog clocks can be accomplished by rotating the dial clockwise
               by the same number of degrees as the observer's longitude. Thus, negative
               longitude values will result in a counter-clockwise rotation. This rotation
-              ensures that the observer's Umi-Time Midnight is placed at the bottom
-              of the dial with their Umi-Time Noon at the top.
+              ensures that the observer's Umi‑Time Midnight is placed at the bottom
+              of the dial with their Umi‑Time Noon at the top.
             </li>
             <li>
               <strong>Digital/Textual Presentation:</strong> While there are multiple
-              ways to provide local context to Umi-Time in digital/textual presentations,
+              ways to provide local context to Umi‑Time in digital/textual presentations,
               the most intuitive is the day phase suffix. This appends an integer
               value in the range of 0 to 23 representing the local hour segment to
-              which the Umi-Time value corresponds. These hour segments will typically
+              which the Umi‑Time value corresponds. These hour segments will typically
               be similar to the existing civil time hours, though still longitude-based
               instead of time zones and DST. This produces a practical local time
               representation without political rules.
@@ -117,7 +117,7 @@ description: "The core architectural layers and interface design principles of U
               <strong>Analog Presentation:</strong> The calculation of times for local
               solar events and periods requires several inputs, including the observer's
               location (latitude and longitude) and the current date and time. The
-              Umi-Time clock demo visualizes this information using a "solar ring"
+              Umi‑Time clock demo visualizes this information using a "solar ring"
               circumscribed around the clock dial. Color gradients are used to represent
               the periods of the day, while distinct markers identify sunrise and
               sunset events.

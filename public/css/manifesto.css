@@ -44,7 +44,7 @@ tbody tr:hover {
   background-color: #f0f4ff;
 }
 
-/* Highlight Umi-Time column */
+/* Highlight Umi‑Time column */
 td:last-child, th:last-child {
   background-color: #eef3ff;
   font-weight: 500;
