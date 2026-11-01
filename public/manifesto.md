@@ -140,6 +140,12 @@ It is tempting to think civil time just needs tidying: abolish daylight saving, 
 
 Each region optimizes for itself. Each fix is another patch. The patches accumulate, the database grows, and the system continues to function only through constant human maintenance. It is a system that works despite itself.
 
+The clock we inherited was designed for a world connected by railways, telegraphs, and telephone lines. Those systems needed to coordinate regions, nations, and continents. Time zones solved that problem extraordinarily well.
+
+The systems that connect people today operate at a different scale. The Internet, satellites, mobile networks, cloud services, and global communications routinely connect people on opposite sides of the planet. Millions of people now spend part of every day coordinating across multiple time zones.
+
+Civil time did not become worse. The world simply outgrew the problem civil time was designed to solve.
+
 So the honest conclusion is not that civil time needs reform. It is that civil time is the wrong tool for the one job it was never designed to do: letting people on different parts of the planet agree about _when_.
 
 For that job, a different tool already exists.
@@ -154,11 +160,21 @@ It is one time for the whole world, maintained by the finest clocks humanity has
 
 Umi‑Time does not ask that. Umi‑Time keeps UTC exactly as it is.
 
-What UTC left out is presentation. The format `hh:mm:ss` was inherited from local civil clocks, and it carries their connotations. `07:00` says _morning_ to everyone who reads it — which is a lie for most of the planet when the `07:00` is UTC. Shown in that format, universal time looks like someone else's local time. People translate it back to their own zone and the universality evaporates.
+What UTC left out is unambiguous human-friendly presentation. The format `hh:mm:ss` was inherited from local civil clocks, and it carries their connotations. `07:00` says _morning_ to everyone who reads it — which is a lie for most of the planet when the `07:00` is UTC. Shown in that format, universal time looks like someone else's local time. People translate it back to their own zone and the universality evaporates.
 
-UTC's only flaw as a human clock is that it was never given a way to be _human_ without becoming _local_. That is the gap Umi‑Time fills — and it fills it without touching the underlying time. Umi‑Time separates a shared universal time value from the local and solar context used to interpret it.
+For most of UTC's history, this limitation hardly mattered. Universal time was primarily the domain of specialists: pilots, navigators, astronomers, military operations, and telecommunications networks. Ordinary people lived almost entirely within local clocks and rarely needed anything else.
 
-The next step is not a new time scale. We have one, and it is excellent. The next step is to let people _see_ it.
+That world has changed.
+
+Today, millions of people routinely coordinate across continents. Distributed teams collaborate across oceans. Open-source projects, online communities, multiplayer games, global businesses, international families, and worldwide events all depend on people agreeing on the same moment from different places.
+
+The need for a shared global time reference is no longer confined to specialists. What was once a niche requirement has become an ordinary part of life for an ever-growing share of humanity.
+
+UTC already solved the coordination problem. What it never solved was how to make that shared reference feel natural to the people who increasingly need it.
+
+UTC's only flaw as a human clock is that it was never given a way to be _human_ without being misinterpreted as _local_. That is the gap Umi‑Time fills — and it fills it without touching the underlying time. Umi‑Time separates a shared universal time value from the local and solar context used to interpret it.
+
+The next step is not a new time scale. We have one, and it is excellent. The next step is to let people _see_ it, in a locally meaningful light.
 
 ---
 
