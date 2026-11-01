@@ -6,7 +6,11 @@ title: "Clock Integration Examples";
 description: "Examples showing how to use the <umi-clock> web component.";
 ---
 
-<script type="module" src="/src/components/umi-clock.js"></script>
+<Fragment slot="head">
+  <script type="module">
+    import "/src/components/umi-clock.js";
+  </script>
+</Fragment>
 
 <Base title="Clock Integration Examples">
   <div class="umi-region umi-pad">
