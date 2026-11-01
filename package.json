@@ -10,7 +10,7 @@
   },
 
   "dependencies": {
-    "umi-time": "file:./src/lib/umi-time-js",
+    "umi-time": "^1.0.0",
     "astro": "^7.2.9",
     "mathjax-full": "^3.2.1"
   },

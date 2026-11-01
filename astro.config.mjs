@@ -4,6 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 export default defineConfig({
+  site: "https://umitime.com",
+  output: "static",
   vite: {
     plugins: [
       {
