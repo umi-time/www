@@ -8,25 +8,35 @@ import Base from "../layouts/Base.astro";
       <section class="hero">
         <h1>About Umi‑Time</h1>
         <p>
-          Umi‑Time expresses the 24‑hour UTC day as a smooth 360‑unit cycle.
+          Umi‑Time expresses the 24‑hour UTC day as a continuous 360‑umi cycle.
           Every location on Earth shares the same umi value at the same moment,
-          giving Umi‑Time a universal, continuous representation of the day.
+          providing a universal representation of time that remains directly
+          compatible with UTC.
         </p>
       </section>
 
       <section class="section">
         <h2>What Is Umi‑Time?</h2>
+
         <p>
-          What changes from place to place is the orientation of the dial. The
-          dial rotates according to longitude, placing Umi‑Time Noon at the top
-          and Umi‑Time Midnight at the bottom for each observer. This rotation
-          gives Umi‑Time its local interpretability without altering the
-          underlying universal value.
+          Umi‑Time is a layered representation of UTC. The universal Umi‑Time
+          value is the same everywhere on Earth, while local interpretation is
+          derived from the observer's longitude and solar context may be added
+          separately.
         </p>
+
+        <p>
+          This separation allows a single shared time value to remain globally
+          consistent while still providing meaningful local context. Universal
+          time, local interpretation, and solar context are treated as distinct
+          layers rather than being combined into a single regional clock
+          reading.
+        </p>
+
         <p>
           Umi‑Time builds directly on UTC, preserving its stability and
-          precision while presenting the day in a form that is easier to read,
-          compare, and reason about.
+          precision while presenting the day in a form that is easier to share,
+          compare, and reason about across regions.
         </p>
       </section>
 
@@ -34,8 +44,10 @@ import Base from "../layouts/Base.astro";
         <h2>Why Umi‑Time Exists</h2>
         <p>
           Civil time was built for regions, borders, and policies — not for a
-          connected world. It fragments the day into zones, offsets, and
-          seasonal rules that differ from place to place and change over time.
+          world connected by global networks, distributed teams, online
+          communities, and continuous international communication. It fragments
+          the day into zones, offsets, and seasonal rules that differ from place
+          to place and change over time.
         </p>
         <p>
           UTC solved many of these problems by providing a single, stable
@@ -57,23 +69,31 @@ import Base from "../layouts/Base.astro";
             <strong>Universal:</strong> one shared value for the entire world, derived
             directly from UTC.
           </li>
+
           <li>
-            <strong>Locally oriented:</strong> the dial rotates by longitude, giving
-            each observer a meaningful view of the day.
+            <strong>Layered:</strong> universal time, local interpretation, and solar
+            context are treated as separate concerns.
           </li>
+
           <li>
-            <strong>Human‑friendly:</strong> the 360‑unit cycle is simple to visualize
-            and compare.
+            <strong>Locally meaningful:</strong> longitude provides local interpretation
+            without changing the underlying time value.
           </li>
+
+          <li>
+            <strong>Human‑friendly:</strong> the 360‑umi cycle is easy to visualize,
+            compare, and communicate.
+          </li>
+
           <li>
             <strong>Compatible:</strong> integrates cleanly with UTC and systems that
             already rely on it.
           </li>
         </ul>
         <p>
-          Umi‑Time is designed to provide a unified daily reference, offering a
-          shared way to understand the day without the fragmentation of time
-          zones or seasonal offsets.
+          Umi‑Time provides a shared planetary reference for time while
+          preserving the local and solar context needed to make that reference
+          meaningful to people.
         </p>
       </section>
     </main>

@@ -11,8 +11,8 @@ description: "Interactive examples and demonstrations of Umi‑Time.";
         <h1>Examples & Demos</h1>
         <p>
           Explore interactive demonstrations of Umi‑Time. These examples show
-          how the universal umi value is presented, how solar context is
-          visualized, and how Umi‑Time can be integrated into real applications.
+          how the universal Umi‑Time value, local interpretation, and solar
+          context can be presented and integrated into real applications.
         </p>
       </header>
 
@@ -20,9 +20,9 @@ description: "Interactive examples and demonstrations of Umi‑Time.";
       <section class="example">
         <h2>Live Umi‑Time Clock</h2>
         <p>
-          The clock demo shows the core Umi‑Time interface: a single rotating
-          hand representing the shared umi value, a fixed solar ring, and a dial
-          oriented by your longitude.
+          The clock demo showcases the reference analog implementation of
+          Umi‑Time: a rotating hand representing the shared Umi‑Time value, a
+          fixed solar ring for solar context, and a dial oriented by longitude.
         </p>
         <p>
           It displays the universal Umi‑Time value alongside your local
@@ -48,13 +48,13 @@ description: "Interactive examples and demonstrations of Umi‑Time.";
         </p>
         <p>
           Moving your pointer or tapping the map sets the observer location and
-          updates the solar ring and clock accordingly.
+          updates the corresponding local interpretation and solar context.
         </p>
         <ul>
           <li>Real‑time day/night shadow</li>
           <li>Seasonal slider for exploring the solar year</li>
           <li>Location‑based solar context</li>
-          <li>Dial orientation based on longitude</li>
+          <li>Longitude‑based local interpretation</li>
         </ul>
         <p><a class="button" href="/world-map">Open the World Map Demo →</a></p>
       </section>
@@ -82,7 +82,9 @@ description: "Interactive examples and demonstrations of Umi‑Time.";
       <!-- Solar Geometry Examples -->
       <section class="example">
         <h2>Solar Geometry Examples</h2>
-        <p>Explore how solar‑day features are computed and visualized.</p>
+        <p>
+          Explore how Layer 3 solar context is computed from location and date.
+        </p>
         <p>
           These examples illustrate the formulas used for sunrise, sunset,
           twilight, solar declination, and the seasonal movement of the
@@ -99,8 +101,9 @@ description: "Interactive examples and demonstrations of Umi‑Time.";
       <section class="example">
         <h2>Clock Integration Examples</h2>
         <p>
-          These examples show how to embed the Umi‑Time clock into your own
-          website or application using the lightweight web component.
+          These examples show how to embed the reference analog implementation
+          of Umi‑Time into your own website or application using the lightweight
+          web component.
         </p>
         <p>
           <a href="/examples/clock" class="umi-link"

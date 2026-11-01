@@ -14,8 +14,9 @@ description: "Examples showing how to use the <umi-clock> web component.";
       <header class="page-header">
         <h1>Clock Integration Examples</h1>
         <p>
-          The <code>&lt;umi-clock&gt;</code> web component renders a complete, self‑contained
-          Umi‑Time clock with solar shading, sunrise/sunset indicators, and a digital
+          The <code>&lt;umi-clock&gt;</code> web component renders the reference analog
+          implementation of Umi‑Time, including a shared Umi‑Time value, longitude‑based
+          local interpretation, solar context visualizations, and an optional digital
           display. You control its location and size using attributes.
         </p>
       </header>
@@ -24,9 +25,10 @@ description: "Examples showing how to use the <umi-clock> web component.";
       <section class="example">
         <h2>1. Basic Usage</h2>
         <p>
-          Provide latitude, longitude, and an optional size. Latitude and
-          longitude are used to compute local presentation and solar context;
-          they do not affect the underlying umi value.
+          Provide latitude, longitude, and an optional size. Longitude is used
+          to derive local interpretation, while latitude and longitude together
+          are used to compute solar context. Neither affects the underlying
+          Umi‑Time value.
         </p>
 
         <umi-clock latitude="35.138666" longitude="-120.643473" size="350px"

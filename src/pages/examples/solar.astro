@@ -11,9 +11,9 @@ description: "Examples demonstrating solar geometry using the Umi‑Time class a
       <header class="page-header">
         <h1>Solar Geometry Examples</h1>
         <p>
-          These examples demonstrate how to compute solar‑related quantities
-          using the <code>UmiTime</code> class and the publicly exported solar helpers.
-          All examples match the current implementation and public API.
+          These examples demonstrate how to compute Layer 3 solar context using
+          the <code>UmiTime</code> class and the publicly exported solar-geometry
+          helpers. All examples match the current implementation and public API.
         </p>
       </header>
 
@@ -21,11 +21,11 @@ description: "Examples demonstrating solar geometry using the Umi‑Time class a
       <section class="example">
         <h2>1. Solar Geometry via UmiTime</h2>
         <p>
-          The <code>UmiTime</code> class exposes solar geometry as getters. These
-          require precise latitude and longitude to be accurate. Solar geometry depends
-          on location, but the underlying umi value does not.
+          The <code>UmiTime</code> class exposes Layer 3 solar-context values as getters.
+          These values are derived from solar geometry and require precise latitude
+          and longitude to be accurate. Solar context depends on location, but the
+          underlying Umi‑Time value does not.
         </p>
-
         <Code
           code={`import { UmiTime } from "umi-time";
 
@@ -49,8 +49,8 @@ console.log(umi.sunset);             // umi of sunset`}
       <section class="example">
         <h2>2. Solar Altitude (Standalone Helper)</h2>
         <p>
-          The <code>solarAltitude</code> helper computesthe apparent altitude of the
-          Sun above the observer's horizon.
+          The <code>solarAltitude</code> helper computes the apparent altitude of
+          the Sun above the observer's horizon.
         </p>
 
         <Code
@@ -71,10 +71,10 @@ console.log(altitude);  // degrees above horizon`}
       <section class="example">
         <h2>3. Solar Hour Angle</h2>
         <p>
-          The hour angle describes how far the Sun is east or west of local
-          solar noon (Umi‑Time Noon). It requires the equation of time, which is
-          available via
-          <code>UmiTime</code>.
+          The hour angle describes how far the Sun is east or west of physical
+          solar noon. It is a fundamental solar-geometry quantity used in the
+          computation of sunrise, sunset, twilight, and other solar-context
+          values.
         </p>
 
         <Code
@@ -102,9 +102,10 @@ console.log(hourAngle);  // degrees`}
         <h2>4. UT Umi From Date</h2>
         <p>
           <code>utUmiFromDate</code> computes the umi position directly from a UTC
-          timestamp. This is the same calculation used internally by
-          <code>UmiTime</code>. Unlike the solar geometry helpers, this
-          calculation depends only on UTC and does not require a location.
+          timestamp. This is the Layer 1 Umi‑Time transformation and is the same calculation
+          used internally by <code>UmiTime</code>.. Unlike the solar geometry
+          helpers, this calculation depends only on UTC and does not require a
+          location.
         </p>
 
         <Code
@@ -138,8 +139,9 @@ console.log(toRad(180));          // 3.14159...`}
       <section class="example">
         <h2>6. Combined Solar Geometry Example</h2>
         <p>
-          A complete example showing how to compute multiple solar quantities
-          using both <code>UmiTime</code> and standalone helpers.
+          A complete example showing how to compute multiple Layer 3
+          solar-context values using both <code>UmiTime</code> and standalone solar-geometry
+          helpers.
         </p>
 
         <Code

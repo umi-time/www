@@ -1,10 +1,10 @@
 ---
-import Base from '../layouts/Base.astro';
+import Base from "../layouts/Base.astro";
 ---
 
 <Base>
   <!-- HERO SECTION -->
-  <section 
+  <section
     class="hero-banner"
     style="
       background-image: url('/assets/sundial.jpg'); 
@@ -14,36 +14,31 @@ import Base from '../layouts/Base.astro';
   >
     <div class="hero-content umi-pad">
       <h1 class="hero-title">Umi‑Time</h1>
-      <p class="hero-tagline">
-        A universal time standard for the modern world.
-      </p>
+      <p class="hero-tagline">Universal time. Local interpretation.</p>
     </div>
   </section>
 
   <main class="umi-region umi-pad">
-
     <!-- THREE VALUE PROPS -->
     <section class="value-props umi-section">
       <div class="prop-grid">
-
         <div class="prop-card">
           <img src="/assets/global.jpg" alt="Global concept" />
           <h3>Global</h3>
-          <p>The same time everywhere on Earth.</p>
+          <p>The same time<br>everywhere on Earth.</p>
         </div>
 
         <div class="prop-card">
           <img src="/assets/local.jpg" alt="Local concept" />
           <h3>Local</h3>
-          <p>Represented to match your day experience.</p>
+          <p>Locally meaningful<br>everywhere.</p>
         </div>
 
         <div class="prop-card">
           <img src="/assets/natural.jpg" alt="Continuous time" />
           <h3>Natural</h3>
-          <p>No time zones. No DST. No politics.</p>
+          <p>No time zones or DST.<br>No politics.</p>
         </div>
-
       </div>
     </section>
 
@@ -53,8 +48,10 @@ import Base from '../layouts/Base.astro';
         <div class="demo-text">
           <h2>Interactive World Map Demo</h2>
           <p>
-            Explore Umi‑Time across the globe to see how its local representation of time shifts with latitude and longitude.
-            Use the slider to adjust the time of year and see how it affects the local representation of time on the world map.
+            Explore Umi‑Time across the globe to see how local interpretation
+            changes with longitude and how solar context changes with location
+            and season. Use the slider to adjust the time of year and observe
+            how daylight, twilight, sunrise, and sunset vary across the world.
           </p>
           <a href="/world-map" class="btn-modern-blue">Launch Demo</a>
         </div>
@@ -70,34 +67,30 @@ import Base from '../layouts/Base.astro';
       <h2>Core Documents</h2>
 
       <div class="resource-grid">
-
-        <a class="resource-card" 
-           href="/manifesto"
-           target="_blank" rel="noopener">
+        <a
+          class="resource-card"
+          href="/manifesto"
+          target="_blank"
+          rel="noopener"
+        >
           <img src="/assets/manifesto.jpg" alt="Manifesto" />
           <h3>Manifesto</h3>
-          <p>Why Umi‑Time exists and what it solves.</p>
+          <p>Why Umi‑Time exists<br>and what it solves.</p>
         </a>
 
-        <a class="resource-card" 
-           href="/design"
-           target="_blank" rel="noopener">
+        <a class="resource-card" href="/design" target="_blank" rel="noopener">
           <img src="/assets/design.jpg" alt="Design Principles" />
           <h3>Design Principles</h3>
-          <p>The guiding principles behind Umi‑Time's design.</p>
+          <p>The guiding principles<br>behind Umi‑Time's design.</p>
         </a>
 
-        <a class="resource-card" 
-           href="/spec"
-           target="_blank" rel="noopener">
+        <a class="resource-card" href="/spec" target="_blank" rel="noopener">
           <img src="/assets/spec.jpg" alt="Specification document" />
           <h3>Technical Specification</h3>
-          <p>The formal definition of Umi‑Time.</p>
+          <p>The formal definition<br>of Umi‑Time.</p>
         </a>
-
       </div>
     </section>
-
   </main>
 
   <!-- Page-specific CSS -->

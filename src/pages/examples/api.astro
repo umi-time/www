@@ -12,8 +12,8 @@ description: "Practical examples showing how to use the Umi‑Time JavaScript AP
         <h1>API Examples</h1>
         <p>
           These examples demonstrate how to construct <code>UmiTime</code>
-          instances, compute derived values, work with solar geometry, use
-          formatting and parsing, and understand segment/refinement helpers.
+          instances, work with Layer 1 Umi‑Time values, derive Layer 2 local interpretation,
+          compute Layer 3 solar context, and use formatting, parsing, and helper utilities.
           All examples match the current Umi‑Time implementation.
         </p>
       </header>
@@ -24,9 +24,9 @@ description: "Practical examples showing how to use the Umi‑Time JavaScript AP
         <p>
           A <code>UmiTime</code> instance is created by passing a UTC
           <code>Date</code>. Latitude and longitude are optional
-          <code>ApproximateValue</code> objects used for solar geometry.
+          <code>ApproximateValue</code> objects used for local interpretation and
+          solar‑context calculations.
         </p>
-
         <Code
           code={`import { UmiTime } from "umi-time";
 
@@ -48,8 +48,8 @@ const umi2 = new UmiTime(
       <section class="example">
         <h2>2. Derived Fields</h2>
         <p>
-          Umi‑Time exposes civil‑date fields and Umi‑Time fields derived from the
-          UTC timestamp.
+          Umi‑Time exposes civil‑date fields and Umi‑Time fields derived from
+          the UTC timestamp.
         </p>
 
         <Code
@@ -109,9 +109,8 @@ umi.format(UMI_CANONICAL_FULL);   // "2026-09-25U042180+S21/24"
       <section class="example">
         <h2>5. Parsing Umi‑Time Strings</h2>
         <p>
-          <code>UmiTime.parse()</code> accepts compact, extended, date-prefixed,
-          and canonical forms, including segment, refinement, and longitude
-          suffixes.
+          <code>UmiTime.parse()</code> accepts compact, extended, date-prefixed, and
+          canonical forms, including segment, refinement, and longitude suffixes.
         </p>
 
         <Code
@@ -140,10 +139,11 @@ UmiTime.parse("042180", { latitude: 35.14, longitude: -120.64 });`}
       <section class="example">
         <h2>6. Segment & Refinement Helpers</h2>
         <p>
-          Segments divide the 360‑umi day into equal parts. Refinement measures
-          offset inside a segment.
+          Segments divide the local Umi‑Day into equal parts and provide
+          optional Layer 2 local-context representations. Refinement measures
+          position within a segment. Day phases are a specific segment system
+          consisting of 24 equal divisions of the local Umi‑Day.
         </p>
-
         <Code
           code={`const umi = new UmiTime(
   new Date(),
@@ -162,10 +162,11 @@ console.log(umi.segmentRefinement(24)); // offset inside segment`}
       <section class="example">
         <h2>7. Solar Geometry (via UmiTime)</h2>
         <p>
-          Solar geometry getters require sufficiently precise latitude and
-          longitude to be accurate.
+          Segments divide the local Umi‑Day into equal parts and provide
+          optional Layer 2 local-context representations. Refinement measures
+          position within a segment. Day phases are a specific segment system
+          consisting of 24 equal divisions of the local Umi‑Day.
         </p>
-
         <Code
           code={`const umi = new UmiTime(
   new Date(),
@@ -187,7 +188,8 @@ console.log(umi.sunset);        // umi of sunset`}
       <section class="example">
         <h2>8. Live Umi‑Time Display</h2>
         <p>
-          A simple example showing how to update a Umi‑Time display every second.
+          A simple example showing how to update a Umi‑Time display every
+          second.
         </p>
 
         <Code

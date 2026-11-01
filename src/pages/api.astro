@@ -24,6 +24,13 @@ import { Code } from "astro:components";
           </p>
 
           <p>
+            The library mirrors the Umi‑Time architecture. UTC is represented as
+            a Layer 1 Umi‑Time value, optional longitude information provides
+            Layer 2 local interpretation, and solar‑geometry helpers provide
+            Layer 3 solar context.
+          </p>
+
+          <p>
             The core of the library is the <code>UmiTime</code> class. A
             <code>UmiTime</code> instance is anchored to a specific UTC moment and
             an approximate observer location, represented by latitude and longitude
@@ -42,8 +49,8 @@ import { Code } from "astro:components";
             <code>UmiTime</code> instances. These derived properties compute quantities
             such as solar declination, equation of time, solar altitude and azimuth,
             sunrise, and sunset, using the UTC timestamp together with the observer’s
-            latitude and longitude. These values are used for solar‑context features
-            such as the solar ring, but they do not affect the umi value or dial orientation.
+            latitude and longitude. These values support Layer 3 solar‑context features
+            and do not affect the underlying Umi‑Time value or Layer 2 local interpretation.
           </p>
 
           <p>
@@ -80,20 +87,31 @@ import { Code } from "astro:components";
             <h3>UTC and Location</h3>
             <p>
               Every Umi‑Time value is anchored to a specific UTC moment.
-              Latitude and longitude provide optional context for solar
-              calculations such as solar altitude, azimuth, sunrise, and sunset.
-              These geographic values may include uncertainty and do not affect
-              the underlying Umi‑Time value.
+              Latitude and longitude provide optional context for local
+              interpretation and solar calculations. Longitude may be used to
+              derive Layer 2 local context, while latitude and longitude
+              together are used for Layer 3 solar‑context calculations such as
+              solar altitude, azimuth, sunrise, and sunset. These geographic
+              values do not affect the underlying Umi‑Time value.
             </p>
           </section>
 
           <section id="concept-segments">
             <h3>Day Segments</h3>
             <p>
-              Day segments divide the 360‑umi cycle into equal parts, such as
-              quarters or twelfths. They provide optional contextual labels for
-              applications and user interfaces. Segments do not affect the
-              underlying Umi‑Time value.
+              Day segments divide the local Umi‑Day into a fixed number of equal
+              intervals. They provide a compact Layer 2 local-context
+              representation by identifying where a Umi‑Time value falls within
+              the observer's local day without altering the underlying Umi‑Time
+              value.
+            </p>
+
+            <p>
+              Different segment systems may use different numbers of divisions.
+              For example, the day‑phase system divides the local Umi‑Day into
+              24 equal segments of 15 umi each, while other segment schemes may
+              use coarser or finer subdivisions. All segment systems are derived
+              from the same longitude‑based local interpretation.
             </p>
           </section>
 

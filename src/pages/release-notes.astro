@@ -21,14 +21,12 @@ description: "Release history for the Umi‑Time Specification and reference imp
             standard.
           </li>
           <li>
-            The <strong>umi-time</strong> JavaScript library, which serves as
-            the reference implementation.
+            The <strong>umi-time</strong> JavaScript library, which serves as the
+            reference implementation.
           </li>
         </ul>
 
-        <p>
-          Release notes for both are maintained on this page.
-        </p>
+        <p>Release notes for both are maintained on this page.</p>
       </header>
 
       <!-- ========================================================== -->
@@ -42,25 +40,23 @@ description: "Release history for the Umi‑Time Specification and reference imp
           <h3>Specification v1.0.0 — Initial Public Release</h3>
           <h4>November 1, 2026</h4>
 
-          <p>
-            The first stable release of the Umi‑Time specification.
-          </p>
+          <p>The first stable release of the Umi‑Time specification.</p>
 
           <ul>
             <li>
-              Defines the 360‑umi representation of the UTC day.
+              Establishes the Layer 0 (UTC), Layer 1 (Umi‑Time Representation),
+              Layer 2 (Local Interpretation), and Layer 3 (Solar Context)
+              architecture.
             </li>
 
-            <li>
-              Defines canonical Umi‑Time formats and representations.
-            </li>
+            <li>Defines the 360‑umi representation of the UTC day.</li>
+
+            <li>Defines canonical Umi‑Time formats and representations.</li>
+
+            <li>Defines longitude‑based local interpretation principles.</li>
 
             <li>
-              Defines longitude‑based presentation principles.
-            </li>
-
-            <li>
-              Defines optional local and solar context layers.
+              Defines optional local-interpretation and solar-context layers.
             </li>
 
             <li>
@@ -101,7 +97,8 @@ description: "Release history for the Umi‑Time Specification and reference imp
             </li>
 
             <li>
-              Implements solar‑geometry helpers including
+              Implements Layer 3 solar-context calculations through
+              solar-geometry helpers including
               <code>solarAltitude</code>,
               <code>getHourAngle</code>,
               <code>toDeg</code>,
@@ -109,13 +106,9 @@ description: "Release history for the Umi‑Time Specification and reference imp
               <code>utUmiFromDate</code>.
             </li>
 
-            <li>
-              Ships comprehensive TypeScript definitions.
-            </li>
+            <li>Ships comprehensive TypeScript definitions.</li>
 
-            <li>
-              Provides ESM, CommonJS, and browser‑ready builds.
-            </li>
+            <li>Provides ESM, CommonJS, and browser‑ready builds.</li>
           </ul>
         </article>
       </section>
@@ -129,8 +122,9 @@ description: "Release history for the Umi‑Time Specification and reference imp
 
         <p>
           Both the Umi‑Time Specification and the
-          <code>umi-time</code> JavaScript library follow semantic versioning
-          (<code>MAJOR.MINOR.PATCH</code>).
+          <code>umi-time</code> JavaScript library follow semantic versioning (<code
+            >MAJOR.MINOR.PATCH</code
+          >).
         </p>
 
         <ul>
@@ -139,13 +133,12 @@ description: "Release history for the Umi‑Time Specification and reference imp
           </li>
 
           <li>
-            <strong>MINOR</strong> versions introduce new functionality while
-            preserving backward compatibility.
+            <strong>MINOR</strong> versions introduce new functionality while preserving
+            backward compatibility.
           </li>
 
           <li>
-            <strong>PATCH</strong> versions contain fixes, clarifications, and
-            refinements.
+            <strong>PATCH</strong> versions contain fixes, clarifications, and refinements.
           </li>
         </ul>
       </section>

@@ -6,11 +6,18 @@ title: "Download & Install";
 description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
 ---
 
-<Base title="Install">
+<Base title="Install Umi‑Time">
   <div class="umi-region umi-pad">
     <main class="page page-install">
       <header class="page-header">
-        <h1>Install</h1>
+        <h1>Install Umi‑Time</h1>
+        <p>
+          <p>
+            The umi-time library supports the complete Umi‑Time architecture, including
+            universal Umi‑Time values, longitude‑based local interpretation, and
+            optional solar context calculations.
+          </p>
+        </p>
         <p>
           Umi‑Time is available via npm, CDN, and GitHub releases. Choose the
           method that fits your workflow.
@@ -63,10 +70,10 @@ description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
 
     <script src="https://cdn.jsdelivr.net/npm/umi-time/dist/umi-time.min.js"></script>
     <script>
-      // Create a UmiTime instance for the current moment
+      // Create a Layer 1 Umi‑Time value from the current UTC moment
       const umi = new UmiTime(new Date());
 
-      // Log the canonical Umi value
+      // Output the canonical textual representation
       console.log(umi.format(UMI_EXTENDED));
     </script>
   </body>
@@ -102,7 +109,8 @@ description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
         <ul>
           <li>Stable version: <strong>1.x</strong></li>
           <li>Browser support: modern evergreen browsers</li>
-          <li>Builds:
+          <li>
+            Builds:
             <ul>
               <li>ES module build (ESM)</li>
               <li>CommonJS build (CJS)</li>
@@ -119,10 +127,9 @@ description: "Install Umi‑Time via npm, CDN, or GitHub releases.";
         <p>
           Umi‑Time ships with full TypeScript definitions. All public
           APIs—including
-          <code>UmiTime</code>, solar‑geometry helpers, error types, and format
-          constants—are strongly typed and included in the npm package via <code
-            >dist/index.d.ts</code
-          >.
+          <code>UmiTime</code>, solar‑context and solar‑geometry helpers, error
+          types, and format constants—are strongly typed and included in the npm
+          package via <code>dist/index.d.ts</code>.
         </p>
       </section>
 

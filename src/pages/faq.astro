@@ -15,9 +15,9 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">What is Umi‑Time in one sentence?</button>
         <div class="faq-answer">
           <p>
-            At its core, Umi‑Time is UTC expressed as a single 360‑umi daily
-            rotation, giving the entire planet one shared continuous time while
-            preserving local meaning through presentation.
+            At its core, Umi‑Time is UTC expressed as a continuous 360‑umi
+            cycle, providing one shared planetary time value with optional local
+            interpretation and solar context.
           </p>
         </div>
       </div>
@@ -135,9 +135,10 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">What does the Umi dial represent?</button>
         <div class="faq-answer">
           <p>
-            The dial is a visual map of UTC’s daily progression. The hand shows
-            the current Umi‑Time; optional layers can display local solar‑day
-            features such as sunrise, sunset, and seasonal shifts.
+            The dial provides the local-interpretation layer of Umi‑Time. By
+            rotating according to longitude, it relates the shared universal
+            Umi‑Time value to the observer's local day, establishing concepts
+            such as Umi‑Time Noon, Umi‑Time Midnight, Umi‑Day, and day phases.
           </p>
         </div>
       </div>
@@ -167,9 +168,10 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">Why is solar geometry involved?</button>
         <div class="faq-answer">
           <p>
-            Solar geometry adds optional local meaning — sunrise, sunset,
-            twilight, day length, and seasonal variation — without affecting the
-            umi value itself.
+            Solar geometry provides the information needed to compute optional
+            solar context, including sunrise, sunset, twilight, day length, and
+            related solar events. These calculations do not affect the
+            underlying Umi‑Time value.
           </p>
         </div>
       </div>
@@ -216,9 +218,10 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">How do I read the Umi‑Time clock?</button>
         <div class="faq-answer">
           <p>
-            The hand shows your current Umi‑Time on the dial. Its position on
-            the solar ring indicates your local solar‑day phase, such as
-            sunrise, daylight, twilight, or night.
+            The primary hand points to the current Umi‑Time value. Because the
+            dial is oriented for the observer's location and surrounded by
+            solar-context information, the same hand position also shows where
+            that moment falls within the local day.
           </p>
         </div>
       </div>
@@ -251,9 +254,10 @@ description: "Frequently Asked Questions about Umi‑Time.";
         >
         <div class="faq-answer">
           <p>
-            A common pattern is the standard Umi‑Time analogclock: a fixed solar
-            ring, a dial rotated by longitude, and a single hand that completes
-            one rotation per UTC day.
+            Umi‑Time can be presented in analog, digital, textual, cartographic,
+            or other forms. One common implementation is the reference analog
+            clock, which combines a longitude‑oriented dial, solar‑context ring,
+            and a single hand that completes one rotation per UTC day.
           </p>
         </div>
       </div>
@@ -275,7 +279,7 @@ description: "Frequently Asked Questions about Umi‑Time.";
         >
         <div class="faq-answer">
           <p>
-            Yes. Official libraries compute Umi‑Time, provide solar‑context
+            Yes. <a href="/install">Official libraries</a> compute Umi‑Time, provide solar‑context
             helpers, and ensure consistent behavior across platforms.
           </p>
         </div>
@@ -358,9 +362,9 @@ description: "Frequently Asked Questions about Umi‑Time.";
         >
         <div class="faq-answer">
           <p>
-            Latitude changes the solar‑day markers — sunrise, sunset, twilight,
-            and day length — but it does not affect the umi value or the dial
-            itself.
+            Latitude does not affect the underlying Umi‑Time value or local
+            interpretation. It affects only solar context, including sunrise,
+            sunset, twilight, and day length.
           </p>
         </div>
       </div>
@@ -383,14 +387,59 @@ description: "Frequently Asked Questions about Umi‑Time.";
 
       <div class="faq-item">
         <button class="faq-question">Is Umi‑Time open source?</button>
+
         <div class="faq-answer">
           <p>
-            Yes. Umi‑Time is fully open source. The specification, core
-            libraries, demos, and website all live in public repositories so
-            anyone can inspect, implement, or contribute to the project.
-            <br />
-            GitHub: <a href="https://github.com/umi-time">github.com/umi-time</a
+            Yes. Umi‑Time is fully open source. The specification, website,
+            reference implementations, and supporting tools all live in public
+            repositories, allowing anyone to inspect, implement, use, or
+            contribute to the project.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Specification:</strong>
+              <a
+                href="https://github.com/umi-time/spec"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/umi-time/spec
+              </a>
+            </li>
+
+            <li>
+              <strong>Website:</strong>
+              <a
+                href="https://github.com/umi-time/www"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/umi-time/www
+              </a>
+            </li>
+
+            <li>
+              <strong>JavaScript Library:</strong>
+              <a
+                href="https://github.com/umi-time/umi-time-js"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/umi-time/umi-time-js
+              </a>
+            </li>
+          </ul>
+
+          <p>
+            The GitHub organization is available at
+            <a
+              href="https://github.com/umi-time"
+              target="_blank"
+              rel="noopener noreferrer"
             >
+              github.com/umi-time
+            </a>.
           </p>
         </div>
       </div>
@@ -422,20 +471,57 @@ description: "Frequently Asked Questions about Umi‑Time.";
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Where can I report bugs or issues?</button>
+        <button class="faq-question">
+          Where can I report bugs or issues?
+        </button>
+
         <div class="faq-answer">
           <p>
-            On the project’s GitHub repository:
-            <br />
-            • <a href="https://github.com/umi-time/umi-time/issues">Issues</a> for
-            bugs or suggestions • <a
-              href="https://github.com/umi-time/umi-time/discussions"
-              >Discussions</a
-            > for questions or ideas
+            Bugs, feature requests, and questions are handled through the
+            Umi‑Time GitHub repositories:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Specification:</strong>
+              <a
+                href="https://github.com/umi-time/spec/issues"
+                target="_blank"
+                rel="noopener noreferrer">Issues</a
+              >
+              •
+              <a
+                href="https://github.com/umi-time/spec/discussions"
+                target="_blank"
+                rel="noopener noreferrer">Discussions</a
+              >
+            </li>
+
+            <li>
+              <strong>Website:</strong>
+              <a
+                href="https://github.com/umi-time/www/issues"
+                target="_blank"
+                rel="noopener noreferrer">Issues</a
+              >
+            </li>
+
+            <li>
+              <strong>JavaScript Library:</strong>
+              <a
+                href="https://github.com/umi-time/umi-time-js/issues"
+                target="_blank"
+                rel="noopener noreferrer">Issues</a
+              >
+            </li>
+          </ul>
+
+          <p>
+            General questions, proposals, and discussions should normally start
+            in the Specification Discussions area.
           </p>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-question"
           >Are there reference implementations?</button
@@ -466,15 +552,62 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">How do I contribute?</button>
         <div class="faq-answer">
           <p>
-            Join the GitHub Discussions, open issues, or submit pull requests:
-            <br />
-            • <a href="https://github.com/umi-time/umi-time/discussions"
-              >Discussions</a
-            >
-            • <a href="https://github.com/umi-time/umi-time/issues">Issues</a>
-            • <a href="https://github.com/umi-time/umi-time/pulls"
-              >Pull Requests</a
-            >
+            Contributions are welcome across the specification, website, and
+            JavaScript implementation.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Specification:</strong>
+              <a
+                href="https://github.com/umi-time/spec/discussions"
+                target="_blank"
+                rel="noopener noreferrer">Discussions</a
+              > •
+              <a
+                href="https://github.com/umi-time/spec/issues"
+                target="_blank"
+                rel="noopener noreferrer">Issues</a
+              > •
+              <a
+                href="https://github.com/umi-time/spec/pulls"
+                target="_blank"
+                rel="noopener noreferrer">Pull Requests</a
+              >
+            </li>
+
+            <li>
+              <strong>Website:</strong>
+              <a
+                href="https://github.com/umi-time/www/issues"
+                target="_blank"
+                rel="noopener noreferrer">Issues</a
+              > •
+              <a
+                href="https://github.com/umi-time/www/pulls"
+                target="_blank"
+                rel="noopener noreferrer">Pull Requests</a
+              >
+            </li>
+
+            <li>
+              <strong>JavaScript Library:</strong>
+              <a
+                href="https://github.com/umi-time/umi-time-js/issues"
+                target="_blank"
+                rel="noopener noreferrer">Issues</a
+              > •
+              <a
+                href="https://github.com/umi-time/umi-time-js/pulls"
+                target="_blank"
+                rel="noopener noreferrer">Pull Requests</a
+              >
+            </li>
+          </ul>
+
+          <p>
+            See the <a href="/contributing">Contributing</a> page for details on participating
+            in the project.
           </p>
         </div>
       </div>
@@ -497,10 +630,10 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">What is the long‑term roadmap?</button>
         <div class="faq-answer">
           <p>
-            The long‑term roadmap focuses on expanding the Umi‑Time ecosystem.
-            Key goals include refining the specification, extending the demos,
-            and developing official libraries in multiple languages so Umi‑Time
-            can be used across many platforms.
+            The <a href="/roadmap">long‑term roadmap</a> focuses on expanding the
+            Umi‑Time ecosystem. Key goals include refining the specification, extending
+            the demos, and developing official libraries in multiple languages so
+            Umi‑Time can be used across many platforms.
           </p>
           <p>
             Maker‑friendly physical clocks are a near‑term possibility — simple
@@ -548,9 +681,9 @@ description: "Frequently Asked Questions about Umi‑Time.";
               hand shows the number of seconds elapsed within the current umi unit.
             </li>
             <li>
-              <strong>Solar ring:</strong> Always visible, showing sunrise, sunset,
-              twilight progression, solar noon, and other solar‑day features for the
-              current observer location.
+              <strong>Solar context ring:</strong>
+              Displays sunrise, sunset, twilight progression, physical solar noon,
+              and related local solar information.
             </li>
             <li>
               <strong>Civil‑time readout:</strong> Your local clock time is shown
@@ -596,8 +729,8 @@ description: "Frequently Asked Questions about Umi‑Time.";
           <p>
             In part, yes. Umi‑Time is derived directly from UTC and represents
             the same moments in time, just expressed with different units.
-            However, it adds additional layers of local and solar context that
-            UTC alone does not provide.
+            However, Umi‑Time also defines longitude‑based local interpretation
+            and optional solar context layers that UTC does not provide.
           </p>
         </div>
       </div>
@@ -642,9 +775,10 @@ description: "Frequently Asked Questions about Umi‑Time.";
         <button class="faq-question">Does Umi‑Time depend on longitude?</button>
         <div class="faq-answer">
           <p>
-            The umi value in Umi‑Time is the same everywhere. Longitude only
-            affects the orientation of the local‑context layer, not Umi‑Time
-            itself.
+            The Umi‑Time value is the same everywhere. Longitude affects local
+            interpretation, including concepts such as Umi‑Time Noon, Umi‑Time
+            Midnight, Umi‑Day, and day phases, but does not affect the
+            underlying Umi‑Time value itself.
           </p>
         </div>
       </div>

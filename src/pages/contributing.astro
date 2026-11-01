@@ -1,5 +1,5 @@
 ---
-import Base from '../layouts/Base.astro';
+import Base from "../layouts/Base.astro";
 import { Code } from "astro:components";
 
 title: "Contributing";
@@ -12,28 +12,44 @@ description: "How to contribute to the Umi‑Time project.";
       <header class="page-header">
         <h1>Contributing</h1>
         <p>
-          Umi-Time gives us one shared number for the exact same instant globally, while presenting it in a way that is locally meaningful. 
-          As an open standard ecosystem, contributions are welcome across our technical specifications, website interfaces, and reference libraries.
+          Umi‑Time provides a shared universal representation of time while
+          preserving locally meaningful interpretation and optional solar
+          context.
         </p>
         <p>
-          Contributions are welcome from developers, writers, designers, educators, translators, and anyone interested in helping make Umi‑Time more understandable and accessible.
+          As an open standard ecosystem, contributions are welcome from
+          developers, writers, designers, educators, translators, and anyone
+          interested in helping make Umi‑Time more understandable and
+          accessible.
         </p>
       </header>
 
       <!-- Project Architecture -->
       <section class="example">
         <h2>Project Architecture</h2>
-        <p>The project is modularized across independent, specialized repositories:</p>
+        <p>
+          The project is modularized across independent, specialized
+          repositories:
+        </p>
 
         <ul>
           <li>
-            <strong><a href="https://github.com">umi-time/spec</a></strong> — The canonical, self-contained standard document defining the 360‑umi representation of the UTC day, mathematical formulas, and canonical formats.
+            <strong><a href="https://github.com/umi-time/spec">umi-time/spec</a></strong>
+            — The canonical, self‑contained standard defining the Umi‑Time model,
+            including universal time representation, local interpretation, solar context,
+            mathematical formulas, and canonical formats.
           </li>
           <li>
-            <strong><a href="https://github.com">umi-time/www</a></strong> — The primary public website, the Manifesto, and the presentation layers (Clock, Map, Geometry). It embeds the <code>spec</code> repository dynamically via a Git submodule.
+            <strong><a href="https://github.com/umi-time/www">umi-time/www</a></strong> — The primary
+            public website, the Manifesto, and the presentation layers (Clock, Map,
+            Geometry). It embeds the <code>spec</code> repository dynamically via
+            a Git submodule.
           </li>
           <li>
-            <strong><a href="https://github.com">umi-time/umi-time-js</a></strong> — The reference JavaScript/TypeScript implementation library for core parsing, calculation, and rendering.
+            <strong
+              ><a href="https://github.com/umi-time/umi-time-js">umi-time/umi-time-js</a></strong
+            > — The reference JavaScript/TypeScript implementation library for core
+            parsing, calculation, and rendering.
           </li>
         </ul>
       </section>
@@ -42,15 +58,21 @@ description: "How to contribute to the Umi‑Time project.";
       <section class="example">
         <h2>Contributing to the Specification Standard</h2>
         <p>
-          Because the <code>spec</code> repository maintains the immutable standard, changes to formulas or core architectures follow a strict protocol. 
-          Typos, formatting bugs, or ambiguities can be submitted directly via an Issue in the <code>spec</code> repository. Architectural adjustments require community consensus on a Discussion thread prior to drafting a Pull Request.
+          Because the <code>spec</code> repository maintains the immutable standard,
+          changes to formulas or core architectures follow a strict protocol. Typos,
+          formatting bugs, or ambiguities can be submitted directly via an Issue in
+          the <code>spec</code> repository. Architectural adjustments require community
+          consensus on a Discussion thread prior to drafting a Pull Request.
         </p>
       </section>
 
       <!-- Getting Started -->
       <section class="example">
         <h2>Getting Started with the Website</h2>
-        <p>To contribute to the website layout, documentation text, or interactive tools, clone the web repository locally:</p>
+        <p>
+          To contribute to the website layout, documentation text, or
+          interactive tools, clone the web repository locally:
+        </p>
 
         <Code
           code={`git clone https://github.com/umi-time/www.git
@@ -62,37 +84,45 @@ npm install`}
         />
 
         <p>
-          <strong>Important First-Time Setup Note:</strong> Our <code>astro.config.mjs</code> features an automated asset sync script that mirrors submodule layouts and MathJax layouts into your active <code>public/</code> tree. **You must run the compilation sequence at least once** to populate these asset structures properly before initializing your dev server:
+          <strong>Important First-Time Setup Note:</strong> Our <code
+            >astro.config.mjs</code
+          > features an automated asset sync script that mirrors submodule layouts
+          and MathJax layouts into your active <code>public/</code> tree. **You must
+          run the compilation sequence at least once** to populate these asset structures
+          properly before initializing your dev server:
         </p>
 
-        <Code
-          code={`npm run build`}
-          lang="bash"
-          theme="dracula"
-        />
+        <Code code={`npm run build`} lang="bash" theme="dracula" />
 
-        <p>Once compiled, start Astro's local hot-reloading development loop:</p>
+        <p>
+          Once compiled, start Astro's local hot-reloading development loop:
+        </p>
 
-        <Code
-          code={`npm run dev`}
-          lang="bash"
-          theme="dracula"
-        />
+        <Code code={`npm run dev`} lang="bash" theme="dracula" />
       </section>
 
       <!-- Website Contributions -->
       <section class="example">
         <h2>Website Contributions</h2>
         <p>
-          The primary public interface lives in the <code>www</code> repository and is powered by Astro. 
-          Impactful contributions include:
+          The primary public interface lives in the <code>www</code> repository and
+          is powered by Astro. Impactful contributions include:
         </p>
 
         <ul>
           <li>Improving documentation copy and text layout readability.</li>
-          <li>Resolving responsive design framework or styling bugs across viewports.</li>
-          <li>Enhancing the interactive canvas demonstration layers (the clock dial, world map tracking, or solar visualizations).</li>
-          <li>Drafting new implementation examples, setup recipes, or technical tutorials.</li>
+          <li>
+            Resolving responsive design framework or styling bugs across
+            viewports.
+          </li>
+          <li>
+            Enhancing interactive demonstrations, including analog clock,
+            cartographic, and solar‑context visualizations.
+          </li>
+          <li>
+            Drafting new implementation examples, setup recipes, or technical
+            tutorials.
+          </li>
         </ul>
       </section>
 
@@ -105,7 +135,10 @@ npm install`}
           <li>Ensure TypeScript builds cleanly without errors</li>
           <li>Run the repository test suite if applicable</li>
           <li>Follow existing code style and naming conventions</li>
-          <li>Update documentation if your change affects a public API or interface behavior</li>
+          <li>
+            Update documentation if your change affects a public API or
+            interface behavior
+          </li>
         </ul>
       </section>
 
@@ -113,23 +146,62 @@ npm install`}
       <section class="example">
         <h2>Coding & Documentation Standards</h2>
         <ul>
-          <li><strong>Universal First:</strong> Keep calculations and core records mapped strictly to UTC. Never write regional adjustments into underlying data objects.</li>
-          <li><strong>Presentation Agnostic:</strong> Interface logic should treat local meaning as a presentation mapping layer—supporting visual, textual, and digital formats equally without favoring a singular UI layout.</li>
-          <li><strong>Zero JS Footprint by Default:</strong> The specification text page parses static raw HTML elements server-side via Astro's <code>set:html</code> directive. Keep script inclusions tightly scoped.</li>
+          <li>
+            <strong>Universal First:</strong> Keep the underlying time representation
+            mapped strictly to UTC. Never write regional adjustments into Layer 1
+            data.
+          </li>
+
+          <li>
+            <strong>Layer Separation:</strong> Treat universal time, local interpretation,
+            and solar context as distinct concerns. Changes in one layer should not
+            modify another.
+          </li>
+
+          <li>
+            <strong>Presentation Agnostic:</strong> Interface logic should support
+            analog, digital, textual, cartographic, and future presentation forms
+            without making any single representation fundamental.
+          </li>
+
+          <li>
+            <strong>Zero JS Footprint by Default:</strong> The specification page
+            parses static raw HTML elements server-side via Astro's
+            <code>set:html</code> directive. Keep script inclusions tightly scoped.
+          </li>
         </ul>
       </section>
 
       <!-- Library Coding Standards -->
       <section class="example">
         <h2>Library Coding Standards</h2>
-        <p>When contributing code to the <code>umi-time-js</code> core reference library, adhere to these architectural rules:</p>
+        <p>
+          When contributing code to the <code>umi-time-js</code> core reference library,
+          adhere to these architectural rules:
+        </p>
         <ul>
           <li>Use TypeScript for all core library code.</li>
-          <li>Prefer pure functions for solar geometry and time conversion calculations.</li>
-          <li>Keep the <code>UmiTime</code> engine immutable—all transformation methods must return new instances.</li>
-          <li>Document public methods explicitly with clear intent, parameter definitions, and geometric units.</li>
-          <li>Write comprehensive tests for any new solar tracking or coordinate mapping functions.</li>
-          <li>Ensure all formatting spec constants remain strictly synchronized with the canonical Umi‑Time standard.</li>
+          <li>
+            Prefer pure functions for solar geometry and time conversion
+            calculations.
+          </li>
+          <li>
+            Keep the <code>UmiTime</code> engine immutable—all transformation methods
+            must return new instances.
+          </li>
+          <li>
+            Document public methods explicitly with clear intent, parameter
+            definitions, and geometric units.
+          </li>
+          <li>
+            Write comprehensive tests for any new local-interpretation,
+            solar-context, coordinate-mapping, or astronomical calculation
+            functions.
+          </li>
+          <li>
+            Ensure all formatting spec constants remain strictly synchronized
+            with the canonical Umi‑Time standard.
+          </li>
         </ul>
       </section>
 
@@ -146,14 +218,18 @@ npm install`}
         </ul>
 
         <p>
-          Keep PRs focused. Small, well-scoped changes are significantly easier to review and merge.
+          Keep PRs focused. Small, well-scoped changes are significantly easier
+          to review and merge.
         </p>
       </section>
 
       <!-- Issues & Feature Requests -->
       <section class="example">
         <h2>Issues & Feature Requests</h2>
-        <p>If you find a bug or want to propose a feature, open an issue on the specific repository matching the component.</p>
+        <p>
+          If you find a bug or want to propose a feature, open an issue on the
+          specific repository matching the component.
+        </p>
 
         <p>Please include:</p>
 
@@ -169,7 +245,10 @@ npm install`}
       <section class="example">
         <h2>Thank You</h2>
         <p>
-          Umi‑Time is a voluntary, collaborative effort to refine how a connected species communicates about time. Whether you’re correcting an equation typo, translating document layouts, or constructing a client library, your help is deeply appreciated.
+          Umi‑Time is a voluntary, collaborative effort to refine how a
+          connected species communicates about time. Whether you’re correcting
+          an equation typo, translating document layouts, or constructing a
+          client library, your help is deeply appreciated.
         </p>
       </section>
     </main>

@@ -72,9 +72,12 @@ description: "The core architectural layers and interface design principles of U
           <p class="layer-subtitle"><strong>The translation.</strong></p>
           <p>
             This layer shifts the time representation to align with the
-            observer's day, based solely on their current longitude. This is the
-            layer that replaces civil time zones, removing political boundaries
-            by mapping universal values using geographic rotation:
+            observer's day, based solely on their current longitude. It
+            establishes concepts such as Umi‑Time Noon, Umi‑Time Midnight,
+            Umi‑Day, Umi‑Date, and day‑phase context without altering the
+            underlying Umi‑Time value. This is the layer that replaces civil
+            time zones, removing political boundaries by mapping universal
+            values using geographic rotation:
           </p>
           <ul>
             <li>
@@ -102,10 +105,12 @@ description: "The core architectural layers and interface design principles of U
           <h3>Layer 3 — Solar Events Context</h3>
           <p class="layer-subtitle"><strong>The enrichment.</strong></p>
           <p>
-            This layer provides additional local day context indications
-            representing events and periods that are meaningful to the
-            observer's experience. This typically includes events like sunrise
-            and sunset, and periods like daytime, nighttime, and twilight.
+            This layer provides solar context derived from the observer's
+            location and date. It encompasses solar events such as sunrise and
+            sunset, and solar periods such as daylight, nighttime, and twilight.
+            These values enrich local interpretation without affecting either
+            the universal Umi‑Time value or the longitude‑based interpretation
+            defined by Layer 2.
           </p>
           <ul>
             <li>
@@ -190,8 +195,8 @@ description: "The core architectural layers and interface design principles of U
             competing animations. Dynamic components are restricted strictly to
             elements that track the active progression of the day or changing
             solar horizons. Maintaining a calm, highly structured display
-            configuration allows the observer to digest the geometry of the
-            entire planetary day at a single glance.
+            configuration allows the observer to understand the structure of the
+            planetary day at a glance.
           </p>
         </div>
       </section>
@@ -200,12 +205,14 @@ description: "The core architectural layers and interface design principles of U
       <section class="principle principle-conclusion">
         <h2>Conclusion</h2>
         <p>
-          Umi‑Time unifies global precision, local meaning, and intuitive data
-          structures into a single cohesive representation of the UTC day. These
+          Umi‑Time unifies universal time, local interpretation, and solar
+          context into a coherent layered representation of the UTC day. These
           design principles ensure that the system remains simple,
           mathematically transparent, and accessible across any hardware
-          platform or interface form factor—a timekeeping framework engineered
-          intentionally for a connected planet.
+          platform or interface form factor. These design principles ensure that
+          the system remains simple, mathematically transparent, and accessible
+          across any hardware platform or interface form factor—a timekeeping
+          framework engineered intentionally for a connected planet.
         </p>
       </section>
     </main>
