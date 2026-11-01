@@ -1,13 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import mapDemoHtml from '../../public/world-map.html?raw';
+import mapDemoHtml from '../content/world-map.html?raw';
 ---
 
 <Base>
+  <slot slot="head">
+    <link rel="stylesheet" href="/css/button.css" />
+    <link rel="stylesheet" href="/css/world-map.css" />
+
+    <script src="../scripts/world-map.js"></script>
+  </slot>
+
   <div set:html={mapDemoHtml}></div>
 
-  <link rel="stylesheet" href="/css/button.css" />
-  <link rel="stylesheet" href="/css/world-map.css" />
-
-  <script src="../scripts/world-map.js"></script>
 </Base>
