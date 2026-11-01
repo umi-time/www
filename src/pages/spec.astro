@@ -1,6 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import specHtml from '../../spec/spec.html?raw';
+import specHtmlRaw from '../../spec/spec.html?raw';
+
+  const match = specHtmlRaw.match(
+    /<!-- BEGIN CONTENT -->([\s\S]*?)<!-- END CONTENT -->/
+  );
+
+  const specHtml = match ? match[1] : specHtmlRaw;   
 ---
 
 <Base>
@@ -20,6 +26,7 @@ import specHtml from '../../spec/spec.html?raw';
     <script is:inline src="/js/spec.js" defer></script>
   </slot>
 
-  <!-- Raw HTML spec content -->
+
+  <!-- Processed HTML spec content -->
   <div set:html={specHtml}></div>
 </Base>
