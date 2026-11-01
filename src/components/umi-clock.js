@@ -961,6 +961,7 @@ class UmiClock extends HTMLElement {
 
     const sunriseDial = umi.sunrise !== null ? umi.sunrise + lon + 180 : null;
     const sunsetDial = umi.sunset !== null ? umi.sunset + lon + 180 : null;
+    const eotDeg = umi.equationOfTime / 4;
 
     const D2R = Math.PI / 180;
     const sinL = Math.sin(lat * D2R);
@@ -976,7 +977,8 @@ class UmiClock extends HTMLElement {
 
     const stops = [];
     for (let deg = 0; deg < 360; deg += 6) {
-      const alt = elevAtHourAngle(deg);
+      const correctedHourAngle = deg + eotDeg;
+      const alt = elevAtHourAngle(correctedHourAngle);
       stops.push([deg, this.elevToColor(alt)]);
     }
 

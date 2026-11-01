@@ -171,7 +171,7 @@ function drawUmiWatch(ctx, lat, lon) {
   drawUmiDial(ctx, handAngle);
 
   // Conic gradient ring
-  drawConicGradient(ctx, 90, 90, 87, lat, decl);
+  drawConicGradient(ctx, 90, 90, 87, lat, decl, eot);
 
   // Dial ticks + labels
   const dialAngle = 180 + lon; // your original mapping
@@ -496,12 +496,12 @@ function elevToColor(elev) {
   return lerpColor("#2A3B55", "#001F3F", t);
 }
 
-function drawConicGradient(ctx, cx, cy, R, lat, decl) {
+function drawConicGradient(ctx, cx, cy, R, lat, decl, eot) {
   const step = 0.5; // degrees
 
   for (let angle = 0; angle < 360; angle += step) {
     // Noon at top, midnight at bottom
-    const haDeg = angle;
+    const haDeg = angle + eot / 4;
 
     // Solar elevation at this hour angle
     const elev = solarAltitude(lat, decl, haDeg);
