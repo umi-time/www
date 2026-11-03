@@ -228,6 +228,15 @@ body {
   margin: 0;
 }
 
+.umi-footer-meta a {
+  text-decoration: none;
+  color: #cde;
+}
+
+.umi-footer-meta a:hover {
+  color: #fff;
+}
+
 /* ============================
    Responsive breakpoints
    ============================ */
