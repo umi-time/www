@@ -25,7 +25,7 @@ function walkPages(dir, base = "") {
 }
 
 export async function GET(context) {
-  const site = context.site || "https://umitime.com";
+  const site = context.site.href || "https://umitime.com/";
   const manifest = context.manifest;
 
   let routes = [];
@@ -43,7 +43,11 @@ export async function GET(context) {
 
   const urls = routes
     .map((route) => {
-      const loc = `${site}${route}`;
+      const relativeRoute = route.replace(/^\//, "");
+      const canonicalRoute = relativeRoute.endsWith("/")
+          ? relativeRoute
+          : relativeRoute + "/";
+      const loc = `${site}${canonicalRoute}`;
       return `
         <url>
           <loc>${loc}</loc>
