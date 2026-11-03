@@ -12,7 +12,7 @@
   "dependencies": {
     "umi-time": "^1.0.0",
     "astro": "^7.2.9",
-    "mathjax-full": "^3.2.1"
+    "mathjax-full": "^3.2.2"
   },
 
   "devDependencies": {
