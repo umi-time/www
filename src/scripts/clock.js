@@ -1,8 +1,196 @@
-//
-// Umi‑Time Clock — JS Controller (Optimized)
-//
+const LOCATIONS = {
+  pismo: {
+    name: "Pismo Beach",
+    latitude: 35.14,
+    longitude: -120.64,
+    timeZone: "America/Los_Angeles",
+  },
 
-import { UmiTime } from "umi-time";
+  honolulu: {
+    name: "Honolulu",
+    latitude: 21.31,
+    longitude: -157.86,
+    timeZone: "Pacific/Honolulu",
+  },
+
+  newyork: {
+    name: "New York",
+    latitude: 40.71,
+    longitude: -74.01,
+    timeZone: "America/New_York",
+  },
+
+  london: {
+    name: "London",
+    latitude: 51.51,
+    longitude: -0.13,
+    timeZone: "Europe/London",
+  },
+
+  cairo: {
+    name: "Cairo",
+    latitude: 30.04,
+    longitude: 31.24,
+    timeZone: "Africa/Cairo",
+  },
+
+  mumbai: {
+    name: "Mumbai",
+    latitude: 19.08,
+    longitude: 72.88,
+    timeZone: "Asia/Kolkata",
+  },
+
+  singapore: {
+    name: "Singapore",
+    latitude: 1.35,
+    longitude: 103.82,
+    timeZone: "Asia/Singapore",
+  },
+
+  tokyo: {
+    name: "Tokyo",
+    latitude: 35.68,
+    longitude: 139.69,
+    timeZone: "Asia/Tokyo",
+  },
+
+  sydney: {
+    name: "Sydney",
+    latitude: -33.87,
+    longitude: 151.21,
+    timeZone: "Australia/Sydney",
+  },
+
+  fairbanks: {
+    name: "Fairbanks",
+    latitude: 64.84,
+    longitude: -147.72,
+    timeZone: "America/Anchorage",
+  }
+};
+
+const TIPS = [
+  {
+    focus: "Umi‑Time",
+    explanation: "It shows UTC in a locally meaningful way.",
+  },
+
+  {
+    focus: "Notice the larger number.",
+    explanation: "It is the current Umi‑Time.",
+  },
+
+  {
+    focus: "Notice the umi symbol.",
+    explanation: "Umi are units of time.",
+  },
+
+  {
+    focus: "Notice the smaller number.",
+    explanation: "It shows the current umi-second.",
+  },
+
+  {
+    focus: "Notice the values around the dial.",
+    explanation: "They are umi values.",
+  },
+
+  {
+    focus: "Notice the large hand.",
+    explanation: "It points to the current umi.",
+  },
+
+  {
+    focus: "Notice the thin hand.",
+    explanation: "It shows the seconds within the current umi.",
+  },
+
+  {
+    focus: "Notice the dial.",
+    explanation: "It rotates with longitude.",
+  },
+
+  {
+    focus: "Notice the top of the dial.",
+    explanation: "It always represents local solar noon.",
+  },
+
+  {
+    focus: "Notice the bottom of the dial.",
+    explanation: "It always represents local solar midnight.",
+  },
+
+  {
+    focus: "Notice the colored ring.",
+    explanation: "It shows daylight, twilight, and night.",
+  },
+
+  {
+    focus: "Notice the lit bezel segment.",
+    explanation: "It shows the current local hour.",
+  },
+
+  {
+    focus: "Notice that the bezel is fixed.",
+    explanation: "It provides a reference for your local solar day.",
+  },
+
+  {
+    focus: "Notice the city selector.",
+    explanation: "Try viewing the clock from another location.",
+  },
+
+  {
+    focus: "Try another city.",
+    explanation: "The Umi‑Time stays the same everywhere on Earth.",
+  },
+
+  {
+    focus: "Notice what changed.",
+    explanation: "The dial rotates, but the Umi‑Time does not change.",
+  },
+
+  {
+    focus: "Notice what stayed the same.",
+    explanation: "Everyone on Earth shares the same Umi‑Time.",
+  },
+
+  {
+    focus: "Notice the conceptual layers.",
+    explanation: "1. UTC 2. Umi‑Time 3. local day 4. solar events.",
+  },
+
+  {
+    focus: "Notice the clock as a whole.",
+    explanation: "It shows universal time personalized for your location.",
+  },
+
+  {
+    focus: "Notice the relationship to UTC.",
+    explanation: "0<sup>u</sup> occurs at UTC midnight.",
+  },
+
+  {
+    focus: "Notice the size of a day.",
+    explanation: "A day contains 360 umi.",
+  },
+
+  {
+    focus: "Notice the size of an umi.",
+    explanation: "Each umi contains exactly 240 seconds.",
+  },
+
+  {
+    focus: "Notice the simplicity.",
+    explanation: "Umi‑Time uses the same seconds as UTC.",
+  },
+
+  {
+    focus: "Notice the advantage.",
+    explanation: "One global time. Many local experiences.",
+  },
+];
 
 // ---------------------------------------------------------
 // DOM references
@@ -14,22 +202,60 @@ const clockWrapper = document.getElementById("clockWrapper");
 const clockContainer = document.getElementById("umi-clock");
 
 const configurationRegion = document.getElementById("configurationRegion");
+const controlPanel = document.getElementById("controlPanel");
+const select = document.getElementById("locationSelect");
+const showTipsCheckbox = document.getElementById("showTips");
 
-const manualLocation = document.querySelector(".manual-location");
-const latInput = document.getElementById("lat");
-const lonInput = document.getElementById("lon");
+const tipsPanel = document.getElementById("tipsPanel");
+const tipText = document.getElementById("tipText");
+const tipFocus = tipText.querySelector(".tip-focus");
+const tipExplanation = tipText.querySelector(".tip-explanation");
+
+let currentTipIndex = 0;
+let tipTimer = null;
+let detailTimer = null;
+let myLocation = null;
+
+const tipDelay = 2000;
+const detailDelay = 3000; // 3 seconds before showing detail
+const tipInterval = 12000; // 12 seconds between tips
+
+Object.entries(LOCATIONS).forEach(([key, location]) => {
+  const option = document.createElement("option");
+
+  option.value = key;
+  option.textContent = location.name;
+
+  select.appendChild(option);
+});
 
 // ---------------------------------------------------------
 // Configuration toggle
 // ---------------------------------------------------------
 
 configurationBtn.addEventListener("click", () => {
-  const isVisible = configurationRegion.style.display === "block";
-  configurationRegion.style.display = isVisible ? "none" : "block";
+  const isVisible = controlPanel.style.display === "flex";
+
+  updatePanelVisibility(!isVisible);
+
   localStorage.setItem("umiClockConfigurationVisible", isVisible ? "0" : "1");
 
   updateClockBounds();
 });
+
+function updatePanelVisibility(showControlPanel) {
+  const tipsEnabled = showTipsCheckbox.checked;
+
+  controlPanel.style.display = showControlPanel ? "flex" : "none";
+
+  if (!showControlPanel && tipsEnabled) {
+    tipsPanel.style.display = "flex";
+    startTipCycle();
+  } else {
+    tipsPanel.style.display = "none";
+    stopTipCycle();
+  }
+}
 
 // ---------------------------------------------------------
 // Fullscreen toggle
@@ -128,7 +354,7 @@ function animateClock() {
 
 function initLocation() {
   if (!navigator.geolocation) {
-    manualLocation.style.display = "block";
+    updatePanelVisibility(true);
     return;
   }
 
@@ -137,27 +363,114 @@ function initLocation() {
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
 
-      latInput.value = lat;
-      lonInput.value = lon;
-
       const umiClock = document.getElementById("umi-clock");
-      umiClock.setAttribute("latitude", lat);
-      umiClock.setAttribute("longitude", lon);
+
+      addMyLocationOption(lat, lon);
+      select.value = "__my_location__";
+
+      updateLocationForClock();
     },
     () => {
-      manualLocation.style.display = "block";
-    }
+      select.value = "pismo";
+      updateLocationForClock();
+      updatePanelVisibility(true);
+    },
   );
 }
 
-latInput.addEventListener("input", () => {
+function addMyLocationOption(lat, lon) {
+  const option = document.createElement("option");
+
+  option.value = "__my_location__";
+  option.textContent = "My Location";
+
+  select.insertBefore(option, select.firstChild);
+
+  myLocation = {
+    latitude: lat,
+    longitude: lon,
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  };
+}
+
+function updateLocationForClock() {
   const umiClock = document.getElementById("umi-clock");
-  umiClock.setAttribute("latitude", latInput.value);
+
+  if (select.value === "__my_location__" && myLocation) {
+    umiClock.setAttribute("latitude", myLocation.latitude);
+    umiClock.setAttribute("longitude", myLocation.longitude);
+    umiClock.setAttribute("timezone", myLocation.timeZone);
+
+    return;
+  }
+
+  const location = LOCATIONS[select.value];
+
+  if (location) {
+    umiClock.setAttribute("latitude", location.latitude);
+    umiClock.setAttribute("longitude", location.longitude);
+    umiClock.setAttribute("timezone", location.timeZone);
+  }
+}
+
+select.addEventListener("change", () => {
+  updateLocationForClock();
 });
 
-lonInput.addEventListener("input", () => {
-  const umiClock = document.getElementById("umi-clock");
-  umiClock.setAttribute("longitude", lonInput.value);
+// ---------------------------------------------------------
+// Tips display management
+// ---------------------------------------------------------
+
+function showTip(index) {
+  if (!tipFocus || !tipExplanation) return;
+
+  const tip = TIPS[index];
+
+  clearTimeout(detailTimer);
+
+  tipFocus.classList.remove("tip-visible");
+  tipExplanation.classList.remove("tip-visible");
+
+  setTimeout(() => {
+    // Stage 1: focus text only
+    tipFocus.innerHTML = tip.focus;
+    tipExplanation.innerHTML = "&nbsp;";
+
+    tipFocus.classList.add("tip-visible");
+
+    // Stage 2: add explanation after a few seconds
+    detailTimer = setTimeout(() => {
+      tipExplanation.innerHTML = tip.explanation;
+      tipExplanation.classList.add("tip-visible");
+    }, detailDelay);
+  }, tipDelay);
+}
+
+function startTipCycle() {
+  stopTipCycle();
+
+  showTip(currentTipIndex);
+
+  tipTimer = setInterval(() => {
+    currentTipIndex = (currentTipIndex + 1) % TIPS.length;
+
+    showTip(currentTipIndex);
+  }, tipInterval);
+}
+
+function stopTipCycle() {
+  if (tipTimer) {
+    clearInterval(tipTimer);
+    tipTimer = null;
+  }
+}
+
+showTipsCheckbox.addEventListener("change", () => {
+  const enabled = showTipsCheckbox.checked;
+
+  localStorage.setItem("umiClockShowTips", enabled ? "1" : "0");
+
+  updatePanelVisibility(controlPanel.style.display === "flex");
 });
 
 // ---------------------------------------------------------
@@ -168,9 +481,10 @@ lonInput.addEventListener("input", () => {
 clockContainer.classList.add("clock-hidden");
 
 // Restore configuration mode
-if (localStorage.getItem("umiClockConfigurationVisible") === "1") {
-  configurationRegion.style.display = "block";
-}
+const isControlPanelVisible =
+  localStorage.getItem("umiClockConfigurationVisible") === "1";
+
+updatePanelVisibility(isControlPanelVisible);
 
 // Restore fullscreen mode
 if (localStorage.getItem("umiClockFullscreen") === "1") {
@@ -224,7 +538,7 @@ function constrainClockPosition(clockX, clockY) {
 }
 
 function applyClockScale() {
-  const MAX_CLOCK_SIZE_RATIO = 0.80;
+  const MAX_CLOCK_SIZE_RATIO = 0.8;
   const TARGET_CLOCK_SIZE_RATIO = 0.75;
 
   const availableW = cw.width;
@@ -258,6 +572,6 @@ function applyClockScale() {
     // Recompute bounding box after scaling
     updateClockBounds();
   }
-  
+
   return scale;
 }

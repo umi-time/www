@@ -6,7 +6,14 @@ import { UmiTime } from "umi-time";
 
 class UmiClock extends HTMLElement {
   static get observedAttributes() {
-    return ["latitude", "longitude", "size", "dark", "update-interval"];
+    return [
+      "latitude",
+      "longitude",
+      "timezone",
+      "size",
+      "dark",
+      "update-interval",
+    ];
   }
 
   constructor() {
@@ -21,6 +28,7 @@ class UmiClock extends HTMLElement {
     this.size = "900px";
     this.darkMode = false;
     this.updateInterval = 100;
+    this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Cache solar geometry for the current minute
     this._lastSolarMinute = null;
@@ -107,6 +115,10 @@ class UmiClock extends HTMLElement {
       case "longitude":
         this.clampLongitude(parseFloat(newValue));
         break;
+      case "timezone":
+        this.timezone =
+          newValue || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        break;
       case "size":
         this.size = newValue;
         this.root.style.width = this.size;
@@ -167,7 +179,7 @@ class UmiClock extends HTMLElement {
     if (isNaN(lat)) return;
     if (lat > 90) lat = 90;
     if (lat < -90) lat = -90;
-    this.latitude = lat
+    this.latitude = lat;
     this._lastSolarMinute = null;
   }
 
@@ -223,6 +235,8 @@ class UmiClock extends HTMLElement {
     style.textContent = `
     .outer-background-shading { fill: #808080; opacity: 0.24; stroke: none; }
     .inner-background-shading { fill: #808080; opacity: 0.62; stroke: none; }
+    .bezel-day-segment { fill: transparent; transition: fill 250ms ease, opacity 250ms ease; }
+    .bezel-day-segment.active { fill: rgba(0, 255, 0, 0.6); stroke: rgba(255, 255, 255, 0.25); stroke-width: 0.15; }
     .compass-ring { fill: none; stroke: #444444; stroke-width: 0.4; }
     .cardinal-point { fill: #888888; stroke: #444444; stroke-width: 0.2; }
     .ordinal-point { fill: #666666; stroke: #444444; stroke-width: 0.2; }
@@ -585,7 +599,10 @@ class UmiClock extends HTMLElement {
       const y = radius * Math.sin(rad);
 
       // Measure width once
-      const temp = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      const temp = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text",
+      );
       temp.setAttribute("x", 0);
       temp.setAttribute("y", 0);
       temp.setAttribute("font-size", "3");
@@ -609,7 +626,10 @@ class UmiClock extends HTMLElement {
       t.textContent = umi;
       g.appendChild(t);
 
-      const symbol = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      const symbol = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg",
+      );
       const symbolX = x + numberWidth / 2 + 0.25;
       const symbolY = y - 1.5;
 
@@ -619,7 +639,10 @@ class UmiClock extends HTMLElement {
       symbol.setAttribute("height", "1.2");
       symbol.setAttribute("viewBox", "0 0 200 200");
 
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const path = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path",
+      );
       path.setAttribute("d", umiSymbolPath);
       path.setAttribute("fill", "none");
       path.setAttribute("stroke", this.foregroundColor);
@@ -715,9 +738,54 @@ class UmiClock extends HTMLElement {
     return this.sunIndicatorGroup;
   }
 
+  createRingSegment(startDeg, endDeg, innerR, outerR) {
+    const startRad = ((startDeg + 90) * Math.PI) / 180;
+    const endRad = ((endDeg + 90) * Math.PI) / 180;
+
+    const x1o = outerR * Math.cos(startRad);
+    const y1o = outerR * Math.sin(startRad);
+
+    const x2o = outerR * Math.cos(endRad);
+    const y2o = outerR * Math.sin(endRad);
+
+    const x1i = innerR * Math.cos(endRad);
+    const y1i = innerR * Math.sin(endRad);
+
+    const x2i = innerR * Math.cos(startRad);
+    const y2i = innerR * Math.sin(startRad);
+
+    const largeArc = endDeg - startDeg > 180 ? 1 : 0;
+
+    return [
+      `M ${x1o} ${y1o}`,
+      `A ${outerR} ${outerR} 0 ${largeArc} 1 ${x2o} ${y2o}`,
+      `L ${x1i} ${y1i}`,
+      `A ${innerR} ${innerR} 0 ${largeArc} 0 ${x2i} ${y2i}`,
+      "Z",
+    ].join(" ");
+  }
+
   createBezel() {
     this.bezel = this._makeGroup("bezelGroup");
     this.bezel.setAttribute("transform", `translate(36,36)`);
+    this.daySegments = [];
+
+    for (let i = 0; i < 24; i++) {
+      const segment = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path",
+      );
+
+      segment.setAttribute(
+        "d",
+        this.createRingSegment(i * 15, (i + 1) * 15, 30, 32.4),
+      );
+
+      segment.setAttribute("class", "bezel-day-segment");
+
+      this.daySegments.push(segment);
+      this.bezel.appendChild(segment);
+    }
 
     const innerBackground = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -879,9 +947,10 @@ class UmiClock extends HTMLElement {
     const now = new Date();
 
     // Compute umi
-    const umiObj = new UmiTime(now,
+    const umiObj = new UmiTime(
+      now,
       { value: this.latitude, uncertainty: 0 },
-      { value: this.longitude, uncertainty: 0 }
+      { value: this.longitude, uncertainty: 0 },
     );
 
     const umi = umiObj.umi;
@@ -893,14 +962,32 @@ class UmiClock extends HTMLElement {
       this.dial.setAttribute("transform", `translate(36,36) rotate(${A})`);
       this._lastLongitude = this.longitude;
     }
- 
+
     // Hand rotations
     this.largeHandGroup.setAttribute("transform", `rotate(${umi})`);
     this.smallHandGroup.setAttribute("transform", `rotate(${umiSec * 1.5})`);
 
+    // Day segments (update based on current time)
+    const bezelAngle = (((umi + this.longitude) % 360) + 360) % 360;
+
+    const activeSegment = Math.floor(bezelAngle / 15);
+
+    if (activeSegment !== this.currentSegment) {
+      if (this.currentSegment != null) {
+        this.daySegments[this.currentSegment].classList.remove("active");
+      }
+
+      this.daySegments[activeSegment].classList.add("active");
+
+      this.currentSegment = activeSegment;
+    }
+
     // Solar geometry (cached per minute)
-    const { gradient, sunriseDial, sunsetDial } =
-      this.computeSunAngles(this.latitude, this.longitude, now);
+    const { gradient, sunriseDial, sunsetDial } = this.computeSunAngles(
+      this.latitude,
+      this.longitude,
+      now,
+    );
 
     this.solarRing.style.background = gradient;
     this.drawSunIndicators(sunriseDial, sunsetDial);
@@ -987,10 +1074,10 @@ class UmiClock extends HTMLElement {
       stops.map(([a, c]) => `${c} ${a}deg`).join(", ") +
       ")";
 
-      const result = {
+    const result = {
       gradient,
       sunriseDial,
-      sunsetDial
+      sunsetDial,
     };
 
     this._lastSolarData = result;
@@ -1108,13 +1195,15 @@ class UmiClock extends HTMLElement {
   }
 
   civilTime(date) {
-    let hh = date.getHours();
-    const mm = String(date.getMinutes()).padStart(2, "0");
-    const ss = String(date.getSeconds()).padStart(2, "0");
-    const ampm = hh < 12 ? "AM" : "PM";
-    hh = hh % 12;
-    hh = hh === 0 ? 12 : hh;
-    return `${hh}:${mm}:${ss} ${ampm}`;
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: this.timezone,
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+
+    return formatter.format(date);
   }
 }
 

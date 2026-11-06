@@ -16,58 +16,54 @@ When the latitude and longitude are set correctly, this clock can be used in any
 <Layout title="Umi‑Time Clock">
   <div class="umi-region-full clock-page">
     <main>
-      <!-- Configuration toggle button -->
-      <button
-        id="configurationToggle"
-        class="configuration-btn"
-        aria-label="Toggle configuration"
-      >
-        ⚙️
-      </button>
+      <section class="section-header">
+        <!-- Configuration toggle button -->
+        <button
+          id="configurationToggle"
+          class="configuration-btn"
+          aria-label="Toggle configuration"
+        >
+          ⚙️
+        </button>
 
-      <!-- Fullscreen toggle button -->
-      <button
-        id="fullscreenToggle"
-        class="fullscreen-btn"
-        aria-label="Toggle fullscreen"
-      >
-        ⛶
-      </button>
+        <!-- Fullscreen toggle button -->
+        <button
+          id="fullscreenToggle"
+          class="fullscreen-btn"
+          aria-label="Toggle fullscreen"
+        >
+          ⛶
+        </button>
 
-      <!-- Manual location fallback (hidden unless geolocation fails) -->
-      <div
-        id="configurationRegion"
-        class="manual-location"
-        style="display:none;"
-      >
-        <div class="manual-location-content">
-          <label>
-            <span>Latitude: </span>
-            <input
-              id="lat"
-              type="number"
-              step="1"
-              value="0"
-              min="-85"
-              max="85"
-            />
-          </label>
-          <label>
-            <span>Longitude: </span>
-            <input
-              id="lon"
-              type="number"
-              step="1"
-              value="0"
-              min="-180"
-              max="180"
-            />
-          </label>
+        <div id="configurationRegion">
+          <div id="controlPanel" class="control-panel" style="display:none">
+            <label>
+              <span title="Location">📍</span>
+              <select id="locationSelect"></select>
+            </label>
+
+            <label class="tips-toggle">
+              <input id="showTips" type="checkbox" checked />
+              <span>Show Tips</span>
+            </label>
+          </div>
+
+          <div id="tipsPanel" class="tips-panel">
+            <div id="tipText">
+              <div class="tip-focus">&nbsp;</div>
+              <div class="tip-explanation">&nbsp;</div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div id="clockWrapper">
-        <umi-clock id="umi-clock" latitude="0" longitude="0" size="350px" dark="true"></umi-clock>
+        <umi-clock
+          id="umi-clock"
+          latitude="0"
+          longitude="0"
+          size="350px"
+          dark="true"></umi-clock>
       </div>
     </main>
   </div>

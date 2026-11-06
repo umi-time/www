@@ -21,8 +21,7 @@ body {
   flex-grow: 1;
   flex-direction: column;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: stretch;
   min-height: 300px;
   background: url(/assets/universal.jpg);
   background-color: #111;
@@ -36,8 +35,8 @@ body {
 
 .configuration-btn {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 5px;
+  left: 5px;
   z-index: 2000;
 
   background: rgba(0,0,0,0.55);
@@ -60,8 +59,8 @@ body {
 
 .fullscreen-btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 5px;
+  right: 5px;
   z-index: 2000;
 
   background: rgba(0,0,0,0.55);
@@ -79,36 +78,101 @@ body {
 }
 
 /* ---------------------------------------------------------
-   Manual location fallback
+   Control panel and tips panel
 --------------------------------------------------------- */
 
-.manual-location {
-  margin: 12px 0;
-  padding: 10px 40px;
-  background: rgba(0,0,0,0.15);
-  border-radius: 6px;
-  color: #ddd;
-  width: 100%;
-  box-sizing: border-box;
+.section-header {
+  position: relative;
+  background: rgba(0,0,0,0.2);
 }
 
-.manual-location-content {
+.control-panel {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
-  gap: 12px;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
 }
 
-.manual-location label {
-  display: block;
-  margin-bottom: 6px;
+.control-panel label {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.manual-location label span {
-  display: inline-block;
-  width: 70px;
-  margin-right: 5px;
-  text-align: right;
+.control-panel select {
+  width: 100%;
+  padding: 0.6rem;
+  background: #111;
+  color: white;
+}
+
+.tips-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+#tipsPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+#tipText {
+  animation: tipFloat 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.tip-focus {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.tip-focus.tip-visible {
+  opacity: 1;
+}
+
+.tip-explanation {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  font-size: 1rem;
+  color: lightgray;
+}
+
+.tip-explanation.tip-visible {
+  opacity: 1;
+}
+
+@keyframes tipFloat {
+  0% {
+    transform: translateY(3px);
+  }
+  50% {
+    transform: translateY(-3px); /* Smooth peak */
+  }
+  100% {
+    transform: translateY(3px);  /* Smooth trough/return */
+  }
+}
+
+@media (max-width: 480px) {
+  .tip-focus {
+    font-size: 1rem;
+  }
+
+  .tip-explanation {
+    font-size: 0.8rem;
+  }
 }
 
 /* ---------------------------------------------------------
