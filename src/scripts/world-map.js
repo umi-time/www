@@ -11,6 +11,105 @@ import { initLayerMenu } from "./ui/layer-menu.js";
 import { addLatitudeGrid, addLongitudeGrid } from "./layers/latlon-grid.js";
 import { addTimeZoneBoundaries } from "./layers/timezone-boundaries.js";
 
+const TIPS = [
+  {
+    focus: "Umi‑Time Map",
+    explanation: "It shows a single global moment unfolding across the Earth.",
+  },
+  {
+    focus: "Notice the bright and dark regions.",
+    explanation: "They show where it is currently day and where it is night.",
+  },
+  {
+    focus: "Notice the curved boundary.",
+    explanation: "This line tracks where sunrise and sunset are happening right now.",
+  },
+  {
+    focus: "Notice the seasonal tilt.",
+    explanation: "Light reaches farther toward one pole depending on the season.",
+  },
+  {
+    focus: "Notice the real-time update.",
+    explanation: "The illumination pattern moves continuously as the Earth rotates.",
+  },
+  {
+    focus: "Notice the grid lines.",
+    explanation: "They show the standard latitude and longitude lines of the globe.",
+  },
+  {
+    focus: "Notice the red boundaries.",
+    explanation: "They mark artificial, jagged legal time zones and borders.",
+  },
+  {
+    focus: "Notice the floating dial.",
+    explanation: "It follows your cursor, acting as an interactive local lens.",
+  },
+  {
+    focus: "Notice the center of the dial.",
+    explanation: "The center always targets the exact location beneath your cursor.",
+  },
+  {
+    focus: "Notice the units around the dial.",
+    explanation: "The circle is divided into 360 umi instead of 24 hours.",
+  },
+  {
+    focus: "Notice the scale alignment.",
+    explanation: "360 umi correspond exactly to the 360 degrees of Earth's rotation.",
+  },
+  {
+    focus: "Notice the size of an umi.",
+    explanation: "1 umi equals exactly 4 minutes—the time it takes Earth to turn 1°.",
+  },
+  {
+    focus: "Move your cursor around.",
+    explanation: "The dial's orientation changes dynamically as you shift locations.",
+  },
+  {
+    focus: "Notice the top of the dial.",
+    explanation: "It rotates to always keep local solar noon at the top.",
+  },
+  {
+    focus: "Notice the bottom of the dial.",
+    explanation: "It rotates to always keep local solar midnight at the bottom.",
+  },
+  {
+    focus: "Notice the Sun symbol.",
+    explanation: "It shows the physical compass direction of the Sun from that spot.",
+  },
+  {
+    focus: "Notice the internal pointer.",
+    explanation: "It shows exactly where to look in the sky to see the Sun right now.",
+  },
+  {
+    focus: "Move between hemispheres.",
+    explanation: "The pointer flips to match the view from opposite sides of the equator.",
+  },
+  {
+    focus: "Compare distant regions.",
+    explanation: "The numbers stay the same, but the local daylight view changes.",
+  },
+  {
+    focus: "Notice what stays the same.",
+    explanation: "Every location on Earth shares the exact same umi timestamp.",
+  },
+  {
+    focus: "Notice what Umi‑Time removes.",
+    explanation: "It eliminates political offsets, arithmetic, and daylight saving shifts.",
+  },
+  {
+    focus: "Notice the universal simplicity.",
+    explanation: "Umi‑Time shares the exact same physical seconds as UTC.",
+  },
+  {
+    focus: "Notice the core question.",
+    explanation: "It answers: What is the local experience of this global instant?",
+  },
+  {
+    focus: "Notice the clock as a whole.",
+    explanation: "One Earth. One synchronized moment. Countless local perspectives.",
+  },
+];
+
 // --- DOM elements ---
 const mapObject = document.getElementById("map-object");
 const watch = document.getElementById("watch-face");
@@ -91,18 +190,24 @@ function drawTerminatorShadow(dayOffset) {
   // Draw polygon
   shadowCtx.beginPath();
   shadowCtx.moveTo(points[0].x, points[0].y);
-
   for (let i = 1; i < points.length; i++) {
-    shadowCtx.lineTo(points[i].x, points[i].y);
+      shadowCtx.lineTo(points[i].x, points[i].y);
   }
 
-  // Fill direction based on declination
-  if (delta >= 0) {
-    shadowCtx.lineTo(width, height);
-    shadowCtx.lineTo(0, height);
+  // ROBUST FILL LOGIC: 
+  // Treat the equinox window cleanly by checking against your epsilon threshold
+  if (Math.abs(delta) < 1e-6) {
+      // Exactly on the equinox: shade exactly half the canvas cleanly
+      shadowCtx.lineTo(width, height);
+      shadowCtx.lineTo(0, height);
+  } else if (delta > 0) {
+      // Northern hemisphere summer (shading the southern hemisphere/bottom)
+      shadowCtx.lineTo(width, height);
+      shadowCtx.lineTo(0, height);
   } else {
-    shadowCtx.lineTo(width, 0);
-    shadowCtx.lineTo(0, 0);
+      // Northern hemisphere winter (shading the northern hemisphere/top)
+      shadowCtx.lineTo(width, 0);
+      shadowCtx.lineTo(0, 0);
   }
 
   shadowCtx.closePath();
@@ -223,24 +328,23 @@ function computeUmiDialAngle(lat, lon, date) {
 // 5. UI Rendering
 // -------------------------------------------------------------
 function drawUmiDial(ctx, angle) {
-  const cx = 90,
-    cy = 90;
+  const cx = 90;
+  const cy = 90;
   const R = 85;
 
   //
-  // Background ring (unchanged)
+  // Background ring
   //
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+  ctx.strokeStyle = "rgba(255,255,255,0.25)";
   ctx.lineWidth = R;
   ctx.beginPath();
   ctx.arc(cx, cy, R / 2, 0, Math.PI * 2);
   ctx.stroke();
 
-  //
-  // Scaled large triangle hand
-  //
-  const TRI_HEIGHT = 62; // scaled from clock’s 20
-  const TRI_HALF_WIDTH = 9; // scaled from clock’s 3
+  const TRI_HEIGHT = 62;
+  const TRI_HALF_WIDTH = 9;
+
+  const HUB_RADIUS = 8;
 
   const rad = (angle * Math.PI) / 180;
 
@@ -248,29 +352,52 @@ function drawUmiDial(ctx, angle) {
   ctx.translate(cx, cy);
   ctx.rotate(rad);
 
+  //
+  // Hand starts from circular hub
+  //
   ctx.beginPath();
-  ctx.moveTo(-TRI_HALF_WIDTH, 0);
-  ctx.lineTo(TRI_HALF_WIDTH, 0);
+  ctx.moveTo(-TRI_HALF_WIDTH, -HUB_RADIUS * 0.3);
+  ctx.lineTo(TRI_HALF_WIDTH, -HUB_RADIUS * 0.3);
   ctx.lineTo(0, -TRI_HEIGHT);
   ctx.closePath();
 
-  // Gradient similar to clock’s triGrad
   const grad = ctx.createLinearGradient(
     -TRI_HALF_WIDTH,
     0,
     TRI_HALF_WIDTH,
-    -TRI_HEIGHT,
+    -TRI_HEIGHT
   );
+
   grad.addColorStop(0, "#888");
   grad.addColorStop(0.4, "#333");
   grad.addColorStop(1, "#000");
 
   ctx.fillStyle = grad;
   ctx.strokeStyle = "#999";
-  ctx.lineWidth = 0.75; // scaled stroke
+  ctx.lineWidth = 0.75;
 
   ctx.fill();
   ctx.stroke();
+
+  //
+  // Hub
+  //
+  ctx.beginPath();
+  ctx.arc(0, 0, HUB_RADIUS, 0, Math.PI * 2);
+  ctx.fillStyle = "#444";
+  ctx.fill();
+
+  ctx.strokeStyle = "#aaa";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  //
+  // Pivot
+  //
+  ctx.beginPath();
+  ctx.arc(0, 0, 3, 0, Math.PI * 2);
+  ctx.fillStyle = "#ddd";
+  ctx.fill();
 
   ctx.restore();
 }

@@ -112,3 +112,52 @@
   font-size: 14px;
   cursor: pointer;
 }
+
+#tipsPanel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+#tipText {
+  animation: tipFloat 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.tip-focus {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.tip-focus.tip-visible {
+  opacity: 1;
+}
+
+.tip-explanation {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  font-size: 1rem;
+  color: lightgray;
+}
+
+.tip-explanation.tip-visible {
+  opacity: 1;
+}
+
+@keyframes tipFloat {
+  0% {
+    transform: translateY(3px);
+  }
+  50% {
+    transform: translateY(-3px); /* Smooth peak */
+  }
+  100% {
+    transform: translateY(3px);  /* Smooth trough/return */
+  }
+}
