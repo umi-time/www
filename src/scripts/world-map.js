@@ -11,105 +11,6 @@ import { initLayerMenu } from "./ui/layer-menu.js";
 import { addLatitudeGrid, addLongitudeGrid } from "./layers/latlon-grid.js";
 import { addTimeZoneBoundaries } from "./layers/timezone-boundaries.js";
 
-const TIPS = [
-  {
-    focus: "Umi‑Time Map",
-    explanation: "It shows a single global moment unfolding across the Earth.",
-  },
-  {
-    focus: "Notice the bright and dark regions.",
-    explanation: "They show where it is currently day and where it is night.",
-  },
-  {
-    focus: "Notice the curved boundary.",
-    explanation: "This line tracks where sunrise and sunset are happening right now.",
-  },
-  {
-    focus: "Notice the seasonal tilt.",
-    explanation: "Light reaches farther toward one pole depending on the season.",
-  },
-  {
-    focus: "Notice the real-time update.",
-    explanation: "The illumination pattern moves continuously as the Earth rotates.",
-  },
-  {
-    focus: "Notice the grid lines.",
-    explanation: "They show the standard latitude and longitude lines of the globe.",
-  },
-  {
-    focus: "Notice the red boundaries.",
-    explanation: "They mark artificial, jagged legal time zones and borders.",
-  },
-  {
-    focus: "Notice the floating dial.",
-    explanation: "It follows your cursor, acting as an interactive local lens.",
-  },
-  {
-    focus: "Notice the center of the dial.",
-    explanation: "The center always targets the exact location beneath your cursor.",
-  },
-  {
-    focus: "Notice the units around the dial.",
-    explanation: "The circle is divided into 360 umi instead of 24 hours.",
-  },
-  {
-    focus: "Notice the scale alignment.",
-    explanation: "360 umi correspond exactly to the 360 degrees of Earth's rotation.",
-  },
-  {
-    focus: "Notice the size of an umi.",
-    explanation: "1 umi equals exactly 4 minutes—the time it takes Earth to turn 1°.",
-  },
-  {
-    focus: "Move your cursor around.",
-    explanation: "The dial's orientation changes dynamically as you shift locations.",
-  },
-  {
-    focus: "Notice the top of the dial.",
-    explanation: "It rotates to always keep local solar noon at the top.",
-  },
-  {
-    focus: "Notice the bottom of the dial.",
-    explanation: "It rotates to always keep local solar midnight at the bottom.",
-  },
-  {
-    focus: "Notice the Sun symbol.",
-    explanation: "It shows the physical compass direction of the Sun from that spot.",
-  },
-  {
-    focus: "Notice the internal pointer.",
-    explanation: "It shows exactly where to look in the sky to see the Sun right now.",
-  },
-  {
-    focus: "Move between hemispheres.",
-    explanation: "The pointer flips to match the view from opposite sides of the equator.",
-  },
-  {
-    focus: "Compare distant regions.",
-    explanation: "The numbers stay the same, but the local daylight view changes.",
-  },
-  {
-    focus: "Notice what stays the same.",
-    explanation: "Every location on Earth shares the exact same umi timestamp.",
-  },
-  {
-    focus: "Notice what Umi‑Time removes.",
-    explanation: "It eliminates political offsets, arithmetic, and daylight saving shifts.",
-  },
-  {
-    focus: "Notice the universal simplicity.",
-    explanation: "Umi‑Time shares the exact same physical seconds as UTC.",
-  },
-  {
-    focus: "Notice the core question.",
-    explanation: "It answers: What is the local experience of this global instant?",
-  },
-  {
-    focus: "Notice the clock as a whole.",
-    explanation: "One Earth. One synchronized moment. Countless local perspectives.",
-  },
-];
-
 // --- DOM elements ---
 const mapObject = document.getElementById("map-object");
 const watch = document.getElementById("watch-face");
@@ -118,9 +19,17 @@ const ctx = canvas.getContext("2d");
 
 const shadowCanvas = document.getElementById("shadow-canvas");
 const shadowCtx = shadowCanvas.getContext("2d");
+const tips = document.querySelectorAll(".tip");
 
 let lastMinute = null;
 let lastDayOffset = null;
+let currentTipIndex = 0;
+let tipTimer = null;
+let detailTimer = null;
+
+const tipDelay = 2000;
+const detailDelay = 3000; // 3 seconds before showing detail
+const tipInterval = 12000; // 12 seconds between tips
 
 // --- Mercator bounds (same as before) ---
 const MAX_LAT = 83.64;
@@ -131,6 +40,10 @@ const latBottom = (MIN_LAT * Math.PI) / 180;
 
 const Y_top = Math.log(Math.tan(Math.PI / 4 + latTop / 2));
 const Y_bottom = Math.log(Math.tan(Math.PI / 4 + latBottom / 2));
+
+const DEFAULT_LOCATION = { lat: 0, lon: 0 };
+let clockLat = DEFAULT_LOCATION.lat;
+let clockLon = DEFAULT_LOCATION.lon;
 
 function adjustedDate(dayOffset) {
   let targetDate = new Date();
@@ -155,7 +68,7 @@ function drawTerminatorShadow(dayOffset) {
   const umi = new UmiTime(
     syntheticDate,
     { value: 0, uncertainty: 0 },
-    { value: 0, uncertainty: 0 }
+    { value: 0, uncertainty: 0 },
   );
 
   const delta = toRad(umi.solarDeclination);
@@ -167,11 +80,13 @@ function drawTerminatorShadow(dayOffset) {
 
   const points = [];
 
+  const EQUINOX_EPSILON = toRad(2);
+
   for (let lngDeg = -180; lngDeg <= 180; lngDeg++) {
     const lambda = toRad(lngDeg);
 
     let phi;
-    if (Math.abs(delta) < 1e-6) {
+    if (Math.abs(delta) < EQUINOX_EPSILON) {
       phi = 0;
     } else {
       phi = Math.atan(-Math.cos(lambda - lambdaS) / Math.tan(delta));
@@ -191,23 +106,23 @@ function drawTerminatorShadow(dayOffset) {
   shadowCtx.beginPath();
   shadowCtx.moveTo(points[0].x, points[0].y);
   for (let i = 1; i < points.length; i++) {
-      shadowCtx.lineTo(points[i].x, points[i].y);
+    shadowCtx.lineTo(points[i].x, points[i].y);
   }
 
-  // ROBUST FILL LOGIC: 
+  // ROBUST FILL LOGIC:
   // Treat the equinox window cleanly by checking against your epsilon threshold
-  if (Math.abs(delta) < 1e-6) {
-      // Exactly on the equinox: shade exactly half the canvas cleanly
-      shadowCtx.lineTo(width, height);
-      shadowCtx.lineTo(0, height);
+  if (Math.abs(delta) < EQUINOX_EPSILON) {
+    // Exactly on the equinox: shade exactly half the canvas cleanly
+    shadowCtx.lineTo(width, height);
+    shadowCtx.lineTo(0, height);
   } else if (delta > 0) {
-      // Northern hemisphere summer (shading the southern hemisphere/bottom)
-      shadowCtx.lineTo(width, height);
-      shadowCtx.lineTo(0, height);
+    // Northern hemisphere summer (shading the southern hemisphere/bottom)
+    shadowCtx.lineTo(width, height);
+    shadowCtx.lineTo(0, height);
   } else {
-      // Northern hemisphere winter (shading the northern hemisphere/top)
-      shadowCtx.lineTo(width, 0);
-      shadowCtx.lineTo(0, 0);
+    // Northern hemisphere winter (shading the northern hemisphere/top)
+    shadowCtx.lineTo(width, 0);
+    shadowCtx.lineTo(0, 0);
   }
 
   shadowCtx.closePath();
@@ -231,15 +146,30 @@ function mercatorInverse(x, y, width, height) {
   const rawLon = scaledX * MERCATOR_SPAN_DEGREES - 188;
 
   // Fast modulo wrap instead of recursion
-  const lon = ((rawLon + 180) % 360 + 360) % 360 - 180;
+  const lon = ((((rawLon + 180) % 360) + 360) % 360) - 180;
 
   return { lat, lon };
 }
 
-function wrapLon(lon) {
-  return ((lon + 180) % 360 + 360) % 360 - 180;
+function mercatorForward(lat, lon, width, height) {
+  // Latitude -> Y
+  const Y = Math.log(
+    Math.tan(Math.PI / 4 + toRad(lat) / 2)
+  );
+
+  const v = (Y_top - Y) / (Y_top - Y_bottom);
+  const y = v * height;
+
+  // Longitude -> X
+  const scaledX = (lon + 188) / MERCATOR_SPAN_DEGREES;
+  const x = scaledX * width;
+
+  return { x, y };
 }
 
+function wrapLon(lon) {
+  return ((((lon + 180) % 360) + 360) % 360) - 180;
+}
 
 // -------------------------------------------------------------
 // 3. UMI‑TIME WATCH
@@ -365,7 +295,7 @@ function drawUmiDial(ctx, angle) {
     -TRI_HALF_WIDTH,
     0,
     TRI_HALF_WIDTH,
-    -TRI_HEIGHT
+    -TRI_HEIGHT,
   );
 
   grad.addColorStop(0, "#888");
@@ -519,6 +449,26 @@ async function initMapDemo(svgDoc) {
     }
   });
 
+  layerMenu.registerLayer("toggleTips", (checked) => {
+    const tipsPanel = document.getElementById("tipsPanel");
+
+    if (tipsPanel) {
+      tipsPanel.style.display = checked ? "flex" : "none";
+    }
+
+    if (checked) {
+      startTipCycle();
+    } else {
+      stopTipCycle();
+    }
+  });
+
+  const tipsEnabled = document.getElementById("toggleTips")?.checked ?? true;
+
+  if (tipsEnabled) {
+    startTipCycle();
+  }
+
   const resetButton = document.getElementById("resetDate");
   const [vbX, vbY, vbWidth, vbHeight] = svgRoot
     .getAttribute("viewBox")
@@ -544,16 +494,28 @@ async function initMapDemo(svgDoc) {
       svgPt.x,
       svgPt.y,
       svgRoot.viewBox.baseVal.width,
-      svgRoot.viewBox.baseVal.height
+      svgRoot.viewBox.baseVal.height,
     );
 
-    watch.style.display = "block";
     watch.style.left = `${e.clientX}px`;
     watch.style.top = `${e.clientY}px`;
+
+    clockLat = lat;
+    clockLon = lon;
 
     drawUmiWatch(ctx, lat, lon);
   });
 
+  // Event listener for when the SVG map changes size or viewBox
+  window.addEventListener("resize", () => {
+    const { x, y } = mercatorForward(clockLat, clockLon, svgRoot.viewBox.baseVal.width, svgRoot.viewBox.baseVal.height);
+    const screenPt = svgRoot.createSVGPoint();
+    screenPt.x = x;
+    screenPt.y = y;
+    const screenCoords = screenPt.matrixTransform(svgRoot.getScreenCTM());
+    watch.style.left = `${screenCoords.x}px`;
+    watch.style.top = `${screenCoords.y}px`;
+  });
 
   resetButton.addEventListener("click", () => {
     lastDayOffset = null;
@@ -564,6 +526,23 @@ async function initMapDemo(svgDoc) {
   seasonSlider.addEventListener("input", updateSelectedDate);
 
   updateSelectedDate();
+
+  // Convert the default location lat/lon to screen coordinates and draw the watch at that location
+  const { x, y } = mercatorForward(clockLat, clockLon, svgRoot.viewBox.baseVal.width, svgRoot.viewBox.baseVal.height);
+
+  // transform the SVG coordinates to screen coordinates
+  const screenPt = svgRoot.createSVGPoint();
+  screenPt.x = x;
+  screenPt.y = y;
+  const screenCoords = screenPt.matrixTransform(svgRoot.getScreenCTM());
+
+  const screenX = screenCoords.x;
+  const screenY = screenCoords.y;
+
+  watch.style.left = `${screenX}px`;
+  watch.style.top = `${screenY}px`;
+
+  drawUmiWatch(ctx, DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lon);
 
   setInterval(() => {
     const now = new Date();
@@ -713,5 +692,63 @@ function drawDialLabels(ctx, cx, cy, R, dialRotationDeg) {
     ctx.rotate(rad + Math.PI / 2); // face outward
     ctx.fillText(`${umi}ᵘ`, 0, 0);
     ctx.restore();
+  }
+}
+
+// ---------------------------------------------------------
+// Tips display management
+// ---------------------------------------------------------
+
+function showTip(index) {
+  if (!tips.length) return;
+
+  clearTimeout(detailTimer);
+
+  tips.forEach((tip) => {
+    tip.classList.remove("active");
+
+    const focus = tip.querySelector(".tip-focus");
+    const explanation = tip.querySelector(".tip-explanation");
+
+    focus?.classList.remove("tip-visible");
+    explanation?.classList.remove("tip-visible");
+  });
+
+  const tip = tips[index];
+  const focus = tip.querySelector(".tip-focus");
+  const explanation = tip.querySelector(".tip-explanation");
+
+  setTimeout(() => {
+    tip.classList.add("active");
+
+    focus?.classList.add("tip-visible");
+
+    detailTimer = setTimeout(() => {
+      explanation?.classList.add("tip-visible");
+    }, detailDelay);
+  }, tipDelay);
+}
+
+function startTipCycle() {
+  stopTipCycle();
+
+  showTip(currentTipIndex);
+
+  tipTimer = setInterval(() => {
+    currentTipIndex = (currentTipIndex + 1) % tips.length;
+
+    showTip(currentTipIndex);
+  }, tipInterval);
+}
+
+function stopTipCycle() {
+  if (tipTimer) {
+    clearInterval(tipTimer);
+    tipTimer = null;
+  }
+
+  if (detailTimer) {
+    clearTimeout(detailTimer);
+    detailTimer = null;
   }
 }

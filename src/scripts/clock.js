@@ -70,128 +70,6 @@ const LOCATIONS = {
   }
 };
 
-const TIPS = [
-  {
-    focus: "Umi‑Time",
-    explanation: "It shows UTC in a locally meaningful way.",
-  },
-
-  {
-    focus: "Notice the larger number.",
-    explanation: "It is the current Umi‑Time.",
-  },
-
-  {
-    focus: "Notice the umi symbol.",
-    explanation: "Umi are units of time.",
-  },
-
-  {
-    focus: "Notice the smaller number.",
-    explanation: "It shows the current umi-second.",
-  },
-
-  {
-    focus: "Notice the values around the dial.",
-    explanation: "They are umi values.",
-  },
-
-  {
-    focus: "Notice the large hand.",
-    explanation: "It points to the current umi.",
-  },
-
-  {
-    focus: "Notice the thin hand.",
-    explanation: "It shows the seconds within the current umi.",
-  },
-
-  {
-    focus: "Notice the dial.",
-    explanation: "It rotates with longitude.",
-  },
-
-  {
-    focus: "Notice the top of the dial.",
-    explanation: "It always represents local solar noon.",
-  },
-
-  {
-    focus: "Notice the bottom of the dial.",
-    explanation: "It always represents local solar midnight.",
-  },
-
-  {
-    focus: "Notice the colored ring.",
-    explanation: "It shows daylight, twilight, and night.",
-  },
-
-  {
-    focus: "Notice the lit bezel segment.",
-    explanation: "It shows the current local hour.",
-  },
-
-  {
-    focus: "Notice that the bezel is fixed.",
-    explanation: "It provides a reference for your local solar day.",
-  },
-
-  {
-    focus: "Notice the city selector.",
-    explanation: "Try viewing the clock from another location.",
-  },
-
-  {
-    focus: "Try another city.",
-    explanation: "The Umi‑Time stays the same everywhere on Earth.",
-  },
-
-  {
-    focus: "Notice what changed.",
-    explanation: "The dial rotates, but the Umi‑Time does not change.",
-  },
-
-  {
-    focus: "Notice what stayed the same.",
-    explanation: "Everyone on Earth shares the same Umi‑Time.",
-  },
-
-  {
-    focus: "Notice the conceptual layers.",
-    explanation: "1. UTC 2. Umi‑Time 3. local day 4. solar events.",
-  },
-
-  {
-    focus: "Notice the clock as a whole.",
-    explanation: "It shows universal time personalized for your location.",
-  },
-
-  {
-    focus: "Notice the relationship to UTC.",
-    explanation: "0<sup>u</sup> occurs at UTC midnight.",
-  },
-
-  {
-    focus: "Notice the size of a day.",
-    explanation: "A day contains 360 umi.",
-  },
-
-  {
-    focus: "Notice the size of an umi.",
-    explanation: "Each umi contains exactly 240 seconds.",
-  },
-
-  {
-    focus: "Notice the simplicity.",
-    explanation: "Umi‑Time uses the same seconds as UTC.",
-  },
-
-  {
-    focus: "Notice the advantage.",
-    explanation: "One global time. Many local experiences.",
-  },
-];
-
 // ---------------------------------------------------------
 // DOM references
 // ---------------------------------------------------------
@@ -210,6 +88,7 @@ const tipsPanel = document.getElementById("tipsPanel");
 const tipText = document.getElementById("tipText");
 const tipFocus = tipText.querySelector(".tip-focus");
 const tipExplanation = tipText.querySelector(".tip-explanation");
+const tips = document.querySelectorAll(".tip");
 
 let currentTipIndex = 0;
 let tipTimer = null;
@@ -422,27 +301,33 @@ select.addEventListener("change", () => {
 // ---------------------------------------------------------
 
 function showTip(index) {
-  if (!tipFocus || !tipExplanation) return;
-
-  const tip = TIPS[index];
+  if (!tips.length) return;
 
   clearTimeout(detailTimer);
 
-  tipFocus.classList.remove("tip-visible");
-  tipExplanation.classList.remove("tip-visible");
+  tips.forEach((tip) => {
+    tip.classList.remove("active");
+
+    const focus = tip.querySelector(".tip-focus");
+    const explanation = tip.querySelector(".tip-explanation");
+
+    focus?.classList.remove("tip-visible");
+    explanation?.classList.remove("tip-visible");
+  });
+
+  const tip = tips[index];
+  const focus = tip.querySelector(".tip-focus");
+  const explanation = tip.querySelector(".tip-explanation");
 
   setTimeout(() => {
-    // Stage 1: focus text only
-    tipFocus.innerHTML = tip.focus;
-    tipExplanation.innerHTML = "&nbsp;";
+    tip.classList.add("active");
 
-    tipFocus.classList.add("tip-visible");
+    focus?.classList.add("tip-visible");
 
-    // Stage 2: add explanation after a few seconds
     detailTimer = setTimeout(() => {
-      tipExplanation.innerHTML = tip.explanation;
-      tipExplanation.classList.add("tip-visible");
+      explanation?.classList.add("tip-visible");
     }, detailDelay);
+
   }, tipDelay);
 }
 
@@ -452,7 +337,7 @@ function startTipCycle() {
   showTip(currentTipIndex);
 
   tipTimer = setInterval(() => {
-    currentTipIndex = (currentTipIndex + 1) % TIPS.length;
+    currentTipIndex = (currentTipIndex + 1) % tips.length;
 
     showTip(currentTipIndex);
   }, tipInterval);

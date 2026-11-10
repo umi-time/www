@@ -25,7 +25,6 @@
   height: 180px;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  display: none;
   will-change: transform;
 }
 
@@ -115,16 +114,35 @@
 
 #tipsPanel {
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 4rem;
   text-align: center;
   padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  pointer-events: none; /* allow clicks to pass through */
 }
 
 #tipText {
+  position: relative;
   animation: tipFloat 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  flex-grow: 1;
+  min-height: 4rem;
+}
+
+.tip {
+  position: absolute;
+  inset: 0; /* position relative to parent */
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.tip.active {
+  opacity: 1; /* make active tip visible */
 }
 
 .tip-focus {
@@ -132,7 +150,7 @@
   transition: opacity 0.8s ease;
   font-weight: bold;
   font-size: 1.2rem;
-  color: white;
+  color: black;
 }
 
 .tip-focus.tip-visible {
@@ -143,7 +161,7 @@
   opacity: 0;
   transition: opacity 0.8s ease;
   font-size: 1rem;
-  color: lightgray;
+  color: #111;
 }
 
 .tip-explanation.tip-visible {
@@ -159,5 +177,15 @@
   }
   100% {
     transform: translateY(3px);  /* Smooth trough/return */
+  }
+}
+
+@media (max-width: 480px) {
+  .tip-focus {
+    font-size: 1rem;
+  }
+
+  .tip-explanation {
+    font-size: 0.8rem;
   }
 }

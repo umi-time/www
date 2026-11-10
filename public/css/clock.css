@@ -127,7 +127,22 @@ body {
 }
 
 #tipText {
+  position: relative;
   animation: tipFloat 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  flex-grow: 1;
+  min-height: 4rem;
+}
+
+.tip {
+  position: absolute;
+  inset: 0; /* position relative to parent */
+  opacity: 0;
+  pointer-events: none; /* allow clicks to pass through */
+  transition: opacity 0.8s ease;
+}
+
+.tip.active {
+  opacity: 1; /* make active tip visible */
 }
 
 .tip-focus {
