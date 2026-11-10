@@ -162,10 +162,6 @@ function drawTerminatorShadow(dayOffset) {
 function finishShadowDrawing(shadowCtx) {
   shadowCtx.closePath();
 
-  shadowCtx.strokeStyle = "orange";
-  shadowCtx.lineWidth = 4;
-  shadowCtx.stroke();
-
   shadowCtx.fillStyle = "rgba(10, 15, 30, 0.45)";
   shadowCtx.fill();
 }
