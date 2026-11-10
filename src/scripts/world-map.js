@@ -113,7 +113,7 @@ function drawTerminatorShadow(dayOffset) {
   shadowCtx.beginPath();
 
   const TOLERANCE = 2; // Small value to compare y positions against target border
-  const targetBorder = borderOnTop ? Y_top-1 : Y_bottom;
+  const targetBorder = borderOnTop ? 0 : height;
   shadowCtx.moveTo(0, targetBorder);
 
   let i = 0;
