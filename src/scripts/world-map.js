@@ -132,7 +132,7 @@ function drawTerminatorShadow(dayOffset) {
   shadowCtx.stroke();
 
   shadowCtx.fillStyle = "rgba(10, 15, 30, 0.45)";
-  shadowCtx.fill();
+  shadowCtx.fill("evenodd");
 }
 
 // -------------------------------------------------------------
