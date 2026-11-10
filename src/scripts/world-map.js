@@ -127,7 +127,7 @@ function drawTerminatorShadow(dayOffset) {
 
   shadowCtx.closePath();
 
-  shadowCtx.strokeStyle = "green";
+  shadowCtx.strokeStyle = "blue";
   shadowCtx.lineWidth = 4;
   shadowCtx.stroke();
 
@@ -135,8 +135,10 @@ function drawTerminatorShadow(dayOffset) {
 
 document.getElementById("debug").textContent = [
   `date=${syntheticDate.toISOString().slice(0,10)}`,
-  `decl=${umi.solarDeclination}`,
-  `points=${points.length}`,
+  `canvas=${shadowCanvas.width}x${shadowCanvas.height}`,
+  `css=${shadowCanvas.clientWidth}x${shadowCanvas.clientHeight}`,
+  `decl=${umi.solarDeclination.toFixed(2)}`,
+  `points=${points.length}`
 ].join("\n");
 
   shadowCtx.fill();
