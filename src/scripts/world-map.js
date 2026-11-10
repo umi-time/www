@@ -60,7 +60,8 @@ function drawTerminatorShadow(dayOffset) {
   const width = shadowCanvas.width;
   const height = shadowCanvas.height;
 
-  shadowCtx.clearRect(0, 0, width, height);
+  shadowCtx.fillStyle = "magenta";
+  shadowCtx.fillRect(0, 0, width, height);
 
   const totalYSpan = Y_top - Y_bottom;
 
@@ -127,7 +128,7 @@ function drawTerminatorShadow(dayOffset) {
 
   shadowCtx.closePath();
 
-  shadowCtx.strokeStyle = "red";
+  shadowCtx.strokeStyle = "green";
   shadowCtx.lineWidth = 4;
   shadowCtx.stroke();
 
