@@ -60,8 +60,7 @@ function drawTerminatorShadow(dayOffset) {
   const width = shadowCanvas.width;
   const height = shadowCanvas.height;
 
-  shadowCtx.fillStyle = "magenta";
-  shadowCtx.fillRect(0, 0, width, height);
+  shadowCtx.clearRect(0, 0, width, height);
 
   const totalYSpan = Y_top - Y_bottom;
 
@@ -133,7 +132,14 @@ function drawTerminatorShadow(dayOffset) {
   shadowCtx.stroke();
 
   shadowCtx.fillStyle = "rgba(10, 15, 30, 0.45)";
-  shadowCtx.fill("evenodd");
+
+document.getElementById("debug").textContent = [
+  `date=${syntheticDate.toISOString().slice(0,10)}`,
+  `decl=${umi.solarDeclination}`,
+  `points=${points.length}`,
+].join("\n");
+
+  shadowCtx.fill();
 }
 
 // -------------------------------------------------------------
