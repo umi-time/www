@@ -80,7 +80,7 @@ function drawTerminatorShadow(dayOffset) {
 
   const points = [];
 
-  const EQUINOX_EPSILON = toRad(2);
+  const EQUINOX_EPSILON = toRad(0.05);
 
   for (let lngDeg = -180; lngDeg <= 180; lngDeg++) {
     const lambda = toRad(lngDeg);
@@ -126,6 +126,11 @@ function drawTerminatorShadow(dayOffset) {
   }
 
   shadowCtx.closePath();
+
+  shadowCtx.strokeStyle = "red";
+  shadowCtx.lineWidth = 4;
+  shadowCtx.stroke();
+
   shadowCtx.fillStyle = "rgba(10, 15, 30, 0.45)";
   shadowCtx.fill();
 }
