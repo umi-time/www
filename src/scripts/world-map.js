@@ -35,6 +35,9 @@ const tipInterval = 12000; // 12 seconds between tips
 const MAX_LAT = 83.64;
 const MIN_LAT = -74.78;
 
+const MAX_LON = 191;
+const MIN_LON = -188;
+
 const latTop = (MAX_LAT * Math.PI) / 180;
 const latBottom = (MIN_LAT * Math.PI) / 180;
 
@@ -80,9 +83,11 @@ function drawTerminatorShadow(dayOffset) {
 
   const points = [];
 
-  const EQUINOX_EPSILON = toRad(0.05);
+  const EQUINOX_EPSILON = toRad(0.01);
+  const MIN_LON_RAD = toRad(MIN_LON);
+  const MAX_LON_RAD = toRad(MAX_LON);
 
-  for (let lngDeg = -180; lngDeg <= 180; lngDeg++) {
+  for (let lngDeg = MIN_LON; lngDeg <= MAX_LON; lngDeg++) {
     const lambda = toRad(lngDeg);
 
     let phi;
@@ -94,7 +99,7 @@ function drawTerminatorShadow(dayOffset) {
 
     const clampedPhi = Math.max(latBottom, Math.min(latTop, phi));
 
-    const x = ((lambda + Math.PI) / (2 * Math.PI)) * width;
+    const x = ((lambda - MIN_LON_RAD) / (MAX_LON_RAD - MIN_LON_RAD)) * width;
     const mercY = Math.log(Math.tan(Math.PI / 4 + clampedPhi / 2));
     const yPercent = (Y_top - mercY) / totalYSpan;
     const y = yPercent * height;
@@ -102,45 +107,66 @@ function drawTerminatorShadow(dayOffset) {
     points.push({ x, y });
   }
 
+  const borderOnTop = delta < 0;
+
   // Draw polygon
   shadowCtx.beginPath();
-  shadowCtx.moveTo(points[0].x, points[0].y);
-  for (let i = 1; i < points.length; i++) {
+
+  const TOLERANCE = 2; // Small value to compare y positions against target border
+  const targetBorder = borderOnTop ? Y_top-1 : Y_bottom;
+  shadowCtx.moveTo(0, targetBorder);
+
+  let i = 0;
+
+  // If the y values begin at the target border of the canvas, find the last x value with the y at the target border, and move there as the starting point
+  for (; i < points.length; i++) {
+    if (Math.abs(points[i].y - targetBorder) > TOLERANCE) {
+      break;
+    }
+    shadowCtx.moveTo(points[i].x, points[i].y);
+  }
+
+  // Draw the main line connecting all points until the line intersects the target border
+  for (; i < points.length; i++) {
     shadowCtx.lineTo(points[i].x, points[i].y);
+
+    if (Math.abs(points[i].y - targetBorder) <= TOLERANCE) {
+      // Stop drawing when we reach the target border
+      finishShadowDrawing(shadowCtx);
+      break;
+    }
   }
 
-  // ROBUST FILL LOGIC:
-  // Treat the equinox window cleanly by checking against your epsilon threshold
-  if (Math.abs(delta) < EQUINOX_EPSILON) {
-    // Exactly on the equinox: shade exactly half the canvas cleanly
-    shadowCtx.lineTo(width, height);
-    shadowCtx.lineTo(0, height);
-  } else if (delta > 0) {
-    // Northern hemisphere summer (shading the southern hemisphere/bottom)
-    shadowCtx.lineTo(width, height);
-    shadowCtx.lineTo(0, height);
-  } else {
-    // Northern hemisphere winter (shading the northern hemisphere/top)
-    shadowCtx.lineTo(width, 0);
-    shadowCtx.lineTo(0, 0);
+  if (i < points.length) {
+    shadowCtx.beginPath();
+    shadowCtx.moveTo(points[i].x, points[i].y);
+
+    // If the y values are at the target border of the canvas, find the last x value with the y at the target border and move there
+    for (; i < points.length; i++) {
+      if (Math.abs(points[i].y - targetBorder) > TOLERANCE) {
+        break;
+      }
+      shadowCtx.moveTo(points[i].x, points[i].y);
+    }
+
+    for (; i < points.length; i++) {
+      shadowCtx.lineTo(points[i].x, points[i].y);
+    }
   }
 
+  shadowCtx.lineTo(width, targetBorder);
+
+  finishShadowDrawing(shadowCtx);
+}
+
+function finishShadowDrawing(shadowCtx) {
   shadowCtx.closePath();
 
-  shadowCtx.strokeStyle = "blue";
+  shadowCtx.strokeStyle = "orange";
   shadowCtx.lineWidth = 4;
   shadowCtx.stroke();
 
   shadowCtx.fillStyle = "rgba(10, 15, 30, 0.45)";
-
-document.getElementById("debug").textContent = [
-  `date=${syntheticDate.toISOString().slice(0,10)}`,
-  `canvas=${shadowCanvas.width}x${shadowCanvas.height}`,
-  `css=${shadowCanvas.clientWidth}x${shadowCanvas.clientHeight}`,
-  `decl=${umi.solarDeclination.toFixed(2)}`,
-  `points=${points.length}`
-].join("\n");
-
   shadowCtx.fill();
 }
 
@@ -148,7 +174,7 @@ document.getElementById("debug").textContent = [
 // 2. MERCATOR INVERSE
 // -------------------------------------------------------------
 // Near your Mercator bounds, add:
-const MERCATOR_SPAN_DEGREES = 188 + 191; // 188°W → 191°E
+const MERCATOR_SPAN_DEGREES = MAX_LON - MIN_LON; // 188°W → 191°E
 
 function mercatorInverse(x, y, width, height) {
   const v = y / height;
@@ -157,7 +183,7 @@ function mercatorInverse(x, y, width, height) {
   const lat = toDeg(Math.atan(Math.sinh(Y)));
 
   const scaledX = x / width;
-  const rawLon = scaledX * MERCATOR_SPAN_DEGREES - 188;
+  const rawLon = scaledX * MERCATOR_SPAN_DEGREES + MIN_LON;
 
   // Fast modulo wrap instead of recursion
   const lon = ((((rawLon + 180) % 360) + 360) % 360) - 180;
@@ -175,7 +201,7 @@ function mercatorForward(lat, lon, width, height) {
   const y = v * height;
 
   // Longitude -> X
-  const scaledX = (lon + 188) / MERCATOR_SPAN_DEGREES;
+  const scaledX = (lon - MIN_LON) / MERCATOR_SPAN_DEGREES;
   const x = scaledX * width;
 
   return { x, y };
